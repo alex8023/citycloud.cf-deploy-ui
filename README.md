@@ -1,5 +1,7 @@
 # citycloud.cf-deploy-ui
 
+使用golang开发的cloudfoundry v2 图形化部署应用。
+
 ## config gopath
 
 ```
