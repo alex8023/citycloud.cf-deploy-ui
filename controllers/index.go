@@ -1,8 +1,8 @@
 package controllers
 
 import (
+	"log"
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/session"
 )
 
 type IndexController struct {
@@ -10,15 +10,12 @@ type IndexController struct {
 }
 
 func (this *IndexController) Get() {
-	if this.GetSession("username") != defaultUserName {
-		this.TplNames = "login.tpl"
-		this.Data["Message"] = ""
-		this.Data["Website"] = "www.citycloud.com.cn"
-		this.Data["Email"] = "cci-paas@citycloud.com.cn"
-		this.Data["LoginAction"] = loginAction
-	} else {
-		this.Data["Message"] = ""
 		this.Data["UserName"] = this.GetSession("UserName")
+		Get(this.GetSession("UserName"))
 		this.TplNames = "index.tpl"
-	}
+}
+
+func Get(username interface{} ) {
+	log.Println("hello")
+	log.Println(username)
 }

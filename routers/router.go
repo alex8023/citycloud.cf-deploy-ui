@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"log"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	"github.com/citycloud/citycloud.cf-deploy-ui/controllers"
@@ -15,16 +16,17 @@ func init() {
 	login :=
 		beego.NewNamespace(appName,
 			beego.NSBefore(func(ctx *context.Context) {
-				username := ctx.Input.Session("username")
+				username := ctx.Input.Session("UserName")
 				loginAction := appName + "/login"
 				if username != defaultUserName && ctx.Request.RequestURI != loginAction {
-					ctx.Redirect(302, loginAction)
+					log.Println("logout successful")
+					ctx.Redirect(301, loginAction)
 				}
 
 			}),
 			beego.NSRouter("/login", &controllers.LoginController{}),
-			beego.NSRouter("/logout", &controllers.LogoutController{}),
-			beego.NSRouter("/index", &controllers.MainController{}),
+			beego.NSRouter("/logout", &controllers.LogoutController{},"*:Logout"),
+			beego.NSRouter("/index", &controllers.IndexController{}),
 		)
 	beego.AddNamespace(login)
 }
