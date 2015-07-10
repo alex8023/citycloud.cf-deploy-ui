@@ -4,30 +4,30 @@ type MicroBOSH struct {
 	Name            string
 	Network         NetWork
 	Resources       Resources
-	Cloudproperties CloudProperties
+	CloudProperties CloudProperties
 }
 
 type NetWork struct {
 	Vip    string
-	Net_id string
+	NetId string
 }
 
 type Resources struct {
-	Persistent_disk   string
-	Instance_type     string
-	Availability_zone string
+	PersistentDisk   string
+	InstanceType     string
+	AvailabilityZone string
 }
 
 type CloudProperties struct {
-	Auth_url          string
-	Username          string
-	Api_key           string
+	AuthUrl          string
+	UserName          string
+	ApiKey           string
 	Tenant            string
-	Default_key_name  string
-	Private_key       string
-	Cci_ebs_url       string
-	Cci_ebs_accesskey string
-	Cci_ebs_secretkey string
+	DefaultKeyName  string
+	PrivateKey       string
+	CciEbsUrl       string
+	CciEbsAccesskey string
+	CciEbsSecretkey string
 }
 
 func NewMicroBOSH(
@@ -39,7 +39,7 @@ func NewMicroBOSH(
 	microbosh.Name = name
 	microbosh.Network = network
 	microbosh.Resources = resource
-	microbosh.Cloudproperties = cloudproperties
+	microbosh.CloudProperties = cloudproperties
 	return
 }
 
@@ -48,7 +48,7 @@ func NewNetWork(
 	net_id string,
 ) (network NetWork) {
 	network.Vip = vip
-	network.Net_id = net_id
+	network.NetId = net_id
 	return
 }
 
@@ -57,9 +57,9 @@ func NewResources(
 	instance_type string,
 	availability_zone string,
 ) (resource Resources) {
-	resource.Persistent_disk = persistent_disk
-	resource.Instance_type = instance_type
-	resource.Availability_zone = availability_zone
+	resource.PersistentDisk = persistent_disk
+	resource.InstanceType = instance_type
+	resource.AvailabilityZone = availability_zone
 	return
 }
 
@@ -74,14 +74,14 @@ func NewCloudProperties(
 	cci_ebs_accesskey string,
 	cci_ebs_secretkey string,
 ) (cloudproperties CloudProperties) {
-	cloudproperties.Auth_url = auth_url
-	cloudproperties.Username = username
-	cloudproperties.Api_key = api_key
+	cloudproperties.AuthUrl = auth_url
+	cloudproperties.UserName = username
+	cloudproperties.ApiKey = api_key
 	cloudproperties.Tenant = tenant
-	cloudproperties.Default_key_name = default_key_name
-	cloudproperties.Private_key = private_key
-	cloudproperties.Cci_ebs_url = cci_ebs_url
-	cloudproperties.Cci_ebs_accesskey = cci_ebs_accesskey
-	cloudproperties.Cci_ebs_secretkey = cci_ebs_secretkey
+	cloudproperties.DefaultKeyName = default_key_name
+	cloudproperties.PrivateKey = private_key
+	cloudproperties.CciEbsUrl = cci_ebs_url
+	cloudproperties.CciEbsAccesskey = cci_ebs_accesskey
+	cloudproperties.CciEbsSecretkey = cci_ebs_secretkey
 	return
 }

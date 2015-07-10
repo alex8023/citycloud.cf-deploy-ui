@@ -12,14 +12,18 @@ type MicroBoshController struct {
 
 func (this *MicroBoshController) Get() {
 	action := this.GetString("action")
-	fmt.Println(action)
 	this.Layout = "index.tpl"
 	this.Data["NavBarFocus"] = "microbosh"
-	//	this.Data["MicroBOSH"] = microbosh
-	this.TplNames = "microbosh/index.tpl"
+	this.Data["MicroBOSH"] = mi
+	if action == "config" {
+		this.TplNames = "microbosh/config.tpl"
+	} else {
+		this.TplNames = "microbosh/index.tpl"
+	}
 }
 
 func (this *MicroBoshController) Post() {
+	
 	network := entity.NewNetWork(this.GetString("vip"),
 		this.GetString("net_id"))
 	resources := entity.NewResources(this.GetString("persistent_disk"),
@@ -43,7 +47,11 @@ func (this *MicroBoshController) Post() {
 	this.Data["MicroBOSH"] = microbosh
 	this.Get()
 }
-
+var mi entity.MicroBOSH = entity.NewMicroBOSH("deployment-name",
+	entity.NewNetWork("vip","netid"),
+	entity.NewResources("16384","flavor_100","zone2"),
+	entity.NewCloudProperties("auth_url","username","apikey","tenant","defaultkeyname","privatekey","ebsurl","ebskey","ebssercetkey"))
 func PrintMicroBOSH(microbosh entity.MicroBOSH) {
 	fmt.Println(microbosh)
+	mi = microbosh
 }

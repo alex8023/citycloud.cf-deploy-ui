@@ -26,8 +26,8 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-			  <li><a href="logout">LogOut</a></li>
+			  	<li><a href="logout">LogOut</a></li>
 			</ul>
 		</div>
 	</div>
- </nav>
+</nav>
