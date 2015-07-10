@@ -26,7 +26,7 @@ func init() {
 			beego.NSRouter("/login", &controllers.LoginController{}),
 			beego.NSRouter("/logout", &controllers.LogoutController{}, "*:Logout"),
 			beego.NSRouter("/index", &controllers.IndexController{}),
-			beego.NSRouter("/microbosh", &controllers.MicroBoshController{}, "post:Post"),
+			beego.NSRouter("/microbosh", &controllers.MicroBoshController{}),
 		)
 	beego.AddNamespace(login)
 }

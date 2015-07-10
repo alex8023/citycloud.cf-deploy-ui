@@ -10,6 +10,15 @@ type MicroBoshController struct {
 	beego.Controller
 }
 
+func (this *MicroBoshController) Get() {
+	action := this.GetString("action")
+	fmt.Println(action)
+	this.Layout = "index.tpl"
+	this.Data["NavBarFocus"] = "microbosh"
+	//	this.Data["MicroBOSH"] = microbosh
+	this.TplNames = "microbosh/index.tpl"
+}
+
 func (this *MicroBoshController) Post() {
 	network := entity.NewNetWork(this.GetString("vip"),
 		this.GetString("net_id"))
@@ -31,9 +40,8 @@ func (this *MicroBoshController) Post() {
 		cloudproperties)
 
 	PrintMicroBOSH(microbosh)
-
-	this.Redirect(indexAction+"?action=home", 302)
-
+	this.Data["MicroBOSH"] = microbosh
+	this.Get()
 }
 
 func PrintMicroBOSH(microbosh entity.MicroBOSH) {

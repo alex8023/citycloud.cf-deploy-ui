@@ -11,25 +11,14 @@ type IndexController struct {
 func (this *IndexController) Get() {
 	action := this.GetString("action")
 	if action == "home" || action == "" {
-		initHome(this)
-	} else if action == "microbosh" {
-		initDeployMicroBosh(this)
+		this.Data["NavBarFocus"] = "home"
+		this.TplNames = "home/home.tpl"
 	} else if action == "paas" {
 		initPaaS(this)
 	} else {
 		unRelease(this)
 	}
 	this.Layout = "index.tpl"
-}
-
-func initHome(this *IndexController) {
-	this.Data["NavBarFocus"] = "home"
-	this.TplNames = "home/home.tpl"
-}
-
-func initDeployMicroBosh(this *IndexController) {
-	this.Data["NavBarFocus"] = "microbosh"
-	this.TplNames = "microbosh/config.tpl"
 }
 
 func initPaaS(this *IndexController) {

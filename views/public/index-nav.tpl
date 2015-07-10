@@ -6,7 +6,7 @@
 		<div id="navbar">
 			<ul class="nav navbar-nav" id="navbarul">
 				<li id = "home" class="active"><a href="index?action=home">Home</a></li>
-				<li id = "microbosh"><a href="index?action=microbosh">Deploy MicroBOSH</a></li>
+				<li id = "microbosh"><a href="microbosh">Deploy MicroBOSH</a></li>
 				<!--<li><a href="#contact">Deploy BOSH</a></li>
 				<li id = "bosh"><a href="index?action=bosh">BOSH Status</a></li>-->
 				<li id = "paas"><a href="index?action=paas">Deploy PaaS</a></li>
