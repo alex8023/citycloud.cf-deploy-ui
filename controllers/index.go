@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"github.com/astaxie/beego"
 )
 
@@ -10,12 +9,35 @@ type IndexController struct {
 }
 
 func (this *IndexController) Get() {
-		this.Data["UserName"] = this.GetSession("UserName")
-		Get(this.GetSession("UserName"))
-		this.TplNames = "index.tpl"
+	action := this.GetString("action")
+	if action == "home" || action == "" {
+		initHome(this)
+	} else if action == "microbosh" {
+		initDeployMicroBosh(this)
+	} else if action == "paas" {
+		initPaaS(this)
+	} else {
+		unRelease(this)
+	}
+	this.Layout = "index.tpl"
 }
 
-func Get(username interface{} ) {
-	log.Println("hello")
-	log.Println(username)
+func initHome(this *IndexController) {
+	this.Data["NavBarFocus"] = "home"
+	this.TplNames = "home/home.tpl"
+}
+
+func initDeployMicroBosh(this *IndexController) {
+	this.Data["NavBarFocus"] = "microbosh"
+	this.TplNames = "microbosh/config.tpl"
+}
+
+func initPaaS(this *IndexController) {
+	this.Data["NavBarFocus"] = "paas"
+	this.TplNames = "paas/config.tpl"
+}
+
+func unRelease(this *IndexController) {
+	this.Data["NavBarFocus"] = "home"
+	this.TplNames = "undo/undo.tpl"
 }

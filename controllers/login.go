@@ -1,17 +1,9 @@
 package controllers
 
 import (
-	"log"
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/session"
+	"log"
 )
-
-var globaleAppName = beego.AppConfig.String("appname")
-var defaultUserName = beego.AppConfig.String("username")
-var defaultPassword = beego.AppConfig.String("password")
-var loginAction = "/" + globaleAppName + "/login"
-
-var globaleSession *session.Manager
 
 type LoginController struct {
 	beego.Controller
@@ -21,7 +13,6 @@ type LogoutController struct {
 	beego.Controller
 }
 
-
 func (this *LoginController) Get() {
 	if this.GetSession("UserName") != defaultUserName {
 		this.TplNames = "login.tpl"
@@ -30,7 +21,7 @@ func (this *LoginController) Get() {
 		this.Data["Email"] = "cci-paas@citycloud.com.cn"
 		this.Data["LoginAction"] = loginAction
 	} else {
-		this.Redirect("/citycloud.cf-deploy-ui/index",302)
+		this.Redirect(indexAction, 302)
 	}
 }
 
@@ -43,7 +34,7 @@ func (this *LoginController) Post() {
 		this.Data["LoginAction"] = loginAction
 	} else {
 		this.SetSession("UserName", this.GetString("username"))
-		this.Redirect("/citycloud.cf-deploy-ui/index",302)
+		this.Redirect(indexAction, 302)
 	}
 
 }

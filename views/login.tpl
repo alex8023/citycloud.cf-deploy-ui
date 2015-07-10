@@ -1,6 +1,6 @@
-{{template "header.tpl"}}
+{{template "public/header.tpl"}}
     <link href="/static/css/signin.css" rel="stylesheet">
-{{template "bodyheader.tpl"}}
+{{template "public/bodyheader.tpl"}}
 	<script src="/static/js/login.js"></script>
     <h2></h2>
     <div class="container">
@@ -19,4 +19,4 @@
       </form>
     </div>
 	<input id = "message" type="hidden" value="{{.Message}}">
-{{template "footer.tpl"}}
+{{template "public/footer.tpl"}}

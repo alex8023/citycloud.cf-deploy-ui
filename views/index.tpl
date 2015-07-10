@@ -1,6 +1,9 @@
-{{template "header.tpl"}}
+{{template "public/header.tpl"}}
   <link href="/static/css/signin.css" rel="stylesheet">
-{{template "bodyheader.tpl"}}
-    <h2 style="text-align: right;">你好，{{.UserName}}！</h2><a href="/citycloud.cf-deploy-ui/logout">LogOut</a>
-	<div class = "container"></div>
-{{template "footer.tpl"}}
+{{template "public/bodyheader.tpl"}}
+<!--nav bar-->
+{{template "public/index-nav.tpl"}}
+<!--body start-->
+{{.LayoutContent}}
+<!--body end-->
+{{template "public/index-footer.tpl"}}
