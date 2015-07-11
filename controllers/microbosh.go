@@ -51,6 +51,7 @@ var mi entity.MicroBOSH = entity.NewMicroBOSH("deployment-name",
 	entity.NewNetWork("vip","netid"),
 	entity.NewResources("16384","flavor_100","zone2"),
 	entity.NewCloudProperties("auth_url","username","apikey","tenant","defaultkeyname","privatekey","ebsurl","ebskey","ebssercetkey"))
+	
 func PrintMicroBOSH(microbosh entity.MicroBOSH) {
 	fmt.Println(microbosh)
 	mi = microbosh

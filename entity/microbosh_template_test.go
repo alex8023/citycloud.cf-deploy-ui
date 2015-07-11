@@ -7,7 +7,7 @@ import (
 
 
 func TestMicroboshTemplate(t *testing.T){
-	var test = NewMicroBOSH("deployment-name",
+	var test = NewMicroBOSH("deployment-microbosh",
 	NewNetWork("vip","netid"),
 	NewResources("16384","flavor_100","zone2"),
 	NewCloudProperties("auth_url","username","apikey","tenant","defaultkeyname","privatekey","ebsurl","ebskey","ebssercetkey"))
