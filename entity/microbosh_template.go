@@ -4,7 +4,7 @@ import (
 	utils "github.com/citycloud/citycloud.cf-deploy-ui/utils"
 )
 
-const micro_bosh string = `
+const MicroBOSHTemplateText string = `
 ---
 name: {{.Name}}
 {{with .Network}}
@@ -50,6 +50,6 @@ func NewMicroBOSHTemplate(microbosh MicroBOSH)(mt MicroBOSHTemplate){
 }
 
 func (mt MicroBOSHTemplate)CreateMicroBOSHYaml(path string) (bool,error) {
-	return utils.CreateYmlFile("microbosh",micro_bosh,path,mt.microbosh)
+	return utils.CreateYmlFile("microbosh",MicroBOSHTemplateText,path,mt.microbosh)
 }
 
