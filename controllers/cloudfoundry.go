@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 type CloudFoundryController struct {
@@ -29,6 +30,7 @@ func (this *CloudFoundryController) Post() {
 }
 
 func (this *CloudFoundryController) DeployCloudFoundry(){
+	logger.Debug("%s","Deploy CloudFoundry")
 	this.LoadData()
 	this.TplNames = "cloudfoundry/config.tpl"
 }
@@ -39,6 +41,7 @@ func (this *CloudFoundryController) IndexCloudFoundry(){
 }
 
 func (this *CloudFoundryController) ConfigCloudFoundry(){
+	logger.Debug("%s","Config CloudFoundry")
 	this.LoadData()
 	this.TplNames = "cloudfoundry/config.tpl"
 }
