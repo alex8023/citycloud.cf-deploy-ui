@@ -20,6 +20,9 @@
 						$('#config-microbosh').on('click', function(){
 				    		window.location.href = "microbosh?action=config";
 				  		})
+						$('#deploy-microbosh').on('click',function(){
+							window.location.href = "microbosh?action=deploy";
+						})
 					</script>
 				</div>
 				{{with .MicroBOSH}}

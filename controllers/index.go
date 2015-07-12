@@ -13,20 +13,28 @@ func (this *IndexController) Get() {
 	if action == "home" || action == "" {
 		this.Data["NavBarFocus"] = "home"
 		this.TplNames = "home/home.tpl"
-	} else if action == "paas" {
-		initPaaS(this)
+	} else if action == "cloudfoundry" {
+		this.initPaaS()
+	} else if action == "bosh" {
+		this.initBOSH()
 	} else {
-		unRelease(this)
+		this.unRelease()
 	}
 	this.Layout = "index.tpl"
 }
 
-func initPaaS(this *IndexController) {
-	this.Data["NavBarFocus"] = "paas"
-	this.TplNames = "paas/config.tpl"
+func (this *IndexController) initPaaS() {
+	this.Data["NavBarFocus"] = "cloudfoundry"
+	this.TplNames = "cloudfoundry/config.tpl"
 }
 
-func unRelease(this *IndexController) {
-	this.Data["NavBarFocus"] = "home"
+func (this *IndexController) initBOSH() {
+	this.Data["NavBarFocus"] = "bosh"
+	this.TplNames = "bosh/config.tpl"
+}
+
+
+func (this *IndexController) unRelease() {
+	this.Data["NavBarFocus"] = this.GetString("action")
 	this.TplNames = "undo/undo.tpl"
 }
