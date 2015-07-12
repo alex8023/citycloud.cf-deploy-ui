@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 )
@@ -14,11 +13,12 @@ func (this *MicroBoshController) Get() {
 	action := this.GetString("action")
 	this.Layout = "index.tpl"
 	this.Data["NavBarFocus"] = "microbosh"
-	this.Data["MicroBOSH"] = mi
 	if action == "config" {
-		this.TplNames = "microbosh/config.tpl"
+		this.ConfigMicroBOSH()
+	} else if action == "deploy" {
+		this.DeployMicroBOSH()
 	} else {
-		this.TplNames = "microbosh/index.tpl"
+		this.IndexMicroBOSH()
 	}
 }
 
@@ -43,16 +43,36 @@ func (this *MicroBoshController) Post() {
 		resources,
 		cloudproperties)
 
-	PrintMicroBOSH(microbosh)
-	this.Data["MicroBOSH"] = microbosh
+	this.CommitData(microbosh)
 	this.Get()
 }
-var mi entity.MicroBOSH = entity.NewMicroBOSH("deployment-name",
+
+func (this *MicroBoshController) IndexMicroBOSH(){
+	this.LoadData()
+	this.TplNames = "microbosh/index.tpl"
+}
+
+func (this *MicroBoshController) ConfigMicroBOSH(){
+	this.LoadData()
+	this.TplNames = "microbosh/config.tpl"
+}
+
+func (this *MicroBoshController) DeployMicroBOSH(){
+	this.LoadData()
+	this.TplNames = "microbosh/config.tpl"
+}
+
+//read data from const or database
+func (this *MicroBoshController) LoadData(){
+	this.Data["MicroBOSH"] = mi
+}
+
+//write data to const or database
+func (this *MicroBoshController) CommitData(microbosh entity.MicroBOSH){
+	mi = microbosh
+}
+	
+var mi entity.MicroBOSH = entity.NewMicroBOSH("deployment-microbosh",
 	entity.NewNetWork("vip","netid"),
 	entity.NewResources("16384","flavor_100","zone2"),
 	entity.NewCloudProperties("auth_url","username","apikey","tenant","defaultkeyname","privatekey","ebsurl","ebskey","ebssercetkey"))
-	
-func PrintMicroBOSH(microbosh entity.MicroBOSH) {
-	fmt.Println(microbosh)
-	mi = microbosh
-}
