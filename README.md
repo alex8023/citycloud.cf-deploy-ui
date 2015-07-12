@@ -19,6 +19,8 @@ $ cd $GOPATH/src
 $ mkdir github.com/citycloud
 $ cd github.com/citycloud
 $ git clone https://github.com/alex8023/citycloud.cf-deploy-ui.git
+#checkout development version of the branch
+$ git checkout dev
 ```
 
 ## update
@@ -34,5 +36,5 @@ $ git pull
 $ git add <file>
 $ git add .
 $ git commit -m "message"
-$ git push origin master
+$ git push origin dev
 ```
