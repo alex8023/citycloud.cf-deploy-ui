@@ -4,8 +4,6 @@ import (
 	"testing"
 )
 
-
-
 func TestBOSHTemplate(t *testing.T){
 	var test = NewBOSH("deployment-bosh")
 	var bt = NewBOSHTemplate(test)

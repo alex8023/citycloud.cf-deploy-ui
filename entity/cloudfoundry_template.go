@@ -1,7 +1,8 @@
 package entity
 
 import (
-	utils "github.com/citycloud/citycloud.cf-deploy-ui/utils"
+	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 const CloudFoundryTemplateText string = `
 ---
@@ -20,5 +21,6 @@ func NewCloudFoundryTemplate(cloudfoundry CloudFoundry)(cft CloudFoundryTemplate
 }
 
 func (cft CloudFoundryTemplate)CreateCloudFoundryYaml(path string) (bool,error) {
+	logger.Debug("Create CloudFoundry deployment file : %s",path)
 	return utils.CreateYmlFile("cloudfoundry",CloudFoundryTemplateText,path,cft.cloudfoundry)
 }

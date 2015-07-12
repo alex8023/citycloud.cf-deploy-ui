@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"log"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 type LoginController struct {
@@ -34,13 +34,14 @@ func (this *LoginController) Post() {
 		this.Data["LoginAction"] = loginAction
 	} else {
 		this.SetSession("UserName", this.GetString("username"))
+		logger.Debug("%s Login",this.GetString("username"))
 		this.Redirect(indexAction, 302)
 	}
 
 }
 
 func (this *LogoutController) Logout() {
-	log.Println("logout successful")
+	logger.Debug("%s","Logout Successful")
 	this.DestroySession()
 	this.Redirect(loginAction, 302)
 }
