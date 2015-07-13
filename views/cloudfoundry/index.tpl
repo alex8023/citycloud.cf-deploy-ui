@@ -16,7 +16,7 @@
 						<button class="btn btn-danger ">danger</button>
 						<button class="btn btn-link ">link</button>-->
 				    </div>
-					<script>
+					<script type="text/javascript">
 						$('#config-cloudfoundry').on('click', function(){
 				    		window.location.href = "cloudfoundry?action=config";
 				  		})
