@@ -27,6 +27,7 @@ func init() {
 			beego.NSRouter("/microbosh", &controllers.MicroBoshController{}),
 			beego.NSRouter("/bosh", &controllers.BOSHController{}),
 			beego.NSRouter("/cloudfoundry", &controllers.CloudFoundryController{}),
+			beego.NSRouter("/websocket", &controllers.WebSocketController{}),
 		)
 	beego.AddNamespace(login)
 }

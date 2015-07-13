@@ -16,7 +16,7 @@
 						<button class="btn btn-danger ">danger</button>
 						<button class="btn btn-link ">link</button>-->
 				    </div>
-					<script>
+					<script type="text/javascript">
 						$('#config-bosh').on('click', function(){
 				    		window.location.href = "bosh?action=config";
 				  		})

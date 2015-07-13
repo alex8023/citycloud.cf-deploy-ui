@@ -62,7 +62,9 @@ func (this *MicroBoshController) ConfigMicroBOSH(){
 func (this *MicroBoshController) DeployMicroBOSH(){
 	logger.Debug("%s","Deploy MicroBOSH")
 	this.LoadData()
-	this.TplNames = "microbosh/config.tpl"
+	this.Data["HOST"] = this.Ctx.Request.Host
+	this.Data["AppName"] = globaleAppName
+	this.TplNames = "microbosh/deploy.tpl"
 }
 
 //read data from const or database
