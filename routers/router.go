@@ -4,7 +4,6 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	"github.com/citycloud/citycloud.cf-deploy-ui/controllers"
-	"log"
 )
 
 var globaleAppName = beego.AppConfig.String("appname")
@@ -18,7 +17,6 @@ func init() {
 				username := ctx.Input.Session("UserName")
 				loginAction := appName + "/login"
 				if username != defaultUserName && ctx.Request.RequestURI != loginAction {
-					log.Println("logout successful")
 					ctx.Redirect(301, loginAction)
 				}
 

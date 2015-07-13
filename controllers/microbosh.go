@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 type MicroBoshController struct {
@@ -53,11 +54,13 @@ func (this *MicroBoshController) IndexMicroBOSH(){
 }
 
 func (this *MicroBoshController) ConfigMicroBOSH(){
+	logger.Debug("%s","Config MicroBOSH")
 	this.LoadData()
 	this.TplNames = "microbosh/config.tpl"
 }
 
 func (this *MicroBoshController) DeployMicroBOSH(){
+	logger.Debug("%s","Deploy MicroBOSH")
 	this.LoadData()
 	this.TplNames = "microbosh/config.tpl"
 }

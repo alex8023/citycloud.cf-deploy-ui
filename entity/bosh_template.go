@@ -1,12 +1,12 @@
 package entity
 
 import (
-	utils "github.com/citycloud/citycloud.cf-deploy-ui/utils"
+	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 const BOSHTemplateText string = `
 ---
 name: {{.Name}}
-
 
 `
 
@@ -20,5 +20,6 @@ func NewBOSHTemplate(bosh BOSH)(bt BOSHTemplate){
 }
 
 func (bt BOSHTemplate)CreateBOSHYaml(path string) (bool,error) {
+	logger.Debug("Create BOSH deployment file : %s",path)
 	return utils.CreateYmlFile("bosh",BOSHTemplateText,path,bt.bosh)
 }

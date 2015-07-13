@@ -1,7 +1,8 @@
 package entity
 
 import (
-	utils "github.com/citycloud/citycloud.cf-deploy-ui/utils"
+	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 const MicroBOSHTemplateText string = `
@@ -50,6 +51,7 @@ func NewMicroBOSHTemplate(microbosh MicroBOSH)(mt MicroBOSHTemplate){
 }
 
 func (mt MicroBOSHTemplate)CreateMicroBOSHYaml(path string) (bool,error) {
+	logger.Debug("Create CloudFoundry deployment file : %s",path)
 	return utils.CreateYmlFile("microbosh",MicroBOSHTemplateText,path,mt.microbosh)
 }
 
