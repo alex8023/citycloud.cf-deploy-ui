@@ -3,12 +3,12 @@ package utils
 import (
 	"bytes"
 	"fmt"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"os"
 	"os/exec"
 	"strings"
 	"syscall"
 	"time"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 const (
@@ -76,15 +76,15 @@ func (p *execProcess) Start() error {
 	}
 
 	cmdString := strings.Join(p.cmd.Args, " ")
-	
+
 	logger.Debug("Running command: %s", cmdString)
 
-//	p.cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	p.cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	p.cmd.SysProcAttr = &syscall.SysProcAttr{}
 
 	err := p.cmd.Start()
 	if err != nil {
-		return fmt.Errorf("Starting command %s : err: %s", cmdString,err)
+		return fmt.Errorf("Starting command %s : err: %s", cmdString, err)
 	}
 
 	p.pid = p.cmd.Process.Pid

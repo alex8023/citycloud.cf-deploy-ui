@@ -33,7 +33,6 @@ func (this *IndexController) initBOSH() {
 	this.TplNames = "bosh/config.tpl"
 }
 
-
 func (this *IndexController) unRelease() {
 	this.Data["NavBarFocus"] = this.GetString("action")
 	this.TplNames = "undo/undo.tpl"

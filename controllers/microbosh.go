@@ -24,7 +24,7 @@ func (this *MicroBoshController) Get() {
 }
 
 func (this *MicroBoshController) Post() {
-	
+
 	network := entity.NewNetWork(this.GetString("vip"),
 		this.GetString("net_id"))
 	resources := entity.NewResources(this.GetString("persistent_disk"),
@@ -48,19 +48,19 @@ func (this *MicroBoshController) Post() {
 	this.Get()
 }
 
-func (this *MicroBoshController) IndexMicroBOSH(){
+func (this *MicroBoshController) IndexMicroBOSH() {
 	this.LoadData()
 	this.TplNames = "microbosh/index.tpl"
 }
 
-func (this *MicroBoshController) ConfigMicroBOSH(){
-	logger.Debug("%s","Config MicroBOSH")
+func (this *MicroBoshController) ConfigMicroBOSH() {
+	logger.Debug("%s", "Config MicroBOSH")
 	this.LoadData()
 	this.TplNames = "microbosh/config.tpl"
 }
 
-func (this *MicroBoshController) DeployMicroBOSH(){
-	logger.Debug("%s","Deploy MicroBOSH")
+func (this *MicroBoshController) DeployMicroBOSH() {
+	logger.Debug("%s", "Deploy MicroBOSH")
 	this.LoadData()
 	this.Data["HOST"] = this.Ctx.Request.Host
 	this.Data["AppName"] = globaleAppName
@@ -68,16 +68,16 @@ func (this *MicroBoshController) DeployMicroBOSH(){
 }
 
 //read data from const or database
-func (this *MicroBoshController) LoadData(){
+func (this *MicroBoshController) LoadData() {
 	this.Data["MicroBOSH"] = mi
 }
 
 //write data to const or database
-func (this *MicroBoshController) CommitData(microbosh entity.MicroBOSH){
+func (this *MicroBoshController) CommitData(microbosh entity.MicroBOSH) {
 	mi = microbosh
 }
-	
+
 var mi entity.MicroBOSH = entity.NewMicroBOSH("deployment-microbosh",
-	entity.NewNetWork("vip","netid"),
-	entity.NewResources("16384","flavor_100","zone2"),
-	entity.NewCloudProperties("auth_url","username","apikey","tenant","defaultkeyname","privatekey","ebsurl","ebskey","ebssercetkey"))
+	entity.NewNetWork("vip", "netid"),
+	entity.NewResources("16384", "flavor_100", "zone2"),
+	entity.NewCloudProperties("auth_url", "username", "apikey", "tenant", "defaultkeyname", "privatekey", "ebsurl", "ebskey", "ebssercetkey"))
