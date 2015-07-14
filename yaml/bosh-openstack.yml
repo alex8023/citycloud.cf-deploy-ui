@@ -1,0 +1,185 @@
+---
+name: bosh-openstack
+director_uuid: d76ec780-7460-4e03-97bd-12408dd0204e 
+
+release:
+  name: bosh
+  version: 0+dev.22
+
+compilation:
+  workers: 3
+  network: default
+  reuse_compilation_vms: true
+  cloud_properties:
+    instance_type: flavor_91 # CHANGE or flavor_94
+    availability_zone: zone2 # 指定区域zone2
+
+update:
+  canaries: 2
+  canary_watch_time: 3000-120000
+  update_watch_time: 3000-120000
+  max_in_flight: 4
+
+networks:
+  - name: floating
+    type: vip
+    cloud_properties: {}
+  - name: default
+    type: dynamic
+    cloud_properties: {}
+
+resource_pools:
+  - name: common
+    network: default
+    size: 8
+    stemcell:
+      name: bosh-openstack-kvm-ubuntu-lucid-go_agent
+      version: 2719
+    cloud_properties:
+      instance_type: flavor_71 # CHANGE
+      availability_zone: zone2
+
+jobs:
+  - name: nats
+    template: nats
+    instances: 1
+    resource_pool: common
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: redis
+    template: redis
+    instances: 1
+    resource_pool: common
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: postgres
+    template: postgres
+    instances: 1
+    resource_pool: common
+    persistent_disk: 16384
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: powerdns
+    template: powerdns
+    instances: 1
+    resource_pool: common
+    networks:
+      - name: default
+        default: [dns, gateway]
+      - name: floating
+        static_ips:
+          - 192.168.133.102 # CHANGE
+
+  - name: blobstore
+    template: blobstore
+    instances: 1
+    resource_pool: common
+    persistent_disk: 51200
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: director
+    template: director
+    instances: 1
+    resource_pool: common
+    persistent_disk: 16384
+    networks:
+      - name: default
+        default: [dns, gateway]
+      - name: floating
+        static_ips:
+          - 192.168.133.101 # CHANGE
+
+  - name: registry
+    template: registry
+    instances: 1
+    resource_pool: common
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+  - name: health_monitor
+    template: health_monitor
+    instances: 1
+    resource_pool: common
+    networks:
+      - name: default
+        default: [dns, gateway]
+
+properties:
+  nats:
+    address: 0.nats.default.bosh-openstack.microbosh
+    user: nats
+    password: nats
+
+  redis:
+    address: 0.redis.default.bosh-openstack.microbosh
+    password: redis
+
+  postgres: &bosh_db
+    host: 0.postgres.default.bosh-openstack.microbosh
+    user: postgres
+    password: postgres
+    database: bosh
+
+  dns:
+    address: 192.168.133.102  # CHANGE
+    db: *bosh_db
+    recursor: 192.168.133.98 # CHANGE<microbosh_ip_address>
+
+  blobstore:
+    address: 0.blobstore.default.bosh-openstack.microbosh
+    agent:
+      user: agent
+      password: agent
+    director:
+      user: director
+      password: director
+
+  director:
+    name: bosh
+    address: 0.director.default.bosh-openstack.microbosh
+    db: *bosh_db
+
+  registry:
+    address: 0.registry.default.bosh-openstack.microbosh
+    db: *bosh_db
+    http:
+      user: registry
+      password: registry
+
+  hm:
+    http:
+      user: hm
+      password: hm
+    director_account:
+      user: admin
+      password: admin
+    resurrector_enabled: true
+
+  ntp:
+    - 0.asia.pool.ntp.org
+    - 1.asia.pool.ntp.org
+
+  openstack:
+      auth_url: http://192.168.128.2:5000/v2.0
+      username: paas
+      api_key: paas123
+      tenant: Project_paas
+      region: RegionOne  # Optional
+      default_security_groups: ["ssh", "bosh","cf-public","cf-private","default"]
+      default_key_name: test_microbosh
+      private_key: ~/bosh-workspace/key/test_microbosh.private
+      cci_ebs_url: http://192.168.128.5:8080/EBS
+      cci_ebs_accesskey: 7fd292943f3a46c491fbe4152cf3c8f0
+      cci_ebs_secretkey: 8e100b9430ab429397352359b16f01b0
+      cci_connection_options: 
+      cci_ebs_api_key: 
+      cci_ebs_username: 
