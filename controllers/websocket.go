@@ -1,10 +1,13 @@
 package controllers
 
 import (
-	"time"
-	"net/http"
+	"bytes"
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/gorilla/websocket"
+	"net/http"
+	"os/exec"
+	"time"
 )
 
 type WebSocketController struct {
@@ -17,7 +20,7 @@ var upgrader = websocket.Upgrader{
 }
 
 func (this *WebSocketController) Get() {
-	
+
 	ws, err := upgrader.Upgrade(this.Ctx.ResponseWriter, this.Ctx.Request, nil)
 	if _, ok := err.(websocket.HandshakeError); ok {
 		http.Error(this.Ctx.ResponseWriter, "Not a websocket handshake", 400)
@@ -25,9 +28,26 @@ func (this *WebSocketController) Get() {
 	} else if err != nil {
 		return
 	}
+	cmd := exec.Command("ping", "127.0.0.1", "-c 20")
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Start()
+
 	for {
-		time.Sleep(time.Second)
-		go ws.WriteMessage(websocket.TextMessage,[]byte("hello"))
+		//		time.Sleep(5 * time.Second)
+		abc, err := out.ReadBytes('\n')
+		if err == nil {
+			fmt.Print(string(abc)) //读取输出的日志
+
+			ws.WriteMessage(websocket.TextMessage, abc)
+		}
+		if err != nil {
+			fmt.Println(err)
+			break
+		}
 	}
-	
+	cmd.Wait()
+	time.Sleep(time.Second)
+	fmt.Println("end")
+	ws.WriteMessage(websocket.TextMessage, []byte("Close"))
 }
