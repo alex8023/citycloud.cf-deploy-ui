@@ -2,6 +2,7 @@ package utils
 
 import (
 	"io"
+	"os"
 	"time"
 )
 
@@ -17,8 +18,10 @@ type Command struct {
 
 	// Full stdout and stderr will be captured to memory
 	// and returned in the Result unless custom Stdout/Stderr are specified.
-	Stdout io.Writer
-	Stderr io.Writer
+	Stdout       io.Writer
+	Stderr       io.Writer
+	ProcessState *os.ProcessState
+	Process      *os.Process
 }
 
 type Process interface {
@@ -29,6 +32,8 @@ type Process interface {
 	// TerminateNicely can be called multiple times.
 	// It must only be called after Wait().
 	TerminateNicely(killGracePeriod time.Duration) error
+
+	Pid() int
 }
 
 type Result struct {

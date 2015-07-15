@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
@@ -35,7 +36,7 @@ func (this *MicroBoshController) Post() {
 		this.GetString("api_key"),
 		this.GetString("tenant"),
 		this.GetString("default_key_name"),
-		this.GetString("private_key"),
+		"/home/ubuntu/bosh-workspace/key/test_microbosh.private",
 		this.GetString("cci_ebs_url"),
 		this.GetString("cci_ebs_accesskey"),
 		this.GetString("cci_ebs_secretkey"))
@@ -62,6 +63,7 @@ func (this *MicroBoshController) ConfigMicroBOSH() {
 func (this *MicroBoshController) DeployMicroBOSH() {
 	logger.Debug("%s", "Deploy MicroBOSH")
 	this.LoadData()
+	this.Deploy()
 	this.Data["HOST"] = this.Ctx.Request.Host
 	this.Data["AppName"] = globaleAppName
 	this.TplNames = "microbosh/deploy.tpl"
@@ -72,12 +74,24 @@ func (this *MicroBoshController) LoadData() {
 	this.Data["MicroBOSH"] = mi
 }
 
+//deploy
+func (this *MicroBoshController) Deploy() {
+	filePath := "/home/ubuntu/bosh-workspace/deploy/microbosh/micro_bosh.yml"
+	microBOSHTemplate := entity.NewMicroBOSHTemplate(mi)
+	ok, err := microBOSHTemplate.CreateMicroBOSHYaml(filePath)
+	if !ok {
+		this.Data["Message"] = fmt.Sprintf("Error: %s", err)
+	} else {
+		this.Data["Message"] = fmt.Sprintf("Successful make deployment file: %s", filePath)
+	}
+}
+
 //write data to const or database
 func (this *MicroBoshController) CommitData(microbosh entity.MicroBOSH) {
 	mi = microbosh
 }
 
-var mi entity.MicroBOSH = entity.NewMicroBOSH("deployment-microbosh",
-	entity.NewNetWork("vip", "netid"),
-	entity.NewResources("16384", "flavor_100", "zone2"),
-	entity.NewCloudProperties("auth_url", "username", "apikey", "tenant", "defaultkeyname", "privatekey", "ebsurl", "ebskey", "ebssercetkey"))
+var mi entity.MicroBOSH = entity.NewMicroBOSH("microbosh-openstack",
+	entity.NewNetWork("192.168.133.108", "8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1"),
+	entity.NewResources("16384", "flavor_71", "zone2"),
+	entity.NewCloudProperties("http://192.168.128.2:5000/v2.0", "paas", "paas123", "Project_paas", "test_microbosh", "/home/ubuntu/bosh-workspace/key/test_microbosh.private", "http://192.168.128.5:8080/EBS", "7fd292943f3a46c491fbe4152cf3c8f0", "8e100b9430ab429397352359b16f01b0"))

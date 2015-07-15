@@ -1,0 +1,47 @@
+---
+name: microbosh-openstack
+
+logging:
+  level: DEBUG
+
+network:
+  type: manual
+  vip: 192.168.133.98
+  cloud_properties:
+    net_id: 8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1
+
+resources:
+  persistent_disk: 40960
+  cloud_properties:
+    instance_type: flavor_71
+    availability_zone: zone2
+
+cloud:
+  plugin: openstack
+  properties:
+    openstack:
+      auth_url: http://192.168.128.2:5000/v2.0
+      username: paas
+      api_key: paas123
+      tenant: Project_paas
+      region: RegionOne  # Optional
+      default_security_groups: ["ssh", "bosh","cf-public","cf-private","default"]
+      default_key_name: test_microbosh
+      private_key: ~/bosh-workspace/key/test_microbosh.private
+      cci_ebs_url: http://192.168.128.5:8080/EBS
+      cci_ebs_accesskey: 7fd292943f3a46c491fbe4152cf3c8f0
+      cci_ebs_secretkey: 8e100b9430ab429397352359b16f01b0
+      cci_connection_options: 
+      cci_ebs_api_key: 
+      cci_ebs_username: 
+
+apply_spec:
+  properties:
+    director:
+      max_threads: 1
+    hm:
+      resurrector_enabled: true
+    ntp: # This example uses the North American NTP servers. Edit for your region.
+      - 0.asia.pool.ntp.org
+      - 1.asia.pool.ntp.org
+

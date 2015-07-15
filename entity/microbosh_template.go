@@ -1,8 +1,8 @@
 package entity
 
 import (
-	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
+	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 )
 
 const MicroBOSHTemplateText string = `
@@ -21,7 +21,7 @@ resources:
   persistent_disk: {{.PersistentDisk}}
   cloud_properties:
     instance_type: {{.InstanceType}}
-	{{if .AvailabilityZone}}availability_zone: {{.AvailabilityZone}}{{end}}
+    {{if .AvailabilityZone}}availability_zone: {{.AvailabilityZone}}{{end}}
 {{end}}
 {{with .CloudProperties}}
 cloud:
@@ -35,23 +35,35 @@ cloud:
       default_key_name: {{.DefaultKeyName}}
       private_key: {{.PrivateKey}}
       default_security_groups: [bosh]
-	  cci_ebs_url: {{.CciEbsUrl}}
-	  cci_ebs_accesskey: {{.CciEbsAccesskey}}
-	  cci_ebs_secretkey: {{.CciEbsSecretkey}}
+      cci_ebs_url: {{.CciEbsUrl}}
+      cci_ebs_accesskey: {{.CciEbsAccesskey}}
+      cci_ebs_secretkey: {{.CciEbsSecretkey}}
+      cci_connection_options: 
+      cci_ebs_api_key: 
+      cci_ebs_username:
 {{end}}
 
+apply_spec:
+  properties:
+    director:
+      max_threads: 1
+    hm:
+      resurrector_enabled: true
+    ntp: # This example uses the North American NTP servers. Edit for your region.
+      - 0.asia.pool.ntp.org
+      - 1.asia.pool.ntp.org
 `
+
 type MicroBOSHTemplate struct {
 	microbosh MicroBOSH
 }
 
-func NewMicroBOSHTemplate(microbosh MicroBOSH)(mt MicroBOSHTemplate){
+func NewMicroBOSHTemplate(microbosh MicroBOSH) (mt MicroBOSHTemplate) {
 	mt.microbosh = microbosh
 	return
 }
 
-func (mt MicroBOSHTemplate)CreateMicroBOSHYaml(path string) (bool,error) {
-	logger.Debug("Create CloudFoundry deployment file : %s",path)
-	return utils.CreateYmlFile("microbosh",MicroBOSHTemplateText,path,mt.microbosh)
+func (mt MicroBOSHTemplate) CreateMicroBOSHYaml(path string) (bool, error) {
+	logger.Debug("Create MicroBOSH deployment file : %s", path)
+	return utils.CreateYmlFile("microbosh", MicroBOSHTemplateText, path, mt.microbosh)
 }
-
