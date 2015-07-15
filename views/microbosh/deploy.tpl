@@ -11,7 +11,7 @@
 					  	<button class="btn btn-default " id = "deploy-microbosh">Deploy</button>
 				    </div>
 					<div id = "websocketmessage">
-					hello world!
+					<div><b>{{.Message}}</b></div>
 					<div>
 			</div>
 	</div>
@@ -21,12 +21,12 @@
 		var conn;
 	    var log = $("#websocketmessage");
 	    if (window["WebSocket"]) {
-	        conn = new WebSocket("ws://{{.HOST}}{{.AppName}}/websocket?action=mi");
+	        conn = new WebSocket("ws://{{.HOST}}{{.AppName}}/websocket?action=MicroBOSH");
 	        conn.onclose = function(evt) {
 	            $("<div><b>Connection closed.</b></div>").appendTo(log);
 	        }
 	        conn.onmessage = function(evt) {
-	            $("<div/>").text(evt.data).appendTo(log);
+	            $("<div/>").html($("<b/>").text(evt.data)).appendTo(log);
 	        }
 	    } else {
 	        $("<div><b>Your browser does not support WebSockets.</b></div>").appendTo(log);

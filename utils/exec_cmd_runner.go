@@ -107,6 +107,10 @@ func (p *execProcess) Wait() <-chan Result {
 	return p.waitCh
 }
 
+func (p *execProcess) Pid() int {
+	return p.pid
+}
+
 func (p execProcess) wait() Result {
 	// err will be non-nil if command exits with non-0 status
 	err := p.cmd.Wait()
