@@ -16,20 +16,5 @@
 			</div>
 	</div>
 </div>
-<script type="text/javascript">
-	$(function(){
-		var conn;
-	    var log = $("#websocketmessage");
-	    if (window["WebSocket"]) {
-	        conn = new WebSocket("ws://{{.HOST}}{{.AppName}}/websocket?action=MicroBOSH");
-	        conn.onclose = function(evt) {
-	            $("<div><b>Connection closed.</b></div>").appendTo(log);
-	        }
-	        conn.onmessage = function(evt) {
-	            $("<div/>").html($("<b/>").text(evt.data)).appendTo(log);
-	        }
-	    } else {
-	        $("<div><b>Your browser does not support WebSockets.</b></div>").appendTo(log);
-	    }
-	});
-</script>
+<input type="hidden" id = "host" value="{{.HOST}}{{.AppName}}">
+<script src="/static/js/microbosh.js"></script>
