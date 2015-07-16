@@ -29,6 +29,7 @@ func (this *DeployCmdRunner) RunCommand(cmdName, input string, out *bytes.Buffer
 	cmdString := strings.Join(cmd.Args, " ")
 	cmd.Stdout = out
 	cmd.Stderr = out
+	cmd.Dir = "/home/ubuntu/bosh-workspace/deploy/"
 	err := cmd.Start()
 	this.Process = cmd.Process
 	err = cmd.Wait()

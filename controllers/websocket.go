@@ -2,12 +2,10 @@ package controllers
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/gorilla/websocket"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -35,6 +33,7 @@ func (this *WebSocketController) Get() {
 
 	if this.GetString("action") == "MicroBOSH" {
 		this.deployMicroBOSH(ws)
+		this.deployDeployment(ws)
 	}
 	ws.WriteMessage(websocket.TextMessage, []byte("Wait for closed"))
 	ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
@@ -47,46 +46,50 @@ func (this *WebSocketController) deployMicroBOSH(ws *websocket.Conn) {
 
 	ws.WriteMessage(websocket.TextMessage, []byte("============================================"))
 	ws.WriteMessage(websocket.TextMessage, []byte("Set MicroBosh Deployment "))
-	stdout, stderr := this.initMicroBOSH()
-	ws.WriteMessage(websocket.TextMessage, []byte(stdout))
-	ws.WriteMessage(websocket.TextMessage, []byte(stderr))
+
+	filePath := "/home/ubuntu/bosh-workspace/deploy/microbosh/micro_bosh.yml"
+	cmdRunner := utils.NewDeployCmdRunner()
+	var out bytes.Buffer
+
+	go cmdRunner.RunCommand("bosh", "", &out, "micro", "deployment", filePath)
+
+	for {
+		time.Sleep(time.Second)
+	reread:
+		message, err := out.ReadBytes('\n')
+		if err != nil && cmdRunner.Success() {
+			break
+		} else {
+			if err != nil {
+				goto reread
+			}
+			ws.WriteMessage(websocket.TextMessage, message)
+		}
+	}
+
 	ws.WriteMessage(websocket.TextMessage, []byte("Finished Set MicroBosh Deployment "))
 	ws.WriteMessage(websocket.TextMessage, []byte("============================================"))
 }
 
-func (this *WebSocketController) initMicroBOSH() (string, string) {
-	filePath := "/home/ubuntu/bosh-workspace/deploy/microbosh/micro_bosh.yml"
-	cmdRunner := utils.NewExecCmdRunner()
-	stdout, stderr, status, err := cmdRunner.RunCommand("bosh", "micro", "deployment", filePath)
-	if status == -1 {
-		return "bash err !", fmt.Sprintf("ErrorMessage : %s", err)
-	}
-	return stdout, stderr
-}
-
 func (this *WebSocketController) deployDeployment(ws *websocket.Conn) {
-	cmdRunner := utils.NewExecCmdRunner()
 
-	cmd := utils.Command{
-		Name:   "bosh",
-		Args:   []string{"micro", "deployment", "/home/ubuntu/bosh-workspace/stemcells/bosh-stemcell-2719-openstack-kvm-ubuntu-lucid-go_agent.tgz"},
-		Stdin:  strings.NewReader("yes"),
-		Stdout: &out,
-		Stderr: &out,
-	}
-	process, errors := cmdRunner.RunComplexCommandAsync(cmd)
+	var out bytes.Buffer
 
-	go process.Wait()
+	cmdRunner := utils.NewDeployCmdRunner()
 
-	ws.WriteMessage(websocket.TextMessage, []byte("Command is Running: pid"+process.Pid()))
-	var count int = 0
+	stemcell := "/home/ubuntu/bosh-workspace/stemcells/bosh-stemcell-2719-openstack-kvm-ubuntu-lucid-go_agent.tgz"
+	go cmdRunner.RunCommand("bosh", "yes", &out, "micro", "deploy", stemcell)
 	for {
-		time.Sleep(5 * time.Second)
-		result, err := out.ReadBytes('\n')
-		if err != nil {
-			time.Sleep(5 * time.Second)
-			count = count + 1
+		time.Sleep(time.Second)
+	reread:
+		message, err := out.ReadBytes('\n')
+		if err != nil && cmdRunner.Success() {
+			break
+		} else {
+			if err != nil {
+				goto reread
+			}
+			ws.WriteMessage(websocket.TextMessage, message)
 		}
-		ws.WriteMessage(websocket.TextMessage, []byte(result))
 	}
 }
