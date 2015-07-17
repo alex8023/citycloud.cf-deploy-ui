@@ -18,38 +18,38 @@ func (this *BOSHController) Get() {
 		this.ConfigBOSH()
 	} else if action == "deploy" {
 		this.DeployBOSH()
-	}else {
+	} else {
 		this.IndexBOSH()
 	}
 }
 
 func (this *BOSHController) Post() {
-	bosh := entity.NewBOSH(this.GetString("name"))
+	bosh := entity.NewSimpleBOSH(this.GetString("name"))
 	this.CommitData(bosh)
 	this.Get()
 }
 
-func (this *BOSHController) DeployBOSH(){
+func (this *BOSHController) DeployBOSH() {
 	this.LoadData()
 	this.TplNames = "bosh/config.tpl"
 }
 
-func (this *BOSHController) IndexBOSH(){
+func (this *BOSHController) IndexBOSH() {
 	this.LoadData()
 	this.TplNames = "bosh/index.tpl"
 }
 
-func (this *BOSHController) ConfigBOSH(){
+func (this *BOSHController) ConfigBOSH() {
 	this.LoadData()
 	this.TplNames = "bosh/config.tpl"
 }
 
-func (this *BOSHController) LoadData(){
+func (this *BOSHController) LoadData() {
 	this.Data["BOSH"] = bo
 }
 
-func (this *BOSHController) CommitData(bosh entity.BOSH){
+func (this *BOSHController) CommitData(bosh entity.BOSH) {
 	bo = bosh
 }
 
-var bo entity.BOSH = entity.NewBOSH("deployment-bosh")
+var bo entity.BOSH = entity.NewSimpleBOSH("deployment-bosh")

@@ -90,3 +90,21 @@
     </div>
   </div>
 </form>
+
+
+$(function(){
+		var conn;
+	    var log = $("#websocketmessage");
+	    if (window["WebSocket"]) {
+	        conn = new WebSocket("ws://{{.HOST}}{{.AppName}}/microboshwebsocket");
+	        conn.onclose = function(evt) {
+	            $("<div><b>Connection closed.</b></div>").appendTo(log);
+	        }
+	        conn.onmessage = function(evt) {
+	            $("<div/>").html($("<b/>").text(evt.data)).appendTo(log);
+	        }
+			conn.send("hello world")
+	    } else {
+	        $("<div><b>Your browser does not support WebSockets.</b></div>").appendTo(log);
+	    }
+	});
