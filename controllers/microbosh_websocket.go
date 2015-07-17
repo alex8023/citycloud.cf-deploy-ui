@@ -31,73 +31,78 @@ func (this *MicroBOSHWebSocketController) Get() {
 	} else if err != nil {
 		return
 	}
-	fmt.Println("no err")
-	fmt.Println("he")
+	fmt.Println("begin accept message")
 	for {
+
 		mesgType, message, _ := ws.ReadMessage()
 		if message != nil && mesgType == websocket.TextMessage {
 			fmt.Println(string(message))
-			fmt.Println("come here")
+			if string(message) == "ping" {
+				ws.WriteMessage(websocket.PingMessage, []byte("ping"))
+				ws.WriteMessage(websocket.PongMessage, []byte("pong"))
+			}
 		}
 	}
-	fmt.Println("has go")
-	if this.GetString("action") == "MicroBOSH" {
+
+	var action = "HELLOWOL"
+	if action == "MicroBOSH" {
 		var success bool = false
 		success = this.setMicroBOSHDeployment(ws)
 		if !success {
 			writeStringMessage(ws, "设置deployment出现了错误，需要检查MicroBOSH Deployment的配置")
-			ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
-			return
 		}
+		if success {
+			success = this.deployMicroBOSH(ws)
+			if !success {
+				writeStringMessage(ws, "部署 MicroBOSH 实例出现了错误！需要检查MicroBOSH Deployment的配置")
+			}
+		}
+
+		if success {
+			success = this.targetMicroBOSH(ws)
+			if !success {
+				writeStringMessage(ws, "设置bosh target失败！")
+			}
+
+		}
+
+		if success {
+			success = this.loginMicroBOSH(ws)
+			if !success {
+				writeStringMessage(ws, "登录失败！")
+			}
+		}
+	}
+	if action == "SetDeployment" {
+		var success bool = false
+		success = this.setMicroBOSHDeployment(ws)
+		if !success {
+			writeStringMessage(ws, "设置deployment出现了错误，需要检查MicroBOSH Deployment的配置")
+		}
+	}
+
+	if action == "Deploy" {
+		var success bool = false
 		success = this.deployMicroBOSH(ws)
 		if !success {
 			writeStringMessage(ws, "部署 MicroBOSH 实例出现了错误！需要检查MicroBOSH Deployment的配置")
 			ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
 			return
 		}
-		success = this.targetMicroBOSH(ws)
-		if !success {
-			writeStringMessage(ws, "设置bosh target失败！")
-			ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
-			return
-		}
-		success = this.loginMicroBOSH(ws)
-		if !success {
-			writeStringMessage(ws, "登录失败！")
-			ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
-			return
-		}
-		ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
-		return
+	}
 
-	}
-	if this.GetString("action") == "SetDeployment" {
-		var success bool = false
-		success = this.setMicroBOSHDeployment(ws)
-		if !success {
-			writeStringMessage(ws, "设置deployment出现了错误，需要检查MicroBOSH Deployment的配置")
-			ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
-			return
-		}
-		ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
-		return
-	}
-	if this.GetString("action") == "Login" {
+	if action == "Login" {
 		var success bool = false
 		success = this.targetMicroBOSH(ws)
 		if !success {
 			writeStringMessage(ws, "设置bosh target失败！")
-			ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
-			return
 		}
-		success = this.loginMicroBOSH(ws)
-		if !success {
-			writeStringMessage(ws, "登录失败！")
-			ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
-			return
+		if success {
+			success = this.loginMicroBOSH(ws)
+			if !success {
+				writeStringMessage(ws, "登录失败！")
+			}
 		}
-		ws.WriteMessage(websocket.CloseMessage, []byte("Closed"))
-		return
 	}
 
 }

@@ -30,7 +30,7 @@ $(document).ready(function(){
 		if (!conn){
 			console.log("conn has close")
 		}else{
-			conn.send("heloo")
+			conn.send("ping")
 		}
 		console.log("send message");
 	})
