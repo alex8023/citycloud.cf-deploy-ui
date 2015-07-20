@@ -23,4 +23,4 @@
 	</div>
 </div>
 <input type="hidden" id = "host" value="{{.HOST}}{{.AppName}}">
-<script src="/static/js/microbosh.js"></script>
+<script src="/static/js/cloudfoundry.js"></script>

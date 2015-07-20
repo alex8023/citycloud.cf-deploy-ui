@@ -19,8 +19,8 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-var IsRunComleted bool = true
-
+// becareful
+//此处未判断任务是否完成，需前端判断控制任务流程
 func (this *MicroBOSHWebSocketController) Get() {
 
 	ws, err := upgrader.Upgrade(this.Ctx.ResponseWriter, this.Ctx.Request, nil)
@@ -30,24 +30,11 @@ func (this *MicroBOSHWebSocketController) Get() {
 	} else if err != nil {
 		return
 	}
-	fmt.Println("begin accept message")
+
 	for {
 		mesgType, message, _ := ws.ReadMessage()
 		if message != nil && mesgType == websocket.TextMessage {
-			IsRunComleted = false
-			//			go func() {
-			//				for {
-			//					if !IsRunComleted {
-			//						dropMesType, dropMes, _ := ws.ReadMessage()
-			//						if dropMes != nil && dropMesType == websocket.TextMessage {
-			//							writeStringMessage(ws, "Job is still Running")
-			//						}
-			//					} else {
-			//						break
-			//					}
-			//				}
-			//				fmt.Println("herer")
-			//			}()
+
 			var action = string(message)
 			switch {
 			case action == "AllStep":
@@ -103,7 +90,8 @@ func (this *MicroBOSHWebSocketController) Get() {
 				writeStringMessage(ws, fmt.Sprintf("未知的执行命令！%s", action))
 			}
 		}
-		IsRunComleted = true
+		//write a message to tell me running over
+		writeStringMessage(ws, "da39a3ee5e6b4b0d3255bfef95601890afd80709")
 	}
 }
 
