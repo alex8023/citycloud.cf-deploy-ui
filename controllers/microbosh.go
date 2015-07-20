@@ -76,13 +76,12 @@ func (this *MicroBoshController) LoadData() {
 
 //deploy
 func (this *MicroBoshController) Deploy() {
-	filePath := "/home/ubuntu/bosh-workspace/deploy/microbosh/micro_bosh.yml"
 	microBOSHTemplate := entity.NewMicroBOSHTemplate(mi)
-	ok, err := microBOSHTemplate.CreateMicroBOSHYaml(filePath)
+	ok, err := microBOSHTemplate.CreateMicroBOSHYaml(microPath)
 	if !ok {
 		this.Data["Message"] = fmt.Sprintf("Error: %s", err)
 	} else {
-		this.Data["Message"] = fmt.Sprintf("Successful make deployment file: %s", filePath)
+		this.Data["Message"] = fmt.Sprintf("Successful make deployment file: %s", microPath)
 	}
 }
 

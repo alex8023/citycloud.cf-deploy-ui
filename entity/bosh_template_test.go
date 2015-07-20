@@ -4,12 +4,12 @@ import (
 	"testing"
 )
 
-func TestBOSHTemplate(t *testing.T){
-	var test = NewBOSH("deployment-bosh")
+func TestBOSHTemplate(t *testing.T) {
+	var test = NewSimpleBOSH("deployment-bosh")
 	var bt = NewBOSHTemplate(test)
-	_,err := bt.CreateBOSHYaml("/home/ubuntu/bosh.yml")
-	
-	if err != nil{
+	_, err := bt.CreateBOSHYaml("/home/ubuntu/temp/bosh.yml")
+
+	if err != nil {
 		t.Error(err)
 	}
 }

@@ -19,8 +19,8 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-var IsRunComleted bool = true
-
+// becareful
+//此处未判断任务是否完成，需前端判断控制任务流程
 func (this *MicroBOSHWebSocketController) Get() {
 
 	ws, err := upgrader.Upgrade(this.Ctx.ResponseWriter, this.Ctx.Request, nil)
@@ -30,24 +30,11 @@ func (this *MicroBOSHWebSocketController) Get() {
 	} else if err != nil {
 		return
 	}
-	fmt.Println("begin accept message")
+
 	for {
 		mesgType, message, _ := ws.ReadMessage()
 		if message != nil && mesgType == websocket.TextMessage {
-			IsRunComleted = false
-			//			go func() {
-			//				for {
-			//					if !IsRunComleted {
-			//						dropMesType, dropMes, _ := ws.ReadMessage()
-			//						if dropMes != nil && dropMesType == websocket.TextMessage {
-			//							writeStringMessage(ws, "Job is still Running")
-			//						}
-			//					} else {
-			//						break
-			//					}
-			//				}
-			//				fmt.Println("herer")
-			//			}()
+
 			var action = string(message)
 			switch {
 			case action == "AllStep":
@@ -103,7 +90,8 @@ func (this *MicroBOSHWebSocketController) Get() {
 				writeStringMessage(ws, fmt.Sprintf("未知的执行命令！%s", action))
 			}
 		}
-		IsRunComleted = true
+		//write a message to tell me running over
+		writeStringMessage(ws, "da39a3ee5e6b4b0d3255bfef95601890afd80709")
 	}
 }
 
@@ -113,9 +101,7 @@ func (this *MicroBOSHWebSocketController) setMicroBOSHDeployment(ws *websocket.C
 	writeStringMessage(ws, "Set MicroBosh Deployment")
 
 	var out bytes.Buffer
-	deployment := "microbosh/micro_bosh.yml"
-	dir := "/home/ubuntu/bosh-workspace/deploy"
-	cmdCommand := utils.Command{Name: "bosh", Args: []string{"micro", "deployment", deployment}, Dir: dir, Stdin: ""}
+	cmdCommand := utils.Command{Name: "bosh", Args: []string{"micro", "deployment", microManiest}, Dir: workDir, Stdin: ""}
 
 	cmdRunner := utils.NewDeployCmdRunner()
 	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
@@ -132,9 +118,7 @@ func (this *MicroBOSHWebSocketController) deployMicroBOSH(ws *websocket.Conn) bo
 	writeStringMessage(ws, "============================================")
 	writeStringMessage(ws, "Deploying MicroBosh instances")
 	var out bytes.Buffer
-	dir := "/home/ubuntu/bosh-workspace/deploy"
-	stemcells := "/home/ubuntu/bosh-workspace/stemcells/bosh-stemcell-2719-openstack-kvm-ubuntu-lucid-go_agent.tgz"
-	cmdCommand := utils.Command{Name: "bosh", Args: []string{"micro", "deploy", stemcells}, Dir: dir, Stdin: "yes"}
+	cmdCommand := utils.Command{Name: "bosh", Args: []string{"micro", "deploy", stemcells}, Dir: workDir, Stdin: "yes"}
 	cmdRunner := utils.NewDeployCmdRunner()
 	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
@@ -149,11 +133,10 @@ func (this *MicroBOSHWebSocketController) targetMicroBOSH(ws *websocket.Conn) bo
 	writeStringMessage(ws, "============================================")
 	writeStringMessage(ws, "Target to MicroBosh instances")
 	var out bytes.Buffer
-	dir := "/home/ubuntu/bosh-workspace/deploy"
 	var ip string = "192.168.133.108"
 	target := fmt.Sprintf("https://%s:25555", ip)
 
-	loginCommand := utils.Command{Name: "bosh", Args: []string{"target", target}, Dir: dir, Stdin: "admin\nadmin\n"}
+	loginCommand := utils.Command{Name: "bosh", Args: []string{"target", target}, Dir: workDir, Stdin: "admin\nadmin\n"}
 
 	cmdRunner := utils.NewDeployCmdRunner()
 
@@ -171,9 +154,8 @@ func (this *MicroBOSHWebSocketController) loginMicroBOSH(ws *websocket.Conn) boo
 	writeStringMessage(ws, "============================================")
 	writeStringMessage(ws, "Login MicroBosh instances")
 	var out bytes.Buffer
-	dir := "/home/ubuntu/bosh-workspace/deploy"
 
-	loginCommand := utils.Command{Name: "bosh", Args: []string{"login"}, Dir: dir, Stdin: "admin\nadmin\n"}
+	loginCommand := utils.Command{Name: "bosh", Args: []string{"login"}, Dir: workDir, Stdin: "admin\nadmin\n"}
 
 	cmdRunner := utils.NewDeployCmdRunner()
 
