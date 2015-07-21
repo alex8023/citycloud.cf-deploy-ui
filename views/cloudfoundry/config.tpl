@@ -13,13 +13,38 @@
 				    </div>
 			  	</div>
 				{{with .CloudFoundry}}
+				{{with .CloudFoundryProperties}}
 			  	<div class="form-group">
 			    	<label for="name" class="col-sm-2 control-label">Deployment Name</label>
 				    <div class="col-sm-10">
 				      <input type="text" class="form-control" id="name" placeholder="Deployment Name" name="name" value = "{{.Name}}">
 				    </div>
 			  	</div>
-	
+			  	<div class="form-group">
+			    	<label for="uuid" class="col-sm-2 control-label">Director UUID</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="uuid" placeholder="Director UUID" name="uuid" value = "{{.Uuid}}">
+				    </div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="floatingIp" class="col-sm-2 control-label">FloatingIp</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="floatingIp" placeholder="FloatingIp" name="floatingIp" value = "{{.FloatingIp}}">
+				    </div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="systemDomain" class="col-sm-2 control-label">SystemDomain</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="systemDomain" placeholder="SystemDomain" name="systemDomain" value = "{{.SystemDomain}}">
+				    </div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label for="systemDomainOrg" class="col-sm-2 control-label">SystemOrg</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="systemDomainOrg" placeholder="SystemOrg" name="systemDomainOrg" value = "{{.SystemDomainOrg}}">
+				    </div>
+			  	</div>
+				{{end}}
 				{{end}}
 			</form>
   		</div>

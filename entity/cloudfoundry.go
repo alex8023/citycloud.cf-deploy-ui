@@ -1,15 +1,20 @@
 package entity
 
 type CloudFoundry struct {
+	CloudFoundryProperties CloudFoundryProperties
+	Compilation            Compilation
+	NetWorks               map[string]NetWorks
+	ResourcesPools         map[string]ResourcesPools
+	Properties             Properties
+}
+
+// CloudFoundry 基本属性配置
+type CloudFoundryProperties struct {
 	Name            string
 	Uuid            string
 	FloatingIp      string
 	SystemDomain    string
 	SystemDomainOrg string
-	Compilation     Compilation
-	NetWorks        NetWorks
-	ResourcesPool   ResourcesPool
-	Properties      Properties
 }
 
 // 编译机器配置
@@ -21,17 +26,25 @@ type Compilation struct {
 }
 
 //网络配置
+//BOSHDns Readonly
+//此对象仅配置一个网络，IaaS2.0使用默认网络和floating网络，IaaS3.0使用多个网络
+//在CloudFoundry中使用map组装网络资源
+//默认情况下，允许定义一个私有网络和一个共有网络，IaaS2.0使用的共有网络为floating网络
 type NetWorks struct {
 	Name       string
 	NetType    string
 	NetId      string
 	Cidr       string
 	Dns        string
+	PowerDns   string
 	ReservedIp string
 	StaticIp   string
 }
 
-type ResourcesPool struct {
+//资源池配置
+//此对象仅配置一个资源池对象
+//在CloudFoundry中使用map组装资源池
+type ResourcesPools struct {
 	Name             string
 	InstanceType     string
 	AvailabilityZone string
@@ -39,30 +52,46 @@ type ResourcesPool struct {
 	DefaultNetWork   string
 }
 
+type CloudFoundryJobs struct {
+	Name          string
+	ResourcesPool string
+	Instances     int
+}
+
+//Job属性配置
 type Properties struct {
 }
 
-func NewCloudFoundry(name string,
-	uuid string,
-	floatingIp string,
-	systemDomain string,
-	systemDomainOrg string,
+func NewCloudFoundry(
+	cloudFoundryProperties CloudFoundryProperties,
 	compilation Compilation,
-	netWorks NetWorks,
-	resourcesPool ResourcesPool,
+	netWorks map[string]NetWorks,
+	resourcesPools map[string]ResourcesPools,
 	properties Properties) (cloudfoundry CloudFoundry) {
-	cloudfoundry.Name = name
-	cloudfoundry.FloatingIp = floatingIp
-	cloudfoundry.SystemDomain = systemDomain
-	cloudfoundry.SystemDomainOrg = systemDomainOrg
+	cloudfoundry.CloudFoundryProperties = cloudFoundryProperties
 	cloudfoundry.Compilation = compilation
 	cloudfoundry.NetWorks = netWorks
-	cloudfoundry.ResourcesPool = resourcesPool
+	cloudfoundry.ResourcesPools = resourcesPools
 	cloudfoundry.Properties = properties
 	return
 }
 
-func NewCompilation(instanceType,
+func NewCloudFoundryProperties(
+	name string,
+	uuid string,
+	floatingIp string,
+	systemDomain string,
+	systemDomainOrg string) (cloudFoundryProperties CloudFoundryProperties) {
+	cloudFoundryProperties.Name = name
+	cloudFoundryProperties.Uuid = uuid
+	cloudFoundryProperties.FloatingIp = floatingIp
+	cloudFoundryProperties.SystemDomain = systemDomain
+	cloudFoundryProperties.SystemDomainOrg = systemDomainOrg
+	return
+}
+
+func NewCompilation(
+	instanceType,
 	availabilityZone string,
 	workers int,
 	defaultNetWork string) (compilation Compilation) {
@@ -73,11 +102,13 @@ func NewCompilation(instanceType,
 	return
 }
 
-func NewNetWorks(name,
+func NewNetWorks(
+	name,
 	netType,
 	netId,
 	cidr,
 	dns,
+	powerDns,
 	reservedIp,
 	staticIp string) (netWorks NetWorks) {
 	netWorks.Name = name
@@ -85,25 +116,34 @@ func NewNetWorks(name,
 	netWorks.NetId = netId
 	netWorks.Cidr = cidr
 	netWorks.Dns = dns
+	netWorks.PowerDns = powerDns
 	netWorks.ReservedIp = reservedIp
 	netWorks.StaticIp = staticIp
 	return
 }
 
-func NewResourcesPool(name,
+func NewResourcesPools(
+	name,
 	instanceType,
 	availabilityZone,
 	defaultNetWork string,
-	size int) (resourcesPool ResourcesPool) {
-	resourcesPool.Name = name
-	resourcesPool.InstanceType = instanceType
-	resourcesPool.AvailabilityZone = availabilityZone
-	resourcesPool.DefaultNetWork = defaultNetWork
-	resourcesPool.Size = size
+	size int) (resourcesPools ResourcesPools) {
+	resourcesPools.Name = name
+	resourcesPools.InstanceType = instanceType
+	resourcesPools.AvailabilityZone = availabilityZone
+	resourcesPools.DefaultNetWork = defaultNetWork
+	resourcesPools.Size = size
 	return
 }
 
-func NewSimpleCloudFoundry(name string) (cloudfoundry CloudFoundry) {
-	cloudfoundry.Name = name
+func NewFloatingNetWork(floatingIp string) (netWorks NetWorks) {
+	netWorks.StaticIp = floatingIp
+	netWorks.Name = "floating"
+	netWorks.NetType = "vip"
+	return
+}
+
+func NewSimpleCloudFoundryProperties(name string) (cloudFoundryProperties CloudFoundryProperties) {
+	cloudFoundryProperties.Name = name
 	return
 }
