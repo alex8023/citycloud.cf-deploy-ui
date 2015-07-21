@@ -27,15 +27,13 @@ func (cft CloudFoundryTemplate) CreateCloudFoundryV3Yaml(path string) (bool, err
 const (
 	CloudFoundryTemplateTextV2 string = `
 ---
-name: {{.Name}}
-
-name: cf-release
-director_uuid: e5a664bd-2447-4bfc-badc-901d7bc89600
+name: {{with .CloudFoundryProperties}}{{.Name}}{{end}}
+director_uuid: {{with .CloudFoundryProperties}}{{.Uuid}}{{end}}
 releases:
 - name: cf2
   version: 170
 meta:
-  environment: cf-release
+  environment: {{with .CloudFoundryProperties}}{{.Name}}{{end}}
   stemcell:
     name: bosh-openstack-kvm-ubuntu-lucid-go_agent
     version: 2719
@@ -53,15 +51,15 @@ meta:
     cci_connection_options: 
     cci_ebs_api_key: 
     cci_ebs_username:
-
+{{with .Compilation}}
 compilation:
   cloud_properties:
-    availability_zone: agOne
-    instance_type: flavor_531
-  network: cf1
+    {{if .AvailabilityZone}}availability_zone: {{.AvailabilityZone}}{{end}}
+    instance_type: {{.InstanceType}}
+  network: {{.DefaultNetWork}}
   reuse_compilation_vms: true
-  workers: 4
-
+  workers: {{.Workers}}
+{{end}}
 update:
   canaries: 1
   canary_watch_time: 30000 - 90000
@@ -69,20 +67,27 @@ update:
   max_in_flight: 4
   max_errors: 4
 
+{{ $floating :="floating"}}
 networks:
-- name: floating
-  type: vip
+{{with .NetWorks}}
+{{range .NetWorks}}
+{{ eq .Name $floating}}
+- name: {{.Name}}
+  type: {{.NetType}}
   cloud_properties: {}
-- name: cf1
+{{else}}
+- name: {{.Name}}
   subnets:
   - cloud_properties: 
-      net_id: b33ba63f-ba6f-441f-a854-118a516870c2
-    range: 10.212.15.0/24
-    dns: [10.212.9.4,10.212.9.5]
+      net_id: {{.NetId}}
+    range: {{.Cidr}}
+    dns: [{{.PowerDns}},{{.Dns}}]
     reserved:
-    - 10.212.15.254 - 10.212.15.254
+    - {{.ReservedIp}}
     static:
-    - 10.212.15.3 - 10.212.15.203
+    - {{.StaticIp}}
+{{end}}
+{{end}}
 
 resource_pools:
 - cloud_properties:
@@ -147,7 +152,7 @@ jobs:
     - 10.212.15.4
   - name: floating
     static_ips:
-    - 10.212.17.9
+    - {{with .CloudFoundryProperties}}{{.FloatingIp}}{{end}}
   properties:
     ha_proxy:
       ssl_pem: ! '-----BEGIN CERTIFICATE-----
@@ -390,12 +395,12 @@ jobs:
   persistent_disk: 102400
 
 properties:
-  system_domain: dha.ac.cn
-  system_domain_organization: dha
-  support_address: http://support.dha.ac.cn
-  domain: dha.ac.cn
+  system_domain: {{with .CloudFoundryProperties}}{{.SystemDomain}}{{end}}
+  system_domain_organization: {{with .CloudFoundryProperties}}{{.SystemDomainOrg}}{{end}}
+  support_address: http://support.{{with .CloudFoundryProperties}}{{.SystemDomain}}{{end}}
+  domain: {{with .CloudFoundryProperties}}{{.SystemDomain}}{{end}}
   app_domains:
-  - dha.ac.cn
+  - {{with .CloudFoundryProperties}}{{.SystemDomain}}{{end}}
   description: CCI PaaS v2 sponsored by Pivotal
   syslog_aggregator:
     address: 10.212.15.19

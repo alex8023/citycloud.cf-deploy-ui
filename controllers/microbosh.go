@@ -66,6 +66,7 @@ func (this *MicroBoshController) DeployMicroBOSH() {
 	this.Deploy()
 	this.Data["HOST"] = this.Ctx.Request.Host
 	this.Data["AppName"] = globaleAppName
+	this.Data["WebSocket"] = microWebsocket
 	this.TplNames = "microbosh/deploy.tpl"
 }
 

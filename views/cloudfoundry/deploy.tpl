@@ -22,5 +22,5 @@
 			</div>
 	</div>
 </div>
-<input type="hidden" id = "host" value="{{.HOST}}{{.AppName}}">
+<input type="hidden" id = "host" value="{{.HOST}}{{.AppName}}{{.WebSocket}}">
 <script src="/static/js/cloudfoundry.js"></script>

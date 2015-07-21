@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var conn;
 	var host = $("#host").val();
-	var url = "ws://" + host + "/microboshwebsocket";
+	var url = "ws://" + host;
 	var cango = "yes";
 	var log = $("#websocketmessage");
     if (window["WebSocket"]) {
