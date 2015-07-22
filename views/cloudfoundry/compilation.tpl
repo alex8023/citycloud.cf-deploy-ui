@@ -46,6 +46,7 @@
 			  	</div>
 				{{end}}
 				{{end}}
+				<input type = "hidden" name="model" value = "{{.Model}}">
 			</form>
   		</div>
 	</div>
