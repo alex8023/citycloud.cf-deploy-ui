@@ -16,67 +16,67 @@
 			  	<div class="form-group">
 			    	<label for="name" class="col-sm-2 control-label">Deployment Name</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="name" placeholder="Deployment Name" name="name" value = "{{.Name}}">
+				      <input type="text" class="form-control" id="name" placeholder="Deployment Name" name="name" value = "{{.Name}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="vip" class="col-sm-2 control-label">Vip</label>
 				    <div class="col-sm-10">
-				      	<input type="text" class="form-control" id="vip" placeholder="Vip" name="vip" value = "{{with .Network}}{{.Vip}}{{end}}">
+				      	<input type="text" class="form-control" id="vip" placeholder="Vip" name="vip" value = "{{with .Network}}{{.Vip}}{{end}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="net_id" class="col-sm-2 control-label">NetId</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="net_id" placeholder="NetId" name="net_id" value = "{{with .Network}}{{.NetId}}{{end}}">
+			      		<input type="text" class="form-control" id="net_id" placeholder="NetId" name="net_id" value = "{{with .Network}}{{.NetId}}{{end}}" required>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="persistent_disk" class="col-sm-2 control-label">PersistentDiskSize</label>
 				    <div class="col-sm-10">
-				      	<input type="text" class="form-control" id="persistent_disk" placeholder="16384" name="persistent_disk" value = "{{with .Resources}}{{.PersistentDisk}}">
+				      	<input type="text" class="form-control" id="persistent_disk" placeholder="16384" name="persistent_disk" value = "{{with .Resources}}{{.PersistentDisk}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="instance_type" class="col-sm-2 control-label">InstanceFlavor</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="instance_type" placeholder="InstanceFlavor" name="instance_type" value = "{{.InstanceType}}">
+			      		<input type="text" class="form-control" id="instance_type" placeholder="InstanceFlavor" name="instance_type" value = "{{.InstanceType}}" required>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="availability_zone" class="col-sm-2 control-label">AvailabilityZone</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="availability_zone" placeholder="AvailabilityZone" name="availability_zone" value = "{{.AvailabilityZone}}{{end}}">
+			      		<input type="text" class="form-control" id="availability_zone" placeholder="AvailabilityZone" name="availability_zone" value = "{{.AvailabilityZone}}{{end}}" required>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="auth_url" class="col-sm-2 control-label">AuthUrl</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="auth_url" placeholder="AuthUrl" name="auth_url" value = "{{with .CloudProperties}}{{.AuthUrl}}">
+			      		<input type="text" class="form-control" id="auth_url" placeholder="AuthUrl" name="auth_url" value = "{{with .CloudProperties}}{{.AuthUrl}}" required>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="username" class="col-sm-2 control-label">UserName</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="username" placeholder=" UserName" name="username" value = "{{.UserName}}">
+			      		<input type="text" class="form-control" id="username" placeholder=" UserName" name="username" value = "{{.UserName}}" required>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="api_key" class="col-sm-2 control-label">ApiKey</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="api_key" placeholder="ApiKey" name="api_key" value = "{{.ApiKey}}">
+			      		<input type="text" class="form-control" id="api_key" placeholder="ApiKey" name="api_key" value = "{{.ApiKey}}" required>
 			    	</div>
 			  	</div>
 				<div class="form-group">
 				    <label for="tenant" class="col-sm-2 control-label">Tenant</label>
 				    <div class="col-sm-10">
-				      	<input type="text" class="form-control" id="tenant" placeholder="Tenant" name="tenant" value = "{{.Tenant}}">
+				      	<input type="text" class="form-control" id="tenant" placeholder="Tenant" name="tenant" value = "{{.Tenant}}" required>
 				    </div>
 				</div>
 			  	<div class="form-group">
 			    	<label for="default_key_name" class="col-sm-2 control-label">SecretKey</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="default_key_name" placeholder="SecretKey" name="default_key_name" value = "{{.DefaultKeyName}}">
+			      		<input type="text" class="form-control" id="default_key_name" placeholder="SecretKey" name="default_key_name" value = "{{.DefaultKeyName}}" required>
 			    	</div>
 			  	</div>
 				<div class="form-group">
@@ -90,19 +90,19 @@
 			  	<div class="form-group">
 			    	<label for="cci_ebs_url" class="col-sm-2 control-label">NBSAuthUrl</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="cci_ebs_url" placeholder="NBSAuthUrl" name="cci_ebs_url" value = "{{.CciEbsUrl}}">
+			      		<input type="text" class="form-control" id="cci_ebs_url" placeholder="NBSAuthUrl" name="cci_ebs_url" value = "{{.CciEbsUrl}}" required>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="cci_ebs_accesskey" class="col-sm-2 control-label">NBSAccesskey</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="cci_ebs_accesskey" placeholder="NBSAccesskey" name="cci_ebs_accesskey" value = "{{.CciEbsAccesskey}}">
+			      		<input type="text" class="form-control" id="cci_ebs_accesskey" placeholder="NBSAccesskey" name="cci_ebs_accesskey" value = "{{.CciEbsAccesskey}}" required>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label for="cci_ebs_secretkey" class="col-sm-2 control-label">NBSSecretkey</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="cci_ebs_secretkey" placeholder="NBSSecretkey" name="cci_ebs_secretkey" value = "{{.CciEbsSecretkey}}{{end}}">
+			      		<input type="text" class="form-control" id="cci_ebs_secretkey" placeholder="NBSSecretkey" name="cci_ebs_secretkey" value = "{{.CciEbsSecretkey}}{{end}}" required>
 			    	</div>
 			  	</div>
 				{{end}}
