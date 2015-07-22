@@ -26,53 +26,52 @@ func (this *CloudFoundryController) Get() {
 
 func (this *CloudFoundryController) Post() {
 	model := this.GetString("model")
-	if model == "CloudFoundryProperties"{
+	if model == "CloudFoundryProperties" {
 		cloudFoundryProperties = entity.NewCloudFoundryProperties(
-		this.GetString("name"),
-	this.GetString("uuid"), 
-	this.GetString("floatingIp"),
-	this.GetString("systemDomain"),
-	this.GetString("systemDomainOrg"))
+			this.GetString("name"),
+			this.GetString("uuid"),
+			this.GetString("floatingIp"),
+			this.GetString("systemDomain"),
+			this.GetString("systemDomainOrg"))
 		cf.CloudFoundryProperties = cloudFoundryProperties
-		
-	}else if model == "NetWorks"{
-	 networks = entity.NewNetWorks(this.GetString("name"),
-		this.GetString("netType"),
-		this.GetString("netId"),
-		this.GetString("cidr"),
-		this.GetString("dns"),
-		this.GetString("powerDns"),
-		this.GetString("reservedIp"),
-		this.GetString("staticIp"))
-	netWorksMap["private"] = network
-	netWorksMap["floating"] = entity.NewFloatingNetWork(cloudFoundryProperties.FloatingIp)
-	
-		cf.NetWokrs = netWorksMap
-	}else if model == "Compilation"{
+
+	} else if model == "NetWorks" {
+		networks = entity.NewNetWorks(this.GetString("name"),
+			this.GetString("netType"),
+			this.GetString("netId"),
+			this.GetString("cidr"),
+			this.GetString("dns"),
+			this.GetString("powerDns"),
+			this.GetString("reservedIp"),
+			this.GetString("staticIp"))
+		netWorksMap["private"] = networks
+		netWorksMap["floating"] = entity.NewFloatingNetWork(cloudFoundryProperties.FloatingIp)
+
+		cf.NetWorks = netWorksMap
+	} else if model == "Compilation" {
+		workers, _ := this.GetInt("workers", 6)
 		compilation = entity.NewCompilation(this.GetString("instanceType"),
-		 this.GetString("availabilityZone"),
-		this.GetInt("workers"),
-		this.GetString("defaultNetWork"))
+			this.GetString("availabilityZone"),
+			workers,
+			this.GetString("defaultNetWork"))
 		cf.Compilation = compilation
-	}else if model == "ResourcesPool"{
-		
+	} else if model == "ResourcesPool" {
+		size, _ := this.GetInt("size", 1)
 		resourcesPool = entity.NewResourcesPools(
-	this.GetString("name"),
-	this.GetString("instanceType"),
-	this.GetString("availabilityZone"),
-	this.GetString("defaultNetWork"),
-	this.GetInt("size"))
-	//重建一个map
-	resourcesPoolsMap = make(map[string]entity.ResourcesPools)
-		resourcesPoolsMap[resourcesPool.name] = resourcesPool
-	}else if model == "Jobs"{
-		
+			this.GetString("name"),
+			this.GetString("instanceType"),
+			this.GetString("availabilityZone"),
+			this.GetString("defaultNetWork"),
+			size)
+		//重建一个map
+		resourcesPoolsMap = make(map[string]entity.ResourcesPools)
+		resourcesPoolsMap[resourcesPool.Name] = resourcesPool
+	} else if model == "Jobs" {
+
 	}
-	
-	
-	
-//	cloudfoundry := entity.CloudFoundry{}
-//	this.CommitData(cloudfoundry)
+
+	//	cloudfoundry := entity.CloudFoundry{}
+	//	this.CommitData(cloudfoundry)
 	this.Get()
 }
 
@@ -94,25 +93,25 @@ func (this *CloudFoundryController) IndexCloudFoundry() {
 func (this *CloudFoundryController) ConfigCloudFoundry() {
 	logger.Debug("%s", "Config CloudFoundry")
 	this.LoadData()
-	
-	model := this.getString("model")
+
+	model := this.GetString("model")
 	if model == "" {
-			model = "CloudFoundryProperties"
+		model = "CloudFoundryProperties"
 	}
 	this.Data["Model"] = model
-		
-	if model == "CloudFoundryProperties"{
+
+	if model == "CloudFoundryProperties" {
 		this.TplNames = "cloudfoundry/properties.tpl"
-	}else if model == "NetWorks"{
+	} else if model == "NetWorks" {
 		this.TplNames = "cloudfoundry/networks.tpl"
-	}else if model == "Compilation"{
+	} else if model == "Compilation" {
 		this.TplNames = "cloudfoundry/compilation.tpl"
-	}else if model == "ResourcesPool"{
+	} else if model == "ResourcesPool" {
 		this.TplNames = "cloudfoundry/resourcespool.tpl"
-	}else if model == "Jobs"{
-		
+	} else if model == "Jobs" {
+
 	}
-	
+
 }
 
 //read data from const or database
@@ -136,25 +135,24 @@ func (this *CloudFoundryController) CommitData(cloudfoundry entity.CloudFoundry)
 	cf = cloudfoundry
 }
 
-
 var cloudFoundryProperties = entity.NewCloudFoundryProperties("cf-release",
 	"57cfc863-786d-4495-bb97-86d2f650a038", "192.168.133.102", "ccipaas.net", "cci")
 var compilation = entity.NewCompilation("flavor_91", "zone2", 6, "cf1")
 
 var netWorksMap map[string]entity.NetWorks = map[string]entity.NetWorks{
-	"private":networks,
-	"floating":floatingNetWork,
+	"private":  networks,
+	"floating": floatingNetWork,
 }
 
 var networks = entity.NewNetWorks("cf1",
-		"manual",
-		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
-		"192.168.129.0/24",
-		"10.10.170.2",
-		"192.168.133.108",
-		"192.168.129.1 - 192.168.129.99",
-		"192.168.129.100 - 192.168.129.126")
-		
+	"manual",
+	"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
+	"192.168.129.0/24",
+	"10.10.170.2",
+	"192.168.133.108",
+	"192.168.129.1 - 192.168.129.99",
+	"192.168.129.100 - 192.168.129.126")
+
 var floatingNetWork = entity.NewFloatingNetWork(cloudFoundryProperties.FloatingIp)
 
 var resourcesPool = entity.NewResourcesPools(
@@ -163,14 +161,15 @@ var resourcesPool = entity.NewResourcesPools(
 	"zone2",
 	"cf1",
 	4)
+
 var resourcesPoolsMap map[string]entity.ResourcesPools = map[string]entity.ResourcesPools{
-	resourcesPool.Name:resourcesPool,
-	}
+	resourcesPool.Name: resourcesPool,
+}
 var properties = entity.Properties{}
 
 var cf entity.CloudFoundry = entity.NewCloudFoundry(
-	cloudFoundryProperties ,
-	compilation ,
-	netWorksMap ,
-	resourcesPoolsMap ,
-	properties )
+	cloudFoundryProperties,
+	compilation,
+	netWorksMap,
+	resourcesPoolsMap,
+	properties)
