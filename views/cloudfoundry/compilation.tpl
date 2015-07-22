@@ -3,7 +3,7 @@
 <div class="container" >
     <div class="panel panel-default">
 		<div class="panel-heading" >
-			<h2 class="panel-title">CloudFoundry Deployment</h2>
+			<h2 class="panel-title">PaaS Compilation</h2>
 		</div>
   		<div class="panel-body">
 			<form class="form-horizontal" method="post" action="cloudfoundry">
@@ -13,35 +13,29 @@
 				    </div>
 			  	</div>
 				{{with .CloudFoundry}}
-				{{with .CloudFoundryProperties}}
+				{{with .Compilation}}
 			  	<div class="form-group">
-			    	<label for="name" class="col-sm-2 control-label">Deployment Name</label>
+			    	<label for="instanceType" class="col-sm-2 control-label">InstanceType</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="name" placeholder="Deployment Name" name="name" value = "{{.Name}}">
+				      <input type="text" class="form-control" id="instanceType" placeholder="InstanceType" name="instanceType" value = "{{.InstanceType}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="uuid" class="col-sm-2 control-label">Director UUID</label>
+			    	<label for="availabilityZone" class="col-sm-2 control-label">AvailabilityZone</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="uuid" placeholder="Director UUID" name="uuid" value = "{{.Uuid}}">
+				      <input type="text" class="form-control" id="availabilityZone" placeholder="AvailabilityZone" name="availabilityZone" value = "{{.AvailabilityZone}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="floatingIp" class="col-sm-2 control-label">FloatingIp</label>
+			    	<label for="workers" class="col-sm-2 control-label">Workers</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="floatingIp" placeholder="FloatingIp" name="floatingIp" value = "{{.FloatingIp}}">
+				      <input type="number" class="form-control" id="workers" placeholder="Workers" name="workers" value = "{{.Workers}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="systemDomain" class="col-sm-2 control-label">SystemDomain</label>
+			    	<label for="defaultNetWork" class="col-sm-2 control-label">DefaultNetWork</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="systemDomain" placeholder="SystemDomain" name="systemDomain" value = "{{.SystemDomain}}">
-				    </div>
-			  	</div>
-			  	<div class="form-group">
-			    	<label for="systemDomainOrg" class="col-sm-2 control-label">SystemOrg</label>
-				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="systemDomainOrg" placeholder="SystemOrg" name="systemDomainOrg" value = "{{.SystemDomainOrg}}">
+				      <input type="text" class="form-control" id="defaultNetWork" placeholder="DefaultNetWork" name="defaultNetWork" value = "{{.DefaultNetWork}}" readonly required>
 				    </div>
 			  	</div>
 				{{end}}
