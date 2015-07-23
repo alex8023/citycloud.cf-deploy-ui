@@ -11,7 +11,7 @@ const (
 	Job_Loggregator             = "loggregator"
 	Job_Loggregator_Traffic     = "loggregator_traffic"
 	Job_Uaa                     = "uaa"
-	Job_CCNG                    = "cloud_controller_ng"
+	Job_Cloud_Controller_NG     = "cloud_controller_ng"
 	Job_Cloud_Controller_Worker = "cloud_controller_worker"
 	Job_Cloud_Controller_Clock  = "cloud_controller_clock"
 	Job_Hm9000                  = "hm9000"
@@ -77,6 +77,7 @@ type CloudFoundryJobs struct {
 	JobName       string
 	ResourcesPool string
 	Instances     int
+	StaticIp      []string
 }
 
 //Job属性配置
@@ -159,11 +160,12 @@ func NewResourcesPools(
 	return
 }
 
-func NewCloudFoundryJobs(name, jobName, resourcePool string, instacnes int) (cloudFoundryJobs CloudFoundryJobs) {
+func NewCloudFoundryJobs(name, jobName, resourcePool string, instacnes int, staticIp []string) (cloudFoundryJobs CloudFoundryJobs) {
 	cloudFoundryJobs.Name = name
 	cloudFoundryJobs.JobName = jobName
 	cloudFoundryJobs.ResourcesPool = resourcePool
 	cloudFoundryJobs.Instances = instacnes
+	cloudFoundryJobs.StaticIp = staticIp
 	return
 }
 

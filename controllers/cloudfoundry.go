@@ -128,7 +128,7 @@ func (this *CloudFoundryController) ConfigCloudFoundry() {
 	} else if model == "ResourcesPools" {
 		this.Data["Pools"] = len(cf.ResourcesPools)
 		this.TplNames = "cloudfoundry/resourcespools.tpl"
-	} else if model == "Jobs" {
+	} else if model == "CloudFoundryJobs" {
 
 	}
 
@@ -196,5 +196,100 @@ var (
 		cloudFoundryJobsMap,
 		properties)
 
-	cloudFoundryJobsMap = make(map[string]entity.CloudFoundryJobs)
+	cloudFoundryJobsMap = map[string]entity.CloudFoundryJobs{
+		entity.Job_Haproxy: entity.NewCloudFoundryJobs(
+			"haproxy",
+			entity.Job_Haproxy,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Gorouter: entity.NewCloudFoundryJobs(
+			"gorouter",
+			entity.Job_Gorouter,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Postgres: entity.NewCloudFoundryJobs(
+			"postgres",
+			entity.Job_Postgres,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_NFS: entity.NewCloudFoundryJobs(
+			"nfs",
+			entity.Job_NFS,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_NATS: entity.NewCloudFoundryJobs(
+			"nats",
+			entity.Job_NATS,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Syslog: entity.NewCloudFoundryJobs(
+			"syslog_aggregator",
+			entity.Job_Syslog,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Etcd: entity.NewCloudFoundryJobs(
+			"etcd",
+			entity.Job_Etcd,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Loggregator: entity.NewCloudFoundryJobs(
+			"loggregator",
+			entity.Job_Loggregator,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Loggregator_Traffic: entity.NewCloudFoundryJobs(
+			"loggregator_traffic",
+			entity.Job_Loggregator_Traffic,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Uaa: entity.NewCloudFoundryJobs(
+			"uaa", entity.Job_Uaa,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Cloud_Controller_NG: entity.NewCloudFoundryJobs(
+			"cloud_controller_ng",
+			entity.Job_Cloud_Controller_NG,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Cloud_Controller_Worker: entity.NewCloudFoundryJobs(
+			"cloud_controller_worker",
+			entity.Job_Cloud_Controller_Worker,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Cloud_Controller_Clock: entity.NewCloudFoundryJobs(
+			"cloud_controller_clock",
+			entity.Job_Cloud_Controller_Clock,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Hm9000: entity.NewCloudFoundryJobs(
+			"hm9000",
+			entity.Job_Hm9000,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Stats: entity.NewCloudFoundryJobs("stats",
+			entity.Job_Stats,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Dea_Next: entity.NewCloudFoundryJobs(
+			"dea_next",
+			entity.Job_Dea_Next,
+			"normal",
+			1,
+			[]string{""}),
+	}
 )
