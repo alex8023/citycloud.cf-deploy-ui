@@ -1,5 +1,3 @@
-<input type="hidden" id="navfocus" value = "{{.NavBarFocus}}">
-<div style="height:20px"></div>
 <div class="container" >
 {{with .CloudFoundry}}
     <div class="panel panel-default">
@@ -85,7 +83,7 @@
 							  		})
 								</script>
 							</div>
-							{{with .NetWorks}}{{with .private}}
+							{{with .NetWorks}}{{range .}}
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Name</label>
 								<div class="col-sm-10">

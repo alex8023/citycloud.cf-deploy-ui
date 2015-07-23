@@ -67,15 +67,10 @@ update:
   max_in_flight: 4
   max_errors: 4
 
-{{ $floating :="floating"}}
-networks:
-{{with .NetWorks}}
-{{range .NetWorks}}
-{{ eq .Name $floating}}
-- name: {{.Name}}
-  type: {{.NetType}}
+networks:{{with .NetWorks}}{{range .}}
+- name: floating
+  type: vip
   cloud_properties: {}
-{{else}}
 - name: {{.Name}}
   subnets:
   - cloud_properties: 
@@ -86,8 +81,7 @@ networks:
     - {{.ReservedIp}}
     static:
     - {{.StaticIp}}
-{{end}}
-{{end}}
+{{end}}{{end}}
 
 resource_pools:
 - cloud_properties:

@@ -1,5 +1,3 @@
-<input type="hidden" id="navfocus" value = "{{.NavBarFocus}}">
-<div style="height:20px"></div>
 <div class="container" >
     <div class="panel panel-default">
 		<div class="panel-heading" >
@@ -13,8 +11,8 @@
 						<button type="button" class="btn btn-default " id="add_resources_pool" >More>></button>
 				    </div>
 			  	</div>
-				{{with .CloudFoundry}}{{$index := 0}}
-				{{range .ResourcesPools}}{{$index := $index + 1}}
+				{{with .CloudFoundry}}
+				{{range .ResourcesPools}}
 			    <div class="panel panel-default">
 					<div class="panel-heading" >
 						<h2 class="panel-title">ResourcesPools</h2>
@@ -22,7 +20,7 @@
 					<div class="form-horizontal">
 					  	<div class="panel-body">
 						  	<div class="form-group">
-						    	<label for="name" class="col-sm-2 control-label">Name@@{{$index}}</label>
+						    	<label for="name" class="col-sm-2 control-label">Name</label>
 							    <div class="col-sm-10">
 							      	<input type="text" class="form-control" id="name" placeholder="Name" name="name" value = "{{.Name}}" required>
 							    </div>

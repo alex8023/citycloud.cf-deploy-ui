@@ -45,8 +45,9 @@ func (this *CloudFoundryController) Post() {
 			mi.Network.Vip,
 			this.GetString("reservedIp"),
 			this.GetString("staticIp"))
-		netWorksMap["private"] = networks
-		netWorksMap["floating"] = entity.NewFloatingNetWork(cloudFoundryProperties.FloatingIp)
+		//rebuild
+		netWorksMap = make([]entity.NetWorks, 0)
+		netWorksMap = append(netWorksMap, networks)
 		cf.Compilation.DefaultNetWork = networks.Name
 		for key, value := range cf.ResourcesPools {
 			value.DefaultNetWork = networks.Name
@@ -69,8 +70,8 @@ func (this *CloudFoundryController) Post() {
 			this.GetString("defaultNetWork"),
 			size)
 		//重建一个map
-		resourcesPoolsMap = make(map[string]entity.ResourcesPools)
-		resourcesPoolsMap[resourcesPool.Name] = resourcesPool
+		resourcesPoolsMap = make([]entity.ResourcesPools, 0)
+		resourcesPoolsMap = append(resourcesPoolsMap, resourcesPool)
 	} else if model == "Jobs" {
 
 	}
@@ -143,7 +144,7 @@ func (this *CloudFoundryController) CommitData(cloudfoundry entity.CloudFoundry)
 
 var cloudFoundryProperties = entity.NewCloudFoundryProperties("cf-release",
 	"57cfc863-786d-4495-bb97-86d2f650a038", "192.168.133.102", "ccipaas.net", "cci")
-var compilation = entity.NewCompilation("flavor_91", "zone2", 6, netWorksMap["private"].Name)
+var compilation = entity.NewCompilation("flavor_91", "zone2", 6, networks.Name)
 
 var networks = entity.NewNetWorks("cf1",
 	"manual",
@@ -153,11 +154,9 @@ var networks = entity.NewNetWorks("cf1",
 	"192.168.133.108",
 	"192.168.129.1 - 192.168.129.99",
 	"192.168.129.100 - 192.168.129.126")
-var floatingNetWork = entity.NewFloatingNetWork(cloudFoundryProperties.FloatingIp)
 
-var netWorksMap map[string]entity.NetWorks = map[string]entity.NetWorks{
-	"private":  networks,
-	"floating": floatingNetWork,
+var netWorksMap []entity.NetWorks = []entity.NetWorks{
+	networks,
 }
 
 var resourcesPool = entity.NewResourcesPools(
@@ -167,8 +166,8 @@ var resourcesPool = entity.NewResourcesPools(
 	"cf1",
 	4)
 
-var resourcesPoolsMap map[string]entity.ResourcesPools = map[string]entity.ResourcesPools{
-	resourcesPool.Name: resourcesPool,
+var resourcesPoolsMap []entity.ResourcesPools = []entity.ResourcesPools{
+	resourcesPool,
 }
 var properties = entity.Properties{}
 

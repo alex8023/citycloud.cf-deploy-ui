@@ -3,8 +3,8 @@ package entity
 type CloudFoundry struct {
 	CloudFoundryProperties CloudFoundryProperties
 	Compilation            Compilation
-	NetWorks               map[string]NetWorks
-	ResourcesPools         map[string]ResourcesPools
+	NetWorks               []NetWorks
+	ResourcesPools         []ResourcesPools
 	Properties             Properties
 }
 
@@ -65,8 +65,8 @@ type Properties struct {
 func NewCloudFoundry(
 	cloudFoundryProperties CloudFoundryProperties,
 	compilation Compilation,
-	netWorks map[string]NetWorks,
-	resourcesPools map[string]ResourcesPools,
+	netWorks []NetWorks,
+	resourcesPools []ResourcesPools,
 	properties Properties) (cloudfoundry CloudFoundry) {
 	cloudfoundry.CloudFoundryProperties = cloudFoundryProperties
 	cloudfoundry.Compilation = compilation
