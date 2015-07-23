@@ -67,15 +67,10 @@ update:
   max_in_flight: 4
   max_errors: 4
 
-{{ $floating :="floating"}}
-networks:
-{{with .NetWorks}}
-{{range .NetWorks}}
-{{ eq .Name $floating}}
-- name: {{.Name}}
-  type: {{.NetType}}
+networks:{{with .NetWorks}}{{range .}}
+- name: floating
+  type: vip
   cloud_properties: {}
-{{else}}
 - name: {{.Name}}
   subnets:
   - cloud_properties: 
@@ -86,61 +81,21 @@ networks:
     - {{.ReservedIp}}
     static:
     - {{.StaticIp}}
-{{end}}
-{{end}}
+{{end}}{{end}}
 
 resource_pools:
+{{with .ResourcesPools}}{{range .}}
 - cloud_properties:
-    availability_zone: agOne
-    instance_type: flavor_891
-  name: normal_pool
-  network: cf1
-  size: 10
+    {{if .AvailabilityZone}}availability_zone: {{.AvailabilityZone}}{{end}}
+    instance_type: {{.InstanceType}}
+  name: {{.Name}}
+  network: {{.DefaultNetWork}}
+  size: {{.Size}}
   stemcell:
     name: bosh-openstack-kvm-ubuntu-lucid-go_agent
     version: 2719
 
-- cloud_properties:
-    availability_zone: agOne
-    instance_type: flavor_891
-  name: gorouter_pool
-  network: cf1
-  size: 1 
-  stemcell:
-    name: bosh-openstack-kvm-ubuntu-lucid-go_agent
-    version: 2719
-
-- cloud_properties:
-    availability_zone: agOne
-    instance_type: flavor_891
-  name: nats_pool
-  network: cf1
-  size: 1 
-  stemcell:
-    name: bosh-openstack-kvm-ubuntu-lucid-go_agent
-    version: 2719
-
-
-- cloud_properties:
-    availability_zone: agOne
-    instance_type: flavor_891
-  name: ccng_pool
-  network: cf1
-  size: 3 
-  stemcell:
-    name: bosh-openstack-kvm-ubuntu-lucid-go_agent
-    version: 2719
-
-- cloud_properties:
-    availability_zone: agOne
-    instance_type: flavor_571
-  name: dea_pool
-  network: cf1
-  size: 16
-  stemcell:
-    name: bosh-openstack-kvm-ubuntu-lucid-go_agent
-    version: 2719
-
+{{end}}{{end}}
 
 jobs:
 - name: haproxy

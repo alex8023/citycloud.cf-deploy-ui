@@ -31,3 +31,5 @@
 		</div>
 	</div>
 </nav>
+<input type="hidden" id="navfocus" value = "{{.NavBarFocus}}">
+<div style="height:20px"></div>

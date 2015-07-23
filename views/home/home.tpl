@@ -1,4 +1,3 @@
-	<input type="hidden" id="navfocus" value = "{{.NavBarFocus}}">
   <div class="container">
       <div class="jumbotron">
         <h1>CityCloud Cf-Deploy-UI</h1>

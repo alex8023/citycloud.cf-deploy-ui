@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
+	"strconv"
 )
 
 type CloudFoundryController struct {
@@ -45,12 +46,12 @@ func (this *CloudFoundryController) Post() {
 			mi.Network.Vip,
 			this.GetString("reservedIp"),
 			this.GetString("staticIp"))
-		netWorksMap["private"] = networks
-		netWorksMap["floating"] = entity.NewFloatingNetWork(cloudFoundryProperties.FloatingIp)
+		//rebuild
+		netWorksMap = make([]entity.NetWorks, 0)
+		netWorksMap = append(netWorksMap, networks)
 		cf.Compilation.DefaultNetWork = networks.Name
-		for key, value := range cf.ResourcesPools {
-			value.DefaultNetWork = networks.Name
-			cf.ResourcesPools[key] = value
+		for key, _ := range cf.ResourcesPools {
+			cf.ResourcesPools[key].DefaultNetWork = networks.Name
 		}
 		cf.NetWorks = netWorksMap
 	} else if model == "Compilation" {
@@ -61,16 +62,29 @@ func (this *CloudFoundryController) Post() {
 			this.GetString("defaultNetWork"))
 		cf.Compilation = compilation
 	} else if model == "ResourcesPools" {
-		size, _ := this.GetInt("size", 1)
-		resourcesPool = entity.NewResourcesPools(
-			this.GetString("name"),
-			this.GetString("instanceType"),
-			this.GetString("availabilityZone"),
-			this.GetString("defaultNetWork"),
-			size)
-		//重建一个map
-		resourcesPoolsMap = make(map[string]entity.ResourcesPools)
-		resourcesPoolsMap[resourcesPool.Name] = resourcesPool
+		arrName := this.GetStrings("name")
+		arrInstanceType := this.GetStrings("instanceType")
+		arrAvailabilityZone := this.GetStrings("availabilityZone")
+		arrDefaultNetWork := this.GetStrings("defaultNetWork")
+		arrSize := this.GetStrings("size")
+
+		resourcesPoolsMap = make([]entity.ResourcesPools, 0)
+
+		for index, value := range arrName {
+			size, _ := strconv.Atoi(arrSize[index])
+			addResourcesPool := entity.NewResourcesPools(value,
+				arrInstanceType[index],
+				arrAvailabilityZone[index],
+				arrDefaultNetWork[index],
+				size,
+			)
+
+			if index == 0 {
+				resourcesPool = addResourcesPool
+			}
+			resourcesPoolsMap = append(resourcesPoolsMap, addResourcesPool)
+		}
+		cf.ResourcesPools = resourcesPoolsMap
 	} else if model == "Jobs" {
 
 	}
@@ -112,8 +126,9 @@ func (this *CloudFoundryController) ConfigCloudFoundry() {
 	} else if model == "Compilation" {
 		this.TplNames = "cloudfoundry/compilation.tpl"
 	} else if model == "ResourcesPools" {
+		this.Data["Pools"] = len(cf.ResourcesPools)
 		this.TplNames = "cloudfoundry/resourcespools.tpl"
-	} else if model == "Jobs" {
+	} else if model == "CloudFoundryJobs" {
 
 	}
 
@@ -141,40 +156,140 @@ func (this *CloudFoundryController) CommitData(cloudfoundry entity.CloudFoundry)
 	cf = cloudfoundry
 }
 
-var cloudFoundryProperties = entity.NewCloudFoundryProperties("cf-release",
-	"57cfc863-786d-4495-bb97-86d2f650a038", "192.168.133.102", "ccipaas.net", "cci")
-var compilation = entity.NewCompilation("flavor_91", "zone2", 6, netWorksMap["private"].Name)
+var (
+	cloudFoundryProperties = entity.NewCloudFoundryProperties("cf-release",
+		"57cfc863-786d-4495-bb97-86d2f650a038", "192.168.133.102", "ccipaas.net", "cci")
 
-var networks = entity.NewNetWorks("cf1",
-	"manual",
-	"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
-	"192.168.129.0/24",
-	"10.10.170.2",
-	"192.168.133.108",
-	"192.168.129.1 - 192.168.129.99",
-	"192.168.129.100 - 192.168.129.126")
-var floatingNetWork = entity.NewFloatingNetWork(cloudFoundryProperties.FloatingIp)
+	compilation = entity.NewCompilation("flavor_91", "zone2", 6, networks.Name)
 
-var netWorksMap map[string]entity.NetWorks = map[string]entity.NetWorks{
-	"private":  networks,
-	"floating": floatingNetWork,
-}
+	networks = entity.NewNetWorks("cf1",
+		"manual",
+		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
+		"192.168.129.0/24",
+		"10.10.170.2",
+		"192.168.133.108",
+		"192.168.129.1 - 192.168.129.99",
+		"192.168.129.100 - 192.168.129.126")
 
-var resourcesPool = entity.NewResourcesPools(
-	"normal",
-	"flavor_91",
-	"zone2",
-	"cf1",
-	4)
+	netWorksMap []entity.NetWorks = []entity.NetWorks{
+		networks,
+	}
 
-var resourcesPoolsMap map[string]entity.ResourcesPools = map[string]entity.ResourcesPools{
-	resourcesPool.Name: resourcesPool,
-}
-var properties = entity.Properties{}
+	resourcesPool = entity.NewResourcesPools(
+		"normal",
+		"flavor_91",
+		"zone2",
+		"cf1",
+		4)
 
-var cf entity.CloudFoundry = entity.NewCloudFoundry(
-	cloudFoundryProperties,
-	compilation,
-	netWorksMap,
-	resourcesPoolsMap,
-	properties)
+	resourcesPoolsMap []entity.ResourcesPools = []entity.ResourcesPools{
+		resourcesPool,
+	}
+
+	properties = entity.Properties{}
+
+	cf entity.CloudFoundry = entity.NewCloudFoundry(
+		cloudFoundryProperties,
+		compilation,
+		netWorksMap,
+		resourcesPoolsMap,
+		cloudFoundryJobsMap,
+		properties)
+
+	cloudFoundryJobsMap = map[string]entity.CloudFoundryJobs{
+		entity.Job_Haproxy: entity.NewCloudFoundryJobs(
+			"haproxy",
+			entity.Job_Haproxy,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Gorouter: entity.NewCloudFoundryJobs(
+			"gorouter",
+			entity.Job_Gorouter,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Postgres: entity.NewCloudFoundryJobs(
+			"postgres",
+			entity.Job_Postgres,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_NFS: entity.NewCloudFoundryJobs(
+			"nfs",
+			entity.Job_NFS,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_NATS: entity.NewCloudFoundryJobs(
+			"nats",
+			entity.Job_NATS,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Syslog: entity.NewCloudFoundryJobs(
+			"syslog_aggregator",
+			entity.Job_Syslog,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Etcd: entity.NewCloudFoundryJobs(
+			"etcd",
+			entity.Job_Etcd,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Loggregator: entity.NewCloudFoundryJobs(
+			"loggregator",
+			entity.Job_Loggregator,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Loggregator_Traffic: entity.NewCloudFoundryJobs(
+			"loggregator_traffic",
+			entity.Job_Loggregator_Traffic,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Uaa: entity.NewCloudFoundryJobs(
+			"uaa", entity.Job_Uaa,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Cloud_Controller_NG: entity.NewCloudFoundryJobs(
+			"cloud_controller_ng",
+			entity.Job_Cloud_Controller_NG,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Cloud_Controller_Worker: entity.NewCloudFoundryJobs(
+			"cloud_controller_worker",
+			entity.Job_Cloud_Controller_Worker,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Cloud_Controller_Clock: entity.NewCloudFoundryJobs(
+			"cloud_controller_clock",
+			entity.Job_Cloud_Controller_Clock,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Hm9000: entity.NewCloudFoundryJobs(
+			"hm9000",
+			entity.Job_Hm9000,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Stats: entity.NewCloudFoundryJobs("stats",
+			entity.Job_Stats,
+			"normal",
+			1,
+			[]string{""}),
+		entity.Job_Dea_Next: entity.NewCloudFoundryJobs(
+			"dea_next",
+			entity.Job_Dea_Next,
+			"normal",
+			1,
+			[]string{""}),
+	}
+)

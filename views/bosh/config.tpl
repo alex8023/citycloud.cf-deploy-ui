@@ -1,5 +1,3 @@
-<input type="hidden" id="navfocus" value = "{{.NavBarFocus}}">
-<div style="height:20px"></div>
 <div class="container" >
     <div class="panel panel-default">
 		<div class="panel-heading" >

@@ -19,18 +19,16 @@ func TestCloudFoundryTemplate(t *testing.T) {
 		"192.168.129.1 - 192.168.129.99",
 		"192.168.129.100 - 192.168.129.126")
 
-	var floatingNetWork = NewFloatingNetWork("192.168.133.102")
-	var mapNetWorks = make(map[string]NetWorks)
-	mapNetWorks[networks.Name] = networks
-	mapNetWorks[floatingNetWork.Name] = floatingNetWork
+	var mapNetWorks = make([]NetWorks, 0)
+	mapNetWorks = append(mapNetWorks, networks)
 
 	var resourcesPool = NewResourcesPools("normal",
 		"flavor_91",
 		"zone2",
 		"cf1",
 		4)
-	var mapResourcesPools = make(map[string]ResourcesPools)
-	mapResourcesPools[resourcesPool.Name] = resourcesPool
+	var mapResourcesPools = make([]ResourcesPools, 0)
+	mapResourcesPools = append(mapResourcesPools, resourcesPool)
 	var cft = NewCloudFoundryTemplate(CloudFoundry{
 		CloudFoundryProperties: cloudFoundryProperties,
 		Compilation:            compilation,

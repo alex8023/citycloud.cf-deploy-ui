@@ -11,7 +11,7 @@
 				    </div>
 			  	</div>
 				{{with .CloudFoundry}}
-				{{with .Compilation}}
+				{{with .CloudFoundryJobs}}
 			  	<div class="form-group">
 			    	<label for="instanceType" class="col-sm-2 control-label">InstanceType</label>
 				    <div class="col-sm-10">

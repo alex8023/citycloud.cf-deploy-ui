@@ -1,10 +1,30 @@
 package entity
 
+const (
+	Job_Haproxy                 = "haproxy"
+	Job_Gorouter                = "gorouter"
+	Job_Postgres                = "postgres"
+	Job_NFS                     = "nfs"
+	Job_NATS                    = "nats"
+	Job_Syslog                  = "syslog_aggregator"
+	Job_Etcd                    = "etcd"
+	Job_Loggregator             = "loggregator"
+	Job_Loggregator_Traffic     = "loggregator_traffic"
+	Job_Uaa                     = "uaa"
+	Job_Cloud_Controller_NG     = "cloud_controller_ng"
+	Job_Cloud_Controller_Worker = "cloud_controller_worker"
+	Job_Cloud_Controller_Clock  = "cloud_controller_clock"
+	Job_Hm9000                  = "hm9000"
+	Job_Stats                   = "stats"
+	Job_Dea_Next                = "dea_next"
+)
+
 type CloudFoundry struct {
 	CloudFoundryProperties CloudFoundryProperties
 	Compilation            Compilation
-	NetWorks               map[string]NetWorks
-	ResourcesPools         map[string]ResourcesPools
+	NetWorks               []NetWorks
+	ResourcesPools         []ResourcesPools
+	CloudFoundryJobs       map[string]CloudFoundryJobs
 	Properties             Properties
 }
 
@@ -54,8 +74,10 @@ type ResourcesPools struct {
 
 type CloudFoundryJobs struct {
 	Name          string
+	JobName       string
 	ResourcesPool string
 	Instances     int
+	StaticIp      []string
 }
 
 //Job属性配置
@@ -65,13 +87,15 @@ type Properties struct {
 func NewCloudFoundry(
 	cloudFoundryProperties CloudFoundryProperties,
 	compilation Compilation,
-	netWorks map[string]NetWorks,
-	resourcesPools map[string]ResourcesPools,
+	netWorks []NetWorks,
+	resourcesPools []ResourcesPools,
+	cloudFoundryJobs map[string]CloudFoundryJobs,
 	properties Properties) (cloudfoundry CloudFoundry) {
 	cloudfoundry.CloudFoundryProperties = cloudFoundryProperties
 	cloudfoundry.Compilation = compilation
 	cloudfoundry.NetWorks = netWorks
 	cloudfoundry.ResourcesPools = resourcesPools
+	cloudfoundry.CloudFoundryJobs = cloudFoundryJobs
 	cloudfoundry.Properties = properties
 	return
 }
@@ -133,6 +157,15 @@ func NewResourcesPools(
 	resourcesPools.AvailabilityZone = availabilityZone
 	resourcesPools.DefaultNetWork = defaultNetWork
 	resourcesPools.Size = size
+	return
+}
+
+func NewCloudFoundryJobs(name, jobName, resourcePool string, instacnes int, staticIp []string) (cloudFoundryJobs CloudFoundryJobs) {
+	cloudFoundryJobs.Name = name
+	cloudFoundryJobs.JobName = jobName
+	cloudFoundryJobs.ResourcesPool = resourcePool
+	cloudFoundryJobs.Instances = instacnes
+	cloudFoundryJobs.StaticIp = staticIp
 	return
 }
 

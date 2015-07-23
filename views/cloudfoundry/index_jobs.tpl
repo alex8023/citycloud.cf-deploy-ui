@@ -1,0 +1,48 @@
+{{with .CloudFoundry}}
+			    <div class="panel panel-default">
+					<div class="panel-heading" >
+						<h2 class="panel-title">PaaS Jobs</h2>
+					</div>
+					<div class="form-horizontal">
+				  		<div class="panel-body">
+							<div class="form-group">
+							    <div class="col-sm-offset-2 col-sm-10">
+							      	<button class="btn btn-default " id = "config-CloudFoundryJobs">Config</button>
+							    </div>
+								<script type="text/javascript">
+									$('#config-CloudFoundryJobs').on('click', function(){
+							    		window.location.href = "cloudfoundry?action=config&model=CloudFoundryJobs";
+							  		})
+								</script>
+							</div>
+							{{with .CloudFoundryJobs}}
+							<div class="form-group">
+								<label class="col-sm-2 control-label">InstanceType</label>
+								<div class="col-sm-10">
+									<p class="form-control-static">{{.InstanceType}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">AvailabilityZone</label>
+								<div class="col-sm-10">
+									<p class="form-control-static">{{.AvailabilityZone}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Workers</label>
+								<div class="col-sm-10">
+									<p class="form-control-static">{{.Workers}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">DefaultNetWork</label>
+								<div class="col-sm-10">
+									<p class="form-control-static">{{.DefaultNetWork}}</p>
+								</div>
+							</div>
+							{{end}}
+							
+						</div>
+					</div>
+				</div>
+{{end}}
