@@ -156,38 +156,45 @@ func (this *CloudFoundryController) CommitData(cloudfoundry entity.CloudFoundry)
 	cf = cloudfoundry
 }
 
-var cloudFoundryProperties = entity.NewCloudFoundryProperties("cf-release",
-	"57cfc863-786d-4495-bb97-86d2f650a038", "192.168.133.102", "ccipaas.net", "cci")
-var compilation = entity.NewCompilation("flavor_91", "zone2", 6, networks.Name)
+var (
+	cloudFoundryProperties = entity.NewCloudFoundryProperties("cf-release",
+		"57cfc863-786d-4495-bb97-86d2f650a038", "192.168.133.102", "ccipaas.net", "cci")
 
-var networks = entity.NewNetWorks("cf1",
-	"manual",
-	"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
-	"192.168.129.0/24",
-	"10.10.170.2",
-	"192.168.133.108",
-	"192.168.129.1 - 192.168.129.99",
-	"192.168.129.100 - 192.168.129.126")
+	compilation = entity.NewCompilation("flavor_91", "zone2", 6, networks.Name)
 
-var netWorksMap []entity.NetWorks = []entity.NetWorks{
-	networks,
-}
+	networks = entity.NewNetWorks("cf1",
+		"manual",
+		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
+		"192.168.129.0/24",
+		"10.10.170.2",
+		"192.168.133.108",
+		"192.168.129.1 - 192.168.129.99",
+		"192.168.129.100 - 192.168.129.126")
 
-var resourcesPool = entity.NewResourcesPools(
-	"normal",
-	"flavor_91",
-	"zone2",
-	"cf1",
-	4)
+	netWorksMap []entity.NetWorks = []entity.NetWorks{
+		networks,
+	}
 
-var resourcesPoolsMap []entity.ResourcesPools = []entity.ResourcesPools{
-	resourcesPool,
-}
-var properties = entity.Properties{}
+	resourcesPool = entity.NewResourcesPools(
+		"normal",
+		"flavor_91",
+		"zone2",
+		"cf1",
+		4)
 
-var cf entity.CloudFoundry = entity.NewCloudFoundry(
-	cloudFoundryProperties,
-	compilation,
-	netWorksMap,
-	resourcesPoolsMap,
-	properties)
+	resourcesPoolsMap []entity.ResourcesPools = []entity.ResourcesPools{
+		resourcesPool,
+	}
+
+	properties = entity.Properties{}
+
+	cf entity.CloudFoundry = entity.NewCloudFoundry(
+		cloudFoundryProperties,
+		compilation,
+		netWorksMap,
+		resourcesPoolsMap,
+		cloudFoundryJobsMap,
+		properties)
+
+	cloudFoundryJobsMap = make(map[string]entity.CloudFoundryJobs)
+)
