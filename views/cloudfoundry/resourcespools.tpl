@@ -5,6 +5,8 @@
 		</div>
   		<div class="panel-body">
 			<form class="form-horizontal" method="post" action="cloudfoundry">
+				<input type = "hidden" name="model" value = "{{.Model}}">
+				<input type = "hidden" id="poollength" value = "{{.Pools}}">
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
 				      	<button type="submit" class="btn btn-default " data-loading-text="Saving...">Save</button>
@@ -12,10 +14,10 @@
 				    </div>
 			  	</div>
 				{{with .CloudFoundry}}
-				{{range .ResourcesPools}}
-			    <div class="panel panel-default">
+				{{range $index,$element := .ResourcesPools}}
+			    <div class="panel panel-default" id="deletePanel{{$index}}">
 					<div class="panel-heading" >
-						<h2 class="panel-title">ResourcesPools</h2>
+						<h2 class="panel-title">ResourcesPools<button name="delete" class="btn btn-default" type="button" onclick="deletePanel('deletePanel{{$index}}')">Delete</button></h2>
 					</div>
 					<div class="form-horizontal">
 					  	<div class="panel-body">
@@ -35,7 +37,7 @@
 						  	<div class="form-group">
 						    	<label for="availabilityZone" class="col-sm-2 control-label">AvailabilityZone</label>
 							    <div class="col-sm-10">
-							      	<input type="text" class="form-control" id="availabilityZone" placeholder="AvailabilityZone" name="availabilityZone" value = "{{.AvailabilityZone}}" required>
+							      	<input type="text" class="form-control" id="availabilityZone" placeholder="AvailabilityZone" name="availabilityZone" value = "{{.AvailabilityZone}}" >
 							    </div>
 						  	</div>
 						  	<div class="form-group">
@@ -47,7 +49,7 @@
 						  	<div class="form-group">
 						    	<label for="defaultNetWork" class="col-sm-2 control-label">DefaultNetWork</label>
 							    <div class="col-sm-10">
-							      	<input type="text" class="form-control" id="defaultNetWork" placeholder="DefaultNetWork" name="defaultNetWork" value = "{{.DefaultNetWork}}" required>
+							      	<input type="text" class="form-control" id="defaultNetWork" placeholder="DefaultNetWork" name="defaultNetWork" value = "{{.DefaultNetWork}}" required readonly>
 							    </div>
 						  	</div>
 						</div>
@@ -55,7 +57,6 @@
 				</div>
 				{{end}}
 				{{end}}
-				<input type = "hidden" name="model" value = "{{.Model}}">
 			</form>
   		</div>
 	</div>

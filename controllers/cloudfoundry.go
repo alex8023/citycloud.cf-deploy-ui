@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
+	"strconv"
 )
 
 type CloudFoundryController struct {
@@ -49,9 +50,8 @@ func (this *CloudFoundryController) Post() {
 		netWorksMap = make([]entity.NetWorks, 0)
 		netWorksMap = append(netWorksMap, networks)
 		cf.Compilation.DefaultNetWork = networks.Name
-		for key, value := range cf.ResourcesPools {
-			value.DefaultNetWork = networks.Name
-			cf.ResourcesPools[key] = value
+		for key, _ := range cf.ResourcesPools {
+			cf.ResourcesPools[key].DefaultNetWork = networks.Name
 		}
 		cf.NetWorks = netWorksMap
 	} else if model == "Compilation" {
@@ -62,16 +62,29 @@ func (this *CloudFoundryController) Post() {
 			this.GetString("defaultNetWork"))
 		cf.Compilation = compilation
 	} else if model == "ResourcesPools" {
-		size, _ := this.GetInt("size", 1)
-		resourcesPool = entity.NewResourcesPools(
-			this.GetString("name"),
-			this.GetString("instanceType"),
-			this.GetString("availabilityZone"),
-			this.GetString("defaultNetWork"),
-			size)
-		//重建一个map
+		arrName := this.GetStrings("name")
+		arrInstanceType := this.GetStrings("instanceType")
+		arrAvailabilityZone := this.GetStrings("availabilityZone")
+		arrDefaultNetWork := this.GetStrings("defaultNetWork")
+		arrSize := this.GetStrings("size")
+
 		resourcesPoolsMap = make([]entity.ResourcesPools, 0)
-		resourcesPoolsMap = append(resourcesPoolsMap, resourcesPool)
+
+		for index, value := range arrName {
+			size, _ := strconv.Atoi(arrSize[index])
+			addResourcesPool := entity.NewResourcesPools(value,
+				arrInstanceType[index],
+				arrAvailabilityZone[index],
+				arrDefaultNetWork[index],
+				size,
+			)
+
+			if index == 0 {
+				resourcesPool = addResourcesPool
+			}
+			resourcesPoolsMap = append(resourcesPoolsMap, addResourcesPool)
+		}
+		cf.ResourcesPools = resourcesPoolsMap
 	} else if model == "Jobs" {
 
 	}
@@ -113,6 +126,7 @@ func (this *CloudFoundryController) ConfigCloudFoundry() {
 	} else if model == "Compilation" {
 		this.TplNames = "cloudfoundry/compilation.tpl"
 	} else if model == "ResourcesPools" {
+		this.Data["Pools"] = len(cf.ResourcesPools)
 		this.TplNames = "cloudfoundry/resourcespools.tpl"
 	} else if model == "Jobs" {
 
