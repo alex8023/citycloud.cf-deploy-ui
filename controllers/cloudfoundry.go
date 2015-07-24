@@ -56,6 +56,10 @@ func (this *CloudFoundryController) Post() {
 		cf.NetWorks = netWorksMap
 	} else if model == "Compilation" {
 		workers, _ := this.GetInt("workers", 6)
+		if workers <= 0 {
+			workers = 6
+		}
+
 		compilation = entity.NewCompilation(this.GetString("instanceType"),
 			this.GetString("availabilityZone"),
 			workers,
@@ -72,6 +76,11 @@ func (this *CloudFoundryController) Post() {
 
 		for index, value := range arrName {
 			size, _ := strconv.Atoi(arrSize[index])
+
+			if size <= 0 {
+				size = 1
+			}
+
 			addResourcesPool := entity.NewResourcesPools(value,
 				arrInstanceType[index],
 				arrAvailabilityZone[index],
@@ -89,6 +98,9 @@ func (this *CloudFoundryController) Post() {
 		for key, value := range cloudFoundryJobsMap {
 			value.Name = this.GetString(key + "_name")
 			instance, _ := this.GetInt(key+"_instances", 1)
+			if instance <= 0 {
+				instance = 1
+			}
 			value.Instances = instance
 			value.ResourcesPool = this.GetString(key + "_resourcesPool_select")
 			value.StaticIp = []string{""}
