@@ -43,7 +43,7 @@
 						  	<div class="form-group">
 						    	<label for="size" class="col-sm-2 control-label">Size</label>
 							    <div class="col-sm-10">
-							      	<input type="text" class="form-control" id="size" placeholder="Size" name="size" value = "{{.Size}}" required>
+							      	<input type="number" class="form-control" id="size" placeholder="Size" name="size" value = "{{.Size}}" required>
 							    </div>
 						  	</div>
 						  	<div class="form-group">
