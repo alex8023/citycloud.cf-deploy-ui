@@ -56,6 +56,10 @@ func (this *CloudFoundryController) Post() {
 		cf.NetWorks = netWorksMap
 	} else if model == "Compilation" {
 		workers, _ := this.GetInt("workers", 6)
+		if workers <= 0 {
+			workers = 6
+		}
+
 		compilation = entity.NewCompilation(this.GetString("instanceType"),
 			this.GetString("availabilityZone"),
 			workers,
@@ -72,6 +76,11 @@ func (this *CloudFoundryController) Post() {
 
 		for index, value := range arrName {
 			size, _ := strconv.Atoi(arrSize[index])
+
+			if size <= 0 {
+				size = 1
+			}
+
 			addResourcesPool := entity.NewResourcesPools(value,
 				arrInstanceType[index],
 				arrAvailabilityZone[index],
@@ -85,8 +94,19 @@ func (this *CloudFoundryController) Post() {
 			resourcesPoolsMap = append(resourcesPoolsMap, addResourcesPool)
 		}
 		cf.ResourcesPools = resourcesPoolsMap
-	} else if model == "Jobs" {
-
+	} else if model == "CloudFoundryJobs" {
+		for key, value := range cloudFoundryJobsMap {
+			value.Name = this.GetString(key + "_name")
+			instance, _ := this.GetInt(key+"_instances", 1)
+			if instance <= 0 {
+				instance = 1
+			}
+			value.Instances = instance
+			value.ResourcesPool = this.GetString(key + "_resourcesPool_select")
+			value.StaticIp = []string{""}
+			cloudFoundryJobsMap[key] = value
+		}
+		cf.CloudFoundryJobs = cloudFoundryJobsMap
 	}
 
 	//	cloudfoundry := entity.CloudFoundry{}
@@ -112,31 +132,29 @@ func (this *CloudFoundryController) IndexCloudFoundry() {
 func (this *CloudFoundryController) ConfigCloudFoundry() {
 	logger.Debug("%s", "Config CloudFoundry")
 	this.LoadData()
-
 	model := this.GetString("model")
 	if model == "" {
 		model = "CloudFoundryProperties"
 	}
 	this.Data["Model"] = model
-
 	if model == "CloudFoundryProperties" {
-		this.TplNames = "cloudfoundry/properties.tpl"
+		this.TplNames = "cloudfoundry/config_properties.tpl"
 	} else if model == "NetWorks" {
-		this.TplNames = "cloudfoundry/networks.tpl"
+		this.TplNames = "cloudfoundry/config_networks.tpl"
 	} else if model == "Compilation" {
-		this.TplNames = "cloudfoundry/compilation.tpl"
+		this.TplNames = "cloudfoundry/config_compilation.tpl"
 	} else if model == "ResourcesPools" {
 		this.Data["Pools"] = len(cf.ResourcesPools)
-		this.TplNames = "cloudfoundry/resourcespools.tpl"
+		this.TplNames = "cloudfoundry/config_resourcespools.tpl"
 	} else if model == "CloudFoundryJobs" {
-
+		this.TplNames = "cloudfoundry/config_jobs.tpl"
 	}
 
 }
 
 //read data from const or database
 func (this *CloudFoundryController) LoadData() {
-	logger.Debug("cloudfoundry properties: %s", cf)
+	//logger.Debug("cloudfoundry properties: %s", cf)
 	this.Data["CloudFoundry"] = cf
 }
 
@@ -181,9 +199,15 @@ var (
 		"zone2",
 		"cf1",
 		4)
+	resourcesPool2 = entity.NewResourcesPools(
+		"normal2",
+		"flavor_91",
+		"zone2",
+		"cf1",
+		4)
 
 	resourcesPoolsMap []entity.ResourcesPools = []entity.ResourcesPools{
-		resourcesPool,
+		resourcesPool, resourcesPool2,
 	}
 
 	properties = entity.Properties{}
@@ -200,7 +224,7 @@ var (
 		entity.Job_Haproxy: entity.NewCloudFoundryJobs(
 			"haproxy",
 			entity.Job_Haproxy,
-			"normal",
+			"normal2",
 			1,
 			[]string{""}),
 		entity.Job_Gorouter: entity.NewCloudFoundryJobs(

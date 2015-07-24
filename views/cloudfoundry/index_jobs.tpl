@@ -16,30 +16,531 @@
 								</script>
 							</div>
 							{{with .CloudFoundryJobs}}
-							<div class="form-group">
-								<label class="col-sm-2 control-label">InstanceType</label>
-								<div class="col-sm-10">
-									<p class="form-control-static">{{.InstanceType}}</p>
+								{{with .haproxy}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">AvailabilityZone</label>
-								<div class="col-sm-10">
-									<p class="form-control-static">{{.AvailabilityZone}}</p>
+								{{end}}
+								{{with .gorouter}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">Workers</label>
-								<div class="col-sm-10">
-									<p class="form-control-static">{{.Workers}}</p>
+								{{end}}
+								{{with .postgres}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">DefaultNetWork</label>
-								<div class="col-sm-10">
-									<p class="form-control-static">{{.DefaultNetWork}}</p>
+								{{end}}
+								{{with .nfs}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-							</div>
+								{{end}}
+								{{with .nats}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .syslog_aggregator}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .etcd}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .loggregator}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .uaa}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .cloud_controller_ng}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .cloud_controller_worker}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .cloud_controller_clock}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .hm9000}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .stats}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
+								{{with .dea_next}}
+							    <div class="panel panel-default">
+									<div class="panel-heading" >
+										<h2 class="panel-title">Jobs-{{.JobName}}</h2>
+									</div>
+									<div class="form-horizontal">
+								  		<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Name</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Name}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">ResourcesPoolName</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.ResourcesPool}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Instances</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.Instances}}</p>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">StaticIp</label>
+												<div class="col-sm-10">
+													<p class="form-control-static">{{.StaticIp}}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{end}}
 							{{end}}
 							
 						</div>
