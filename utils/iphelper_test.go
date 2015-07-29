@@ -30,3 +30,37 @@ func TestParseStaticIP(testing *testing.T) {
 
 	fmt.Println(ips)
 }
+
+func TestAssIp(testing *testing.T) {
+	iPFactory := NewIPFactory()
+	iPFactory.InitFactory("192.168.1.1", "192.168.1.20")
+	fmt.Printf(" ips \n = %s", iPFactory.ips)
+	fmt.Printf(" \nippool \n = %s", iPFactory.ippool)
+	fmt.Printf(" \njobMaps \n = %s", iPFactory.jobMaps)
+	fmt.Println()
+	fmt.Printf("%s", iPFactory.GetAssignaIP4Job(Job_Cloud_Controller_Clock))
+	fmt.Println()
+	abs, e := iPFactory.AssignaIP2Job(Job_Cloud_Controller_Clock, 2)
+	fmt.Printf("AssignaIP %s , %s", abs, e)
+	fmt.Println()
+	fmt.Printf("%s", iPFactory.GetAssignaIP4Job(Job_Cloud_Controller_Clock))
+	fmt.Println()
+
+	iPFactory.AssignaIP2Job(Job_Cloud_Controller_Clock, 3)
+
+	fmt.Printf("%s", iPFactory.GetAssignaIP4Job(Job_Cloud_Controller_Clock))
+	fmt.Println()
+
+	iPFactory.AssignaIP2Job(Job_Cloud_Controller_Clock, 1)
+
+	fmt.Printf("%s", iPFactory.GetAssignaIP4Job(Job_Cloud_Controller_Clock))
+	fmt.Println()
+}
+
+func TestSplite(testing *testing.T) {
+	str := SpliteIPs("192.168.129.100 - 192.168.129.126")
+	fmt.Println(str)
+	for _, i := range str {
+		fmt.Println(i)
+	}
+}
