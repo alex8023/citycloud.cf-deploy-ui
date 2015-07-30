@@ -40,7 +40,7 @@ func (this *CloudFoundryController) Post() {
 
 	} else if model == "NetWorks" {
 		// use default MicroBOSH vip
-		networks = entity.NewNetWorks(this.GetString("name"),
+		privateNetWorks = entity.NewNetWorks(this.GetString("name"),
 			this.GetString("netType"),
 			this.GetString("netId"),
 			this.GetString("cidr"),
@@ -49,19 +49,24 @@ func (this *CloudFoundryController) Post() {
 			this.GetString("reservedIp"),
 			this.GetString("staticIp"))
 		//rebuild
-		netWorksMap = make([]entity.NetWorks, 0)
-		netWorksMap = append(netWorksMap, networks)
-		cf.Compilation.DefaultNetWork = networks.Name
+		netWorksMap = make(map[string]entity.NetWorks)
+		netWorksMap["private"] = privateNetWorks
+
+		publicNetWorks := entity.NewFloatingNetWork(cf.CloudFoundryProperties.FloatingIp)
+		netWorksMap["public"] = publicNetWorks
+
+		cf.Compilation.DefaultNetWork = privateNetWorks.Name
+
 		for key, _ := range cf.ResourcesPools {
-			cf.ResourcesPools[key].DefaultNetWork = networks.Name
+			cf.ResourcesPools[key].DefaultNetWork = privateNetWorks.Name
 		}
+
 		cf.NetWorks = netWorksMap
 	} else if model == "Compilation" {
 		workers, _ := this.GetInt("workers", 6)
 		if workers <= 0 {
 			workers = 6
 		}
-
 		compilation = entity.NewCompilation(this.GetString("instanceType"),
 			this.GetString("availabilityZone"),
 			workers,
@@ -98,7 +103,7 @@ func (this *CloudFoundryController) Post() {
 		cf.ResourcesPools = resourcesPoolsMap
 	} else if model == "CloudFoundryJobs" {
 		iPFactory := utils.NewIPFactory()
-		ipArr := utils.SpliteIPs(networks.StaticIp)
+		ipArr := utils.SpliteIPs(privateNetWorks.StaticIp)
 
 		success, iperr := iPFactory.InitFactory(ipArr[0], ipArr[1])
 
@@ -189,7 +194,7 @@ func (this *CloudFoundryController) LoadData() {
 //deploy,only set deployment
 func (this *CloudFoundryController) Deploy() {
 	cloudFoundryTemplate := entity.NewCloudFoundryTemplate(cf)
-	ok, err := cloudFoundryTemplate.CreateCloudFoundryV2Yaml(cloudFoundryPath)
+	ok, err := cloudFoundryTemplate.CreateCloudFoundryV2Yaml(entity.CloudFoundryTemplateV2, cloudFoundryPath)
 	if !ok {
 		this.Data["Message"] = fmt.Sprintf("Error: %s", err)
 	} else {
@@ -206,9 +211,9 @@ var (
 	cloudFoundryProperties = entity.NewCloudFoundryProperties("cf-release",
 		"57cfc863-786d-4495-bb97-86d2f650a038", "192.168.133.102", "ccipaas.net", "cci")
 
-	compilation = entity.NewCompilation("flavor_91", "zone2", 6, networks.Name)
+	compilation = entity.NewCompilation("flavor_91", "zone2", 6, privateNetWorks.Name)
 
-	networks = entity.NewNetWorks("cf1",
+	privateNetWorks = entity.NewNetWorks("cf1",
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
 		"192.168.129.0/24",
@@ -217,8 +222,8 @@ var (
 		"192.168.129.1 - 192.168.129.99",
 		"192.168.129.100 - 192.168.129.126")
 
-	netWorksMap []entity.NetWorks = []entity.NetWorks{
-		networks,
+	netWorksMap map[string]entity.NetWorks = map[string]entity.NetWorks{
+		"private": privateNetWorks,
 	}
 
 	resourcesPool = entity.NewResourcesPools(

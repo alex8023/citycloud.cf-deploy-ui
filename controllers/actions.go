@@ -14,7 +14,7 @@ var (
 	cloudfoundryWebsocket string = "/cloudfoundrywebsocket"
 	boshWebsocket         string = "/boshwebsocket"
 
-	workDir      string = "/home/ubuntu/bosh-workspace/dephloy"
+	workDir      string = "/home/ubuntu/bosh-workspace/deploy"
 	microManiest string = "microbosh/micro_bosh.yml"
 	microPath    string = workDir + "/" + microManiest
 

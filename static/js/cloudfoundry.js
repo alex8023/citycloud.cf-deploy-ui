@@ -25,11 +25,19 @@ $(document).ready(function(){
 		SendMessage("AllStep");
 	})
 	
-	$('#set-microbosh').on('click',function(){
+	$('#set-deployment').on('click',function(){
 		SendMessage("SetDeploy");
 	})
 	
-	$('#deploy-microbosh').on('click',function(){
+	$('#upload-release').on('click',function(){
+		SendMessage("UpRelease");
+	})
+	
+	$('#upload-stemcell').on('click',function(){
+		SendMessage("UpStemcell");
+	})
+	
+	$('#deploy-cloudfoundry').on('click',function(){
 		SendMessage("Deploy");
 	})
 	
@@ -41,8 +49,8 @@ $(document).ready(function(){
         $("<div><b>Your browser does not support WebSockets.</b></div>").appendTo(log);
     }
 	
-	$('#config-microbosh').on('click', function(){
-		window.location.href = "microbosh?action=config";
+	$('#config-cloudfoundry').on('click', function(){
+		window.location.href = "cloudfoundry";
 	})
 	
 	function SendMessage(msg){
