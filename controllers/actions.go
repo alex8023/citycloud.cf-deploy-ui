@@ -18,9 +18,9 @@ var (
 	microManiest string = "microbosh/micro_bosh.yml"
 	microPath    string = workDir + "/" + microManiest
 
-	stemcells string = "/home/ubuntu/bosh-workspace/stemcells/bosh-stemcell-2719-openstack-kvm-ubuntu-lucid-go_agent.tgz"
+	stemcells string = beego.AppConfig.String("stemcells")
 
 	cloudFoundryManiest string = "cloudfoundry/cloudfoundry.yml"
 	cloudFoundryPath    string = workDir + "/" + cloudFoundryManiest
-	cloudFoundryRelease string = "/home/ubuntu/bosh-workspace/stemcells/boshrelease-cf-170.tgz"
+	cloudFoundryRelease string = beego.AppConfig.String("paas-release")
 )

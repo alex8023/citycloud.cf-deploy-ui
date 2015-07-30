@@ -25,9 +25,8 @@ func NewIPFactory() (iPFactory *IPFactory) {
 //初始化IPFactory
 func (iPFactory *IPFactory) InitFactory(start, end string) (bool, error) {
 	ips := parseStaticIP(start, end)
-	fmt.Println(ips)
 	if len(ips) < Job_Instance {
-		return false, fmt.Errorf("ip not enough")
+		return false, fmt.Errorf("there is not enough ip for PaaS instances: %s", Job_Instance)
 	}
 
 	ippool := make(map[string]string)
@@ -36,7 +35,6 @@ func (iPFactory *IPFactory) InitFactory(start, end string) (bool, error) {
 	}
 	iPFactory.ippool = ippool
 	iPFactory.ips = ips
-	fmt.Println(iPFactory.ips)
 	usedip := make(map[string]string)
 
 	jobMaps := make(map[string][]string)
@@ -153,9 +151,8 @@ func (iPFactory *IPFactory) GetUnUsedIp(size int) ([]string, error) {
 			}
 		}
 	}
-	fmt.Println(ips)
 	if len(ips) != size {
-		return nil, fmt.Errorf("Not enough ips to get ")
+		return nil, fmt.Errorf("there is not enough ip")
 	}
 
 	return ips, nil

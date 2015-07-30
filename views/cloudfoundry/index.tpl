@@ -1,4 +1,14 @@
 <div class="container" >
+	<div class="alert alert-warning alert-dismissible hide" role="alert" id = "warning-block">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>
+		<strong>Warning!</strong> {{.MessageErr}}
+	</div>
+	<input type="hidden" id="hidden-message" value="{{.MessageErr}}">
+	<script type="text/javascript">
+		if ($('#hidden-message').val()!=""){
+			$('#warning-block').attr("class","alert alert-warning alert-dismissible")
+		}
+	</script>
     <div class="panel panel-default">
 		<div class="panel-heading" >
 			<h2 class="panel-title">PaaS Deployment</h2>
