@@ -217,7 +217,7 @@
 						  	<div class="form-group">
 						    	<label for="{{.syslog_aggregator.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
 							    <div class="col-sm-10">
-							      	<input type="number" class="form-control" id="{{.syslog_aggregator.JobName}}_instances" placeholder="Instances" name="{{.syslog_aggregator.JobName}}_instances" value = "{{.gorouter.Instances}}" required readonly>
+							      	<input type="number" class="form-control" id="{{.syslog_aggregator.JobName}}_instances" placeholder="Instances" name="{{.syslog_aggregator.JobName}}_instances" value = "{{.syslog_aggregator.Instances}}" required readonly>
 							    </div>
 						  	</div>
 						</div>

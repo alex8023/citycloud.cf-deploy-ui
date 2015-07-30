@@ -3,7 +3,7 @@ package entity
 type CloudFoundry struct {
 	CloudFoundryProperties CloudFoundryProperties
 	Compilation            Compilation
-	NetWorks               []NetWorks
+	NetWorks               map[string]NetWorks
 	ResourcesPools         []ResourcesPools
 	CloudFoundryJobs       map[string]CloudFoundryJobs
 	Properties             Properties
@@ -16,6 +16,7 @@ type CloudFoundryProperties struct {
 	FloatingIp      string
 	SystemDomain    string
 	SystemDomainOrg string
+	CloudProperties CloudProperties
 }
 
 // 编译机器配置
@@ -68,7 +69,7 @@ type Properties struct {
 func NewCloudFoundry(
 	cloudFoundryProperties CloudFoundryProperties,
 	compilation Compilation,
-	netWorks []NetWorks,
+	netWorks map[string]NetWorks,
 	resourcesPools []ResourcesPools,
 	cloudFoundryJobs map[string]CloudFoundryJobs,
 	properties Properties) (cloudfoundry CloudFoundry) {

@@ -111,25 +111,34 @@ func (this *CloudFoundryController) Post() {
 			if instance <= 0 {
 				instance = 1
 			}
-			value.Instances = instance
 			value.ResourcesPool = this.GetString(key + "_resourcesPool_select")
-			value.StaticIp = []string{""}
 			if success {
 				assignaIP, assignaerr := iPFactory.AssignaIP2Job(key, instance)
 				if assignaerr == nil {
 					value.StaticIp = assignaIP
+					value.Instances = instance
 				} else {
-					erros = append(erros, assignaerr)
+					erros = append(erros, fmt.Errorf("Assign IP for Job : %s , Errors: %s", key, assignaerr))
 				}
 			}
 			cloudFoundryJobsMap[key] = value
 		}
 		cf.CloudFoundryJobs = cloudFoundryJobsMap
-	}
 
-	//	cloudfoundry := entity.CloudFoundry{}
-	//	this.CommitData(cloudfoundry)
-	fmt.Println(erros)
+		for index, value := range cf.ResourcesPools {
+			poolsize := 0
+			for _, v := range cf.CloudFoundryJobs {
+				if value.Name == v.ResourcesPool {
+					poolsize = poolsize + 1
+				}
+			}
+			value.Size = poolsize
+			cf.ResourcesPools[index] = value
+		}
+	}
+	if len(erros) != 0 {
+		this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", erros)
+	}
 	this.Get()
 }
 

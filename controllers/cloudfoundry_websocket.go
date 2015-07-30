@@ -135,7 +135,7 @@ func (this *CloudFoundryWebSocketController) uploadRelease(ws *websocket.Conn) b
 	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
-	writeStringMessage(ws, "Finished uploading PaaS v2 release")
+	writeStringMessage(ws, fmt.Sprintf("Finished uploading PaaS v2 release %s ", cloudFoundryRelease))
 	writeStringMessage(ws, "============================================")
 	return cmdRunner.Success()
 }
@@ -152,7 +152,7 @@ func (this *CloudFoundryWebSocketController) uploadStemcell(ws *websocket.Conn) 
 
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
-	writeStringMessage(ws, "Finished uploading stemcells 2719")
+	writeStringMessage(ws, fmt.Sprintf("Finished uploading stemcells %s ", stemcells))
 	writeStringMessage(ws, "============================================")
 	return cmdRunner.Success()
 }
