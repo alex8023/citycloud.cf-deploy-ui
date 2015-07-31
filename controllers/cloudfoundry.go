@@ -6,6 +6,7 @@ import (
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
+	"reflect"
 	"strconv"
 )
 
@@ -36,7 +37,8 @@ func (this *CloudFoundryController) Post() {
 			this.GetString("floatingIp"),
 			this.GetString("systemDomain"),
 			this.GetString("systemDomainOrg"))
-		cf.CloudFoundryProperties = cloudFoundryProperties
+
+		this.CommitData(cloudFoundryProperties)
 
 	} else if model == "NetWorks" {
 		// use default MicroBOSH vip
@@ -61,7 +63,7 @@ func (this *CloudFoundryController) Post() {
 			cf.ResourcesPools[key].DefaultNetWork = privateNetWorks.Name
 		}
 
-		cf.NetWorks = netWorksMap
+		this.CommitData(netWorksMap)
 	} else if model == "Compilation" {
 		workers, _ := this.GetInt("workers", 6)
 		if workers <= 0 {
@@ -71,7 +73,7 @@ func (this *CloudFoundryController) Post() {
 			this.GetString("availabilityZone"),
 			workers,
 			this.GetString("defaultNetWork"))
-		cf.Compilation = compilation
+		this.CommitData(compilation)
 	} else if model == "ResourcesPools" {
 		arrName := this.GetStrings("name")
 		arrInstanceType := this.GetStrings("instanceType")
@@ -100,7 +102,7 @@ func (this *CloudFoundryController) Post() {
 			}
 			resourcesPoolsMap = append(resourcesPoolsMap, addResourcesPool)
 		}
-		cf.ResourcesPools = resourcesPoolsMap
+		this.CommitData(resourcesPoolsMap)
 	} else if model == "CloudFoundryJobs" {
 		iPFactory := utils.NewIPFactory()
 		ipArr := utils.SpliteIPs(privateNetWorks.StaticIp)
@@ -128,7 +130,7 @@ func (this *CloudFoundryController) Post() {
 			}
 			cloudFoundryJobsMap[key] = value
 		}
-		cf.CloudFoundryJobs = cloudFoundryJobsMap
+		this.CommitData(cloudFoundryJobsMap)
 
 		for index, value := range cf.ResourcesPools {
 			poolsize := 0
@@ -203,8 +205,23 @@ func (this *CloudFoundryController) Deploy() {
 }
 
 //write data to const or database
-func (this *CloudFoundryController) CommitData(cloudfoundry entity.CloudFoundry) {
-	cf = cloudfoundry
+func (this *CloudFoundryController) CommitData(data interface{}) {
+	switch data.(type) {
+	case map[string]entity.CloudFoundryJobs:
+		cf.CloudFoundryJobs = data.(map[string]entity.CloudFoundryJobs)
+	case entity.CloudFoundryProperties:
+		cf.CloudFoundryProperties = data.(entity.CloudFoundryProperties)
+	case entity.Compilation:
+		cf.Compilation = data.(entity.Compilation)
+	case entity.CloudFoundry:
+		cf = data.(entity.CloudFoundry)
+	case map[string]entity.NetWorks:
+		cf.NetWorks = data.(map[string]entity.NetWorks)
+	case []entity.ResourcesPools:
+		cf.ResourcesPools = data.([]entity.ResourcesPools)
+	default:
+		this.Data["MessageErr"] = fmt.Sprintf("Unknow type %s", reflect.TypeOf(data))
+	}
 }
 
 var (
@@ -349,4 +366,6 @@ var (
 			1,
 			[]string{""}),
 	}
+
+	cloudf entity.CloudFoundry = entity.NewCloudFoundrySimple()
 )

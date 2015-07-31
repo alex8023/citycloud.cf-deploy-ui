@@ -82,6 +82,10 @@ func NewCloudFoundry(
 	return
 }
 
+func NewCloudFoundrySimple() CloudFoundry {
+	return CloudFoundry{}
+}
+
 func NewCloudFoundryProperties(
 	name string,
 	uuid string,
