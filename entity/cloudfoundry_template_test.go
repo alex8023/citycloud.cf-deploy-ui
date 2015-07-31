@@ -102,7 +102,9 @@ func InitCloudFoundryV2() CloudFoundryTemplate {
 
 	var cloudFoundryProperties = NewCloudFoundryProperties("cf-release",
 		"57cfc863-786d-4495-bb97-86d2f650a038", "192.168.133.102", "ccipaas.net", "cci")
+
 	cloudFoundryProperties.CloudProperties = cloudProperties
+
 	var compilation = NewCompilation("flavor_91", "zone2", 6, "cf1")
 
 	var networks = NewNetWorks("cf1",
