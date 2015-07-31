@@ -133,7 +133,7 @@ func (this *MicroBOSHWebSocketController) targetMicroBOSH(ws *websocket.Conn) bo
 	writeStringMessage(ws, "============================================")
 	writeStringMessage(ws, "Target to MicroBosh instances")
 	var out bytes.Buffer
-	var ip string = "192.168.133.108"
+	var ip string = mi.Network.Vip
 	target := fmt.Sprintf("https://%s:25555", ip)
 
 	loginCommand := utils.Command{Name: "bosh", Args: []string{"target", target}, Dir: workDir, Stdin: "admin\nadmin\n"}
