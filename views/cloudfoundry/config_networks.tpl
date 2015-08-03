@@ -11,7 +11,7 @@
 				    </div>
 			  	</div>
 				{{with .CloudFoundry}}
-				{{with .NetWorks}}{{range .}}
+				{{with .NetWorks}}{{with .private}}
 			  	<div class="form-group">
 			    	<label for="name" class="col-sm-2 control-label">Name</label>
 				    <div class="col-sm-10">
