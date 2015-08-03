@@ -29,7 +29,9 @@ $ cd github.com/citycloud
 $ git clone https://github.com/alex8023/citycloud.cf-deploy-ui.git
 ```
 
-#checkout development version of the branch
+## checkout development version of the branch
+
+```
 $ git checkout dev
 ```
 
@@ -40,6 +42,8 @@ $ git fetch
 $ git pull
 ```
 
+
+
 ## commit and pull
 
 ```
@@ -47,4 +51,13 @@ $ git add <file>
 $ git add .
 $ git commit -m "commit message"
 $ git push origin dev
+```
+
+## commit to gogit
+```
+$ git remote add gogit http://10.10.82.100:8800/cci-paas/citycloud.cf-deploy-ui.git
+
+$ git push gogit dev
+#or
+$ git push gogit master
 ```
