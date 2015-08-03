@@ -66,9 +66,6 @@ func (this *CloudFoundryController) Post() {
 				"",
 				"",
 				this.GetString("public-staticIp"))
-			ipArr := utils.SpliteIPs(publicNetWorks.StaticIp)
-			cf.CloudFoundryProperties.FloatingIp = ipArr[0]
-			//设置ip段的第一个ip为haproxy的浮动ip
 		} else {
 			publicNetWorks = entity.NewFloatingNetWork(cf.CloudFoundryProperties.FloatingIp)
 		}
@@ -216,6 +213,9 @@ func (this *CloudFoundryController) Deploy() {
 	templateText := ""
 	if iaasVersion == defaultVersion {
 		templateText = entity.CloudFoundryTemplateV3
+		ipArr := utils.SpliteIPs(publicNetWorks.StaticIp)
+		cf.CloudFoundryProperties.FloatingIp = ipArr[0]
+		//设置ip段的第一个ip为haproxy的浮动ip
 	} else {
 		templateText = entity.CloudFoundryTemplateV2
 	}
