@@ -23,4 +23,7 @@ var (
 	cloudFoundryManiest string = "cloudfoundry/cloudfoundry.yml"
 	cloudFoundryPath    string = workDir + "/" + cloudFoundryManiest
 	cloudFoundryRelease string = beego.AppConfig.String("paas-release")
+
+	iaasVersion    = beego.AppConfig.String("iaas-version")
+	defaultVersion = "CCI-IaaS3.0"
 )

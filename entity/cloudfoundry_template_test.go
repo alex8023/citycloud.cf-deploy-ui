@@ -7,7 +7,7 @@ import (
 
 func TestCloudFoundryTemplate(t *testing.T) {
 	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryV2Yaml(CloudFoundryTemplateV2, "/home/ubuntu/temp/cloudfoundryv2.yml")
+	_, err := cft.CreateCloudFoundryYaml(CloudFoundryTemplateV2, "/home/ubuntu/temp/cloudfoundryv2.yml")
 
 	if err != nil {
 		t.Error(err)
@@ -16,7 +16,7 @@ func TestCloudFoundryTemplate(t *testing.T) {
 
 func TestMeta(t *testing.T) {
 	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryV2Yaml(CloudFoundryMetaTemplateV2+`{{template "meta" .}}`, "/home/ubuntu/temp/metav2.yml")
+	_, err := cft.CreateCloudFoundryYaml(CloudFoundryMetaTemplateV2+`{{template "meta" .}}`, "/home/ubuntu/temp/metav2.yml")
 
 	if err != nil {
 		t.Error(err)
@@ -25,7 +25,7 @@ func TestMeta(t *testing.T) {
 
 func TestUpdate(t *testing.T) {
 	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryV2Yaml(CloudFoundryUpdateTempalte+`{{template "update" .}}`, "/home/ubuntu/temp/update.yml")
+	_, err := cft.CreateCloudFoundryYaml(CloudFoundryUpdateTempalte+`{{template "update" .}}`, "/home/ubuntu/temp/update.yml")
 
 	if err != nil {
 		t.Error(err)
@@ -34,7 +34,7 @@ func TestUpdate(t *testing.T) {
 
 func TestCompilation(t *testing.T) {
 	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryV2Yaml(CloudFoundryCompilationTemplate+`{{template "compilation" .}}`, "/home/ubuntu/temp/compilation.yml")
+	_, err := cft.CreateCloudFoundryYaml(CloudFoundryCompilationTemplate+`{{template "compilation" .}}`, "/home/ubuntu/temp/compilation.yml")
 
 	if err != nil {
 		t.Error(err)
@@ -43,7 +43,7 @@ func TestCompilation(t *testing.T) {
 
 func TestNetWorks(t *testing.T) {
 	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryV2Yaml(CloudFoundryNetworksTemplateV2+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv2.yml")
+	_, err := cft.CreateCloudFoundryYaml(CloudFoundryNetworksTemplateV2+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv2.yml")
 
 	if err != nil {
 		t.Error(err)
@@ -52,7 +52,7 @@ func TestNetWorks(t *testing.T) {
 
 func TestResourcePool(t *testing.T) {
 	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryV2Yaml(CloudFoundryResourcePoolTemplate+`{{template "resourcepool" .}}`, "/home/ubuntu/temp/resourcepool.yml")
+	_, err := cft.CreateCloudFoundryYaml(CloudFoundryResourcePoolTemplate+`{{template "resourcepool" .}}`, "/home/ubuntu/temp/resourcepool.yml")
 
 	if err != nil {
 		t.Error(err)
@@ -61,7 +61,7 @@ func TestResourcePool(t *testing.T) {
 
 func TestJobs(t *testing.T) {
 	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryV2Yaml(CloudFoundryJobsTemplate+`{{template "jobs" .}}`, "/home/ubuntu/temp/jobs.yml")
+	_, err := cft.CreateCloudFoundryYaml(CloudFoundryJobsTemplate+`{{template "jobs" .}}`, "/home/ubuntu/temp/jobs.yml")
 
 	if err != nil {
 		t.Error(err)
@@ -69,7 +69,7 @@ func TestJobs(t *testing.T) {
 }
 func TestProperties(t *testing.T) {
 	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryV2Yaml(CloudFoundryPropertiesTemplate+`{{template "properties" .}}`, "/home/ubuntu/temp/properties.yml")
+	_, err := cft.CreateCloudFoundryYaml(CloudFoundryPropertiesTemplate+`{{template "properties" .}}`, "/home/ubuntu/temp/properties.yml")
 
 	if err != nil {
 		t.Error(err)

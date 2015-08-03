@@ -24,12 +24,15 @@
 				      <input type="text" class="form-control" id="uuid" placeholder="Director UUID" name="uuid" value = "{{.Uuid}}" required>
 				    </div>
 			  	</div>
+				{{if eq $.IaaSVersion $.DefaultVersion}}
+				{{else}}
 			  	<div class="form-group">
 			    	<label for="floatingIp" class="col-sm-2 control-label">FloatingIp</label>
 				    <div class="col-sm-10">
 				      <input type="text" class="form-control" id="floatingIp" placeholder="FloatingIp" name="floatingIp" value = "{{.FloatingIp}}" required>
 				    </div>
 			  	</div>
+				{{end}}
 			  	<div class="form-group">
 			    	<label for="systemDomain" class="col-sm-2 control-label">SystemDomain</label>
 				    <div class="col-sm-10">

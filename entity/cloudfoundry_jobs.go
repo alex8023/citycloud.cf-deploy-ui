@@ -12,7 +12,7 @@ jobs:
     - {{.}}{{end}}
   - name: {{$.NetWorks.public.Name}}
     static_ips:
-    - {{$.NetWorks.public.StaticIp}}
+    - {{$.CloudFoundryProperties.FloatingIp}}
   release: cf2
   resource_pool: {{.haproxy.ResourcesPool}}
   template: haproxy

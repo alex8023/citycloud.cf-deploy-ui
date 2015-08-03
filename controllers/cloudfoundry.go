@@ -18,6 +18,8 @@ func (this *CloudFoundryController) Get() {
 	action := this.GetString("action")
 	this.Layout = "index.tpl"
 	this.Data["NavBarFocus"] = "cloudfoundry"
+	this.Data["IaaSVersion"] = iaasVersion
+	this.Data["DefaultVersion"] = defaultVersion
 	if action == "config" {
 		this.ConfigCloudFoundry()
 	} else if action == "deploy" {
@@ -41,20 +43,35 @@ func (this *CloudFoundryController) Post() {
 		this.CommitData(cloudFoundryProperties)
 
 	} else if model == "NetWorks" {
+		iaas := this.GetString("iaasVsersion")
 		// use default MicroBOSH vip
-		privateNetWorks = entity.NewNetWorks(this.GetString("name"),
-			this.GetString("netType"),
-			this.GetString("netId"),
-			this.GetString("cidr"),
-			this.GetString("dns"),
+		privateNetWorks = entity.NewNetWorks(this.GetString("private-name"),
+			this.GetString("private-netType"),
+			this.GetString("private-netId"),
+			this.GetString("private-cidr"),
+			this.GetString("private-dns"),
 			mi.Network.Vip,
-			this.GetString("reservedIp"),
-			this.GetString("staticIp"))
+			this.GetString("private-reservedIp"),
+			this.GetString("private-staticIp"))
 		//rebuild
 		netWorksMap = make(map[string]entity.NetWorks)
 		netWorksMap["private"] = privateNetWorks
 
-		publicNetWorks := entity.NewFloatingNetWork(cf.CloudFoundryProperties.FloatingIp)
+		if iaas == defaultVersion {
+			publicNetWorks = entity.NewNetWorks(this.GetString("public-name"),
+				this.GetString("public-netType"),
+				this.GetString("public-netId"),
+				this.GetString("public-cidr"),
+				"",
+				"",
+				"",
+				this.GetString("public-staticIp"))
+			ipArr := utils.SpliteIPs(publicNetWorks.StaticIp)
+			cf.CloudFoundryProperties.FloatingIp = ipArr[0]
+			//设置ip段的第一个ip为haproxy的浮动ip
+		} else {
+			publicNetWorks = entity.NewFloatingNetWork(cf.CloudFoundryProperties.FloatingIp)
+		}
 		netWorksMap["public"] = publicNetWorks
 
 		cf.Compilation.DefaultNetWork = privateNetWorks.Name
@@ -196,7 +213,14 @@ func (this *CloudFoundryController) LoadData() {
 //deploy,only set deployment
 func (this *CloudFoundryController) Deploy() {
 	cloudFoundryTemplate := entity.NewCloudFoundryTemplate(cf)
-	ok, err := cloudFoundryTemplate.CreateCloudFoundryV2Yaml(entity.CloudFoundryTemplateV2, cloudFoundryPath)
+	templateText := ""
+	if iaasVersion == defaultVersion {
+		templateText = entity.CloudFoundryTemplateV3
+	} else {
+		templateText = entity.CloudFoundryTemplateV2
+	}
+
+	ok, err := cloudFoundryTemplate.CreateCloudFoundryYaml(templateText, cloudFoundryPath)
 	if !ok {
 		this.Data["Message"] = fmt.Sprintf("Error: %s", err)
 	} else {
@@ -239,8 +263,17 @@ var (
 		"192.168.129.1 - 192.168.129.99",
 		"192.168.129.100 - 192.168.129.126")
 
+	publicNetWorks = entity.NewNetWorks("publc",
+		"manual",
+		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
+		"10.162.2.0/24",
+		"",
+		"",
+		"",
+		"10.162.2.28 - 10.162.2.29")
+
 	netWorksMap map[string]entity.NetWorks = map[string]entity.NetWorks{
-		"private": privateNetWorks,
+		"private": privateNetWorks, "public": publicNetWorks,
 	}
 
 	resourcesPool = entity.NewResourcesPools(
@@ -366,6 +399,4 @@ var (
 			1,
 			[]string{""}),
 	}
-
-	cloudf entity.CloudFoundry = entity.NewCloudFoundrySimple()
 )
