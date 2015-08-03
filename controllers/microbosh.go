@@ -5,6 +5,8 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
+	"io"
+	"os"
 )
 
 type MicroBoshController struct {
@@ -25,6 +27,13 @@ func (this *MicroBoshController) Get() {
 }
 
 func (this *MicroBoshController) Post() {
+	path := workSpace + "/" + "keys" + "/" + this.GetString("default_key_name") + ".private"
+
+	errors := this.SavePrivateKeyFile("private_key", path)
+
+	if errors != nil {
+		path = mi.CloudProperties.PrivateKey
+	}
 
 	network := entity.NewNetWork(this.GetString("vip"),
 		this.GetString("net_id"))
@@ -36,7 +45,7 @@ func (this *MicroBoshController) Post() {
 		this.GetString("api_key"),
 		this.GetString("tenant"),
 		this.GetString("default_key_name"),
-		"/home/ubuntu/bosh-workspace/key/test_microbosh.private",
+		path,
 		this.GetString("cci_ebs_url"),
 		this.GetString("cci_ebs_accesskey"),
 		this.GetString("cci_ebs_secretkey"))
@@ -47,6 +56,23 @@ func (this *MicroBoshController) Post() {
 
 	this.CommitData(microbosh)
 	this.Get()
+}
+
+func (this *MicroBoshController) SavePrivateKeyFile(key string, path string) error {
+	file, _, err := this.GetFile(key)
+	if err != nil {
+		logger.Debug("UpLoadFile error :%s", err)
+		return err
+	}
+
+	defer file.Close()
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	io.Copy(f, file)
+	return nil
 }
 
 func (this *MicroBoshController) IndexMicroBOSH() {

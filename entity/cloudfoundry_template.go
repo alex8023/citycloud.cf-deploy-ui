@@ -6,22 +6,22 @@ import (
 )
 
 type CloudFoundryTemplate struct {
-	cloudfoundry CloudFoundry
+	CloudFoundry CloudFoundry
 }
 
 func NewCloudFoundryTemplate(cloudfoundry CloudFoundry) (cft CloudFoundryTemplate) {
-	cft.cloudfoundry = cloudfoundry
+	cft.CloudFoundry = cloudfoundry
 	return
 }
 
-func (cft CloudFoundryTemplate) CreateCloudFoundryV2Yaml(template, path string) (bool, error) {
+func (cft CloudFoundryTemplate) CreateCloudFoundryYaml(template, path string) (bool, error) {
 	logger.Debug("Create CloudFoundry deployment file : %s", path)
-	return utils.CreateYmlFile("cloudfoundry", template, path, cft.cloudfoundry)
+	return utils.CreateYmlFile("cloudfoundry", template, path, cft.CloudFoundry)
 }
 
 func (cft CloudFoundryTemplate) CreateCloudFoundryV3Yaml(path string) (bool, error) {
 	logger.Debug("Create CloudFoundry deployment file : %s", path)
-	return utils.CreateYmlFile("cloudfoundry", CloudFoundryTemplateTextV33, path, cft.cloudfoundry)
+	return utils.CreateYmlFile("cloudfoundry", CloudFoundryTemplateTextV33, path, cft.CloudFoundry)
 }
 
 const (

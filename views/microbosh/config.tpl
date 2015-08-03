@@ -4,7 +4,7 @@
 			<h2 class="panel-title">MicroBOSH Deployment</h2>
 		</div>
   		<div class="panel-body">
-			<form class="form-horizontal" method="post" action="microbosh">
+			<form class="form-horizontal" method="post" action="microbosh" enctype="multipart/form-data">
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
 				      <button type="submit" class="btn btn-default " data-loading-text="Saving...">Save</button>

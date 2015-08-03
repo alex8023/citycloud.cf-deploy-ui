@@ -14,13 +14,17 @@ var (
 	cloudfoundryWebsocket string = "/cloudfoundrywebsocket"
 	boshWebsocket         string = "/boshwebsocket"
 
-	workDir      string = "/home/ubuntu/bosh-workspace/deploy"
+	workSpace    string = beego.AppConfig.String("workSpace")
+	workDir      string = workSpace + "/" + beego.AppConfig.String("workDir")
 	microManiest string = "microbosh/micro_bosh.yml"
 	microPath    string = workDir + "/" + microManiest
 
-	stemcells string = beego.AppConfig.String("stemcells")
+	stemcells string = workSpace + "/" + beego.AppConfig.String("stemcells")
 
 	cloudFoundryManiest string = "cloudfoundry/cloudfoundry.yml"
 	cloudFoundryPath    string = workDir + "/" + cloudFoundryManiest
-	cloudFoundryRelease string = beego.AppConfig.String("paas-release")
+	cloudFoundryRelease string = workSpace + "/" + beego.AppConfig.String("paas-release")
+
+	iaasVersion    = beego.AppConfig.String("iaas-version")
+	defaultVersion = "CCI-IaaS3.0"
 )

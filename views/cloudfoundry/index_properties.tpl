@@ -28,12 +28,15 @@
 									<p class="form-control-static">{{.Uuid}}</p>
 								</div>
 							</div>
+							{{if eq $.IaaSVersion $.DefaultVersion}}
+							{{else}}
 							<div class="form-group">
 								<label class="col-sm-2 control-label">FloatingIp</label>
 								<div class="col-sm-10">
 									<p class="form-control-static">{{.FloatingIp}}</p>
 								</div>
 							</div>
+							{{end}}
 							<div class="form-group">
 								<label class="col-sm-2 control-label">SystemDomain</label>
 								<div class="col-sm-10">
