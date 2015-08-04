@@ -7,6 +7,8 @@ type CloudFoundry struct {
 	ResourcesPools         []ResourcesPools
 	CloudFoundryJobs       map[string]CloudFoundryJobs
 	Properties             Properties
+	Release                Release
+	Stemcells              Stemcells
 }
 
 // CloudFoundry 基本属性配置
@@ -64,6 +66,16 @@ type CloudFoundryJobs struct {
 
 //Job属性配置
 type Properties struct {
+}
+
+type Release struct {
+	Name    string
+	Version string
+}
+
+type Stemcells struct {
+	Name    string
+	Version string
 }
 
 func NewCloudFoundry(
@@ -159,6 +171,30 @@ func NewFloatingNetWork(floatingIp string) (netWorks NetWorks) {
 	netWorks.StaticIp = floatingIp
 	netWorks.Name = "floating"
 	netWorks.NetType = "vip"
+	return
+}
+
+func NewRelease(name, version string) (release Release) {
+	if name == "" {
+		name = "cf"
+	}
+	if version == "" {
+		version = "170"
+	}
+	release.Name = name
+	release.Version = version
+	return
+}
+
+func NewStemcell(name, version string) (stemcell Stemcells) {
+	if name == "" {
+		name = "bosh-openstack-kvm-ubuntu-lucid-go_agent"
+	}
+	if version == "" {
+		version = "2719"
+	}
+	stemcell.Name = name
+	stemcell.Version = version
 	return
 }
 

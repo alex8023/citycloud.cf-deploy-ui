@@ -6,13 +6,13 @@ const (
 name: {{.CloudFoundryProperties.Name}}
 director_uuid: {{.CloudFoundryProperties.Uuid}}
 releases:
-- name: cf2
-  version: 170
+- name: {{.Release.Name}}
+  version: {{.Release.Version}}
 meta:
   environment: {{.CloudFoundryProperties.Name}}
   stemcell:
-    name: bosh-openstack-kvm-ubuntu-lucid-go_agent
-    version: 2719
+    name: {{.Stemcells.Name}}
+    version: {{.Stemcells.Version}}
   openstack:
     auth_url: {{.CloudFoundryProperties.CloudProperties.AuthUrl}}
     tenant: {{.CloudFoundryProperties.CloudProperties.Tenant}}
@@ -34,13 +34,13 @@ meta:
 name: {{.CloudFoundryProperties.Name}}
 director_uuid: {{.CloudFoundryProperties.Uuid}}
 releases:
-- name: cf2
-  version: 170
+- name: {{.Release.Name}}
+  version: {{.Release.Version}}
 meta:
   environment: {{.CloudFoundryProperties.Name}}
   stemcell:
-    name: bosh-openstack-kvm-ubuntu-lucid-go_agent
-    version: 2719
+    name: {{.Stemcells.Name}}
+    version: {{.Stemcells.Version}}
   openstack:
     auth_url: {{.CloudFoundryProperties.CloudProperties.AuthUrl}}
     tenant: {{.CloudFoundryProperties.CloudProperties.Tenant}}

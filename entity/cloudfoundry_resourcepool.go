@@ -10,7 +10,7 @@ resource_pools:{{range .}}
   network: {{.DefaultNetWork}}
   size: {{.Size}}
   stemcell:
-    name: bosh-openstack-kvm-ubuntu-lucid-go_agent
-    version: 2719
+    name: {{$.Stemcells.Name}}
+    version: {{$.Stemcells.Version}}
 {{end}}{{end}}{{end}}`
 )
