@@ -13,7 +13,7 @@ jobs:
   - name: {{$.NetWorks.public.Name}}
     static_ips:
     - {{$.CloudFoundryProperties.FloatingIp}}
-  release: cf2
+  release: {{$.Release.Name}}
   resource_pool: {{.haproxy.ResourcesPool}}
   template: haproxy
 
@@ -26,7 +26,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: gorouter
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.postgres.Name}}
   instances: {{.postgres.Instances}}
@@ -37,7 +37,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: postgres
-    release: cf2
+    release: {{$.Release.Name}}
   persistent_disk: 30720
 
 - name: {{.nfs.Name}}
@@ -49,7 +49,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: debian_nfs_server
-    release: cf2
+    release: {{$.Release.Name}}
   persistent_disk: 102400
 
 - name: {{.nats.Name}}
@@ -61,9 +61,9 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: nats
-    release: cf2
+    release: {{$.Release.Name}}
   - name: nats_stream_forwarder
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.syslog_aggregator.Name}}
   instances: {{.syslog_aggregator.Instances}}
@@ -74,7 +74,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: syslog_aggregator
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.etcd.Name}}
   instances: {{.etcd.Instances}}
@@ -85,9 +85,9 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: etcd
-    release: cf2
+    release: {{$.Release.Name}}
   - name: etcd_metrics_server
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.loggregator.Name}}
   instances: {{.loggregator.Instances}}
@@ -98,7 +98,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: loggregator
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.loggregator_traffic.Name}}
   instances: {{.loggregator_traffic.Instances}}
@@ -109,7 +109,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: loggregator_trafficcontroller
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.uaa.Name}}
   instances: {{.uaa.Instances}}
@@ -120,7 +120,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: uaa
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.cloud_controller_ng.Name}}
   instances: {{.cloud_controller_ng.Instances}}
@@ -131,7 +131,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: cloud_controller_ng
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.cloud_controller_worker.Name}}
   instances: {{.cloud_controller_worker.Instances}}
@@ -142,7 +142,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: cloud_controller_worker
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.cloud_controller_clock.Name}}
   instances: {{.cloud_controller_clock.Instances}}
@@ -153,7 +153,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: cloud_controller_clock
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.hm9000.Name}}
   instances: {{.hm9000.Instances}}
@@ -164,7 +164,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: hm9000
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.stats.Name}}
   instances: {{.stats.Instances}}
@@ -175,7 +175,7 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: collector
-    release: cf2
+    release: {{$.Release.Name}}
 
 - name: {{.dea_next.Name}}
   instances: {{.dea_next.Instances}}
@@ -186,9 +186,9 @@ jobs:
     - {{.}}{{end}}
   templates:
   - name: dea_next
-    release: cf2
+    release: {{$.Release.Name}}
   - name: dea_logging_agent
-    release: cf2
+    release: {{$.Release.Name}}
   persistent_disk: 102400
 {{end}}{{end}}`
 )

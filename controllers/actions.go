@@ -27,4 +27,10 @@ var (
 
 	iaasVersion    = beego.AppConfig.String("iaas-version")
 	defaultVersion = "CCI-IaaS3.0"
+
+	paasName    = beego.AppConfig.String("paasName")
+	paasVersion = beego.AppConfig.String("paasVersion")
+
+	stemcellName    = beego.AppConfig.String("stemcellName")
+	stemcellVersion = beego.AppConfig.String("stemcellVersion")
 )

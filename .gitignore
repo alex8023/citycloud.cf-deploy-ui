@@ -1,3 +1,7 @@
 citycloud.cf-deploy-ui
 citycloud.cf-deploy-ui.exe
 citycloud.cf-deploy-ui.log
+*.pprof
+*.memprof
+citycloud.cf-deploy-ui.tar.gz
+*.tar.gz

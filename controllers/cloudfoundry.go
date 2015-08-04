@@ -210,6 +210,8 @@ func (this *CloudFoundryController) LoadData() {
 
 //deploy,only set deployment
 func (this *CloudFoundryController) Deploy() {
+	cf.Release = entity.NewRelease(paasName, paasVersion)
+	cf.Stemcells = entity.NewStemcell(stemcellName, stemcellVersion)
 	cloudFoundryTemplate := entity.NewCloudFoundryTemplate(cf)
 	templateText := ""
 	if iaasVersion == defaultVersion {
@@ -388,7 +390,8 @@ var (
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Stats: entity.NewCloudFoundryJobs("stats",
+		utils.Job_Stats: entity.NewCloudFoundryJobs(
+			"stats",
 			utils.Job_Stats,
 			"normal",
 			1,
