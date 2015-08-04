@@ -262,6 +262,8 @@ func InitCloudFoundryV2() CloudFoundryTemplate {
 		ResourcesPools:         mapResourcesPools,
 		CloudFoundryJobs:       cloudFoundryJobsMap,
 	})
+	cft.CloudFoundry.Release = NewRelease("cf", "170")
+	cft.CloudFoundry.Stemcells = NewStemcell("", "")
 	return cft
 }
 
@@ -437,5 +439,8 @@ func InitCloudFoundryV3() CloudFoundryTemplate {
 		ResourcesPools:         mapResourcesPools,
 		CloudFoundryJobs:       cloudFoundryJobsMap,
 	})
+
+	cft.CloudFoundry.Release = NewRelease("cf", "170")
+	cft.CloudFoundry.Stemcells = NewStemcell("", "")
 	return cft
 }
