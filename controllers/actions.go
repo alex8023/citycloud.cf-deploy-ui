@@ -19,18 +19,16 @@ var (
 	microManiest string = "microbosh/micro_bosh.yml"
 	microPath    string = workDir + "/" + microManiest
 
-	stemcells string = workSpace + "/" + beego.AppConfig.String("stemcells")
-
 	cloudFoundryManiest string = "cloudfoundry/cloudfoundry.yml"
 	cloudFoundryPath    string = workDir + "/" + cloudFoundryManiest
-	cloudFoundryRelease string = workSpace + "/" + beego.AppConfig.String("paas-release")
+	cloudFoundryName           = beego.AppConfig.String("paasName")
+	cloudFoundryVersion        = beego.AppConfig.String("paasVersion")
+	cloudFoundryRelease string = workSpace + "/" + beego.AppConfig.String("paasRelease")
 
 	iaasVersion    = beego.AppConfig.String("iaas-version")
 	defaultVersion = "CCI-IaaS3.0"
 
-	paasName    = beego.AppConfig.String("paasName")
-	paasVersion = beego.AppConfig.String("paasVersion")
-
-	stemcellName    = beego.AppConfig.String("stemcellName")
-	stemcellVersion = beego.AppConfig.String("stemcellVersion")
+	stemcellName           = beego.AppConfig.String("stemcellName")
+	stemcellVersion        = beego.AppConfig.String("stemcellVersion")
+	stemcellRelease string = workSpace + "/" + beego.AppConfig.String("stemcellRelease")
 )

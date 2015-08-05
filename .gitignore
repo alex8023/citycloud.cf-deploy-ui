@@ -5,3 +5,4 @@ citycloud.cf-deploy-ui.log
 *.memprof
 citycloud.cf-deploy-ui.tar.gz
 *.tar.gz
+pushcode.sh

@@ -118,7 +118,7 @@ func (this *MicroBOSHWebSocketController) deployMicroBOSH(ws *websocket.Conn) bo
 	writeStringMessage(ws, "============================================")
 	writeStringMessage(ws, "Deploying MicroBosh instances")
 	var out bytes.Buffer
-	cmdCommand := utils.Command{Name: "bosh", Args: []string{"micro", "deploy", stemcells}, Dir: workDir, Stdin: "yes"}
+	cmdCommand := utils.Command{Name: "bosh", Args: []string{"micro", "deploy", stemcellRelease}, Dir: workDir, Stdin: "yes"}
 	cmdRunner := utils.NewDeployCmdRunner()
 	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
 	writeBytesBufferMessage(&out, &cmdRunner, ws)

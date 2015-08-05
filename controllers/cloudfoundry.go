@@ -210,7 +210,7 @@ func (this *CloudFoundryController) LoadData() {
 
 //deploy,only set deployment
 func (this *CloudFoundryController) Deploy() {
-	cf.Release = entity.NewRelease(paasName, paasVersion)
+	cf.Release = entity.NewRelease(cloudFoundryName, cloudFoundryVersion)
 	cf.Stemcells = entity.NewStemcell(stemcellName, stemcellVersion)
 	cloudFoundryTemplate := entity.NewCloudFoundryTemplate(cf)
 	templateText := ""
