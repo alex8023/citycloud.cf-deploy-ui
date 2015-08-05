@@ -146,13 +146,13 @@ func (this *CloudFoundryWebSocketController) uploadStemcell(ws *websocket.Conn) 
 	writeStringMessage(ws, "Uploading stemcells  ")
 	var out bytes.Buffer
 
-	cmdCommand := utils.Command{Name: "bosh", Args: []string{"upload", "stemcell", stemcells, "--skip-if-exists"}, Dir: workDir, Stdin: ""}
+	cmdCommand := utils.Command{Name: "bosh", Args: []string{"upload", "stemcell", stemcellRelease, "--skip-if-exists"}, Dir: workDir, Stdin: ""}
 	cmdRunner := utils.NewDeployCmdRunner()
 	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
 
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
-	writeStringMessage(ws, fmt.Sprintf("Finished uploading stemcells %s ", stemcells))
+	writeStringMessage(ws, fmt.Sprintf("Finished uploading stemcells %s ", stemcellRelease))
 	writeStringMessage(ws, "============================================")
 	return cmdRunner.Success()
 }
