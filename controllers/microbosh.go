@@ -17,6 +17,8 @@ func (this *MicroBoshController) Get() {
 	action := this.GetString("action")
 	this.Layout = "index.tpl"
 	this.Data["NavBarFocus"] = "microbosh"
+	this.Data["IaaSVersion"] = iaasVersion
+	this.Data["DefaultVersion"] = defaultVersion
 	if action == "config" {
 		this.ConfigMicroBOSH()
 	} else if action == "deploy" {
