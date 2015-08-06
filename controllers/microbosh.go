@@ -106,7 +106,14 @@ func (this *MicroBoshController) LoadData() {
 //deploy
 func (this *MicroBoshController) Deploy() {
 	microBOSHTemplate := entity.NewMicroBOSHTemplate(mi)
-	ok, err := microBOSHTemplate.CreateMicroBOSHYaml(microPath)
+
+	template := entity.MicroBOSHTemplateTextV2
+
+	if iaasVersion == defaultVersion {
+		template = entity.MicroBOSHTemplateTextV3
+	}
+
+	ok, err := microBOSHTemplate.CreateMicroBOSHYaml(template, microPath)
 	if !ok {
 		this.Data["Message"] = fmt.Sprintf("Error: %s", err)
 	} else {
