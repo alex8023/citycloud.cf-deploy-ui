@@ -1,33 +1,42 @@
 package entity
 
+import (
+	"github.com/astaxie/beego/orm"
+	"strconv"
+)
+
 type MicroBOSH struct {
+	Id              int
 	Name            string
-	Network         NetWork
-	Resources       Resources
-	CloudProperties CloudProperties
+	Network         NetWork         `orm:"-"`
+	Resources       Resources       `orm:"-"`
+	CloudProperties CloudProperties `orm:"-"`
 }
 
 type NetWork struct {
-	Vip    string
+	Id    int
+	Vip   string
 	NetId string
 }
 
 type Resources struct {
+	Id               int
 	PersistentDisk   string
 	InstanceType     string
 	AvailabilityZone string
 }
 
 type CloudProperties struct {
-	AuthUrl          string
-	UserName          string
-	ApiKey           string
-	Tenant            string
+	Id              int
+	AuthUrl         string
+	UserName        string
+	ApiKey          string
+	Tenant          string
 	DefaultKeyName  string
-	PrivateKey       string
-	CciEbsUrl       string
-	CciEbsAccesskey string
-	CciEbsSecretkey string
+	PrivateKey      string
+	CciEbsUrl       string `orm:"null"`
+	CciEbsAccesskey string `orm:"null"`
+	CciEbsSecretkey string `orm:"null"`
 }
 
 func NewMicroBOSH(
@@ -84,4 +93,22 @@ func NewCloudProperties(
 	cloudproperties.CciEbsAccesskey = cci_ebs_accesskey
 	cloudproperties.CciEbsSecretkey = cci_ebs_secretkey
 	return
+}
+
+func (microbosh MicroBOSH) GetById(ids string) MicroBOSH {
+	id, err := strconv.Atoi(ids)
+	if err != nil {
+		return microbosh
+	}
+	microbosh.Id = id
+	orm.NewOrm().Read(&microbosh)
+	return microbosh
+}
+
+func (microbosh *MicroBOSH) TableName() string {
+	return "micro_bosh"
+}
+
+func init() {
+	orm.RegisterModel(new(NetWork), new(CloudProperties), new(MicroBOSH))
 }
