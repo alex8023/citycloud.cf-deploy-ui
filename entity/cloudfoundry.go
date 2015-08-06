@@ -1,5 +1,10 @@
 package entity
 
+import (
+	"github.com/astaxie/beego/orm"
+	"strings"
+)
+
 type CloudFoundry struct {
 	CloudFoundryProperties CloudFoundryProperties
 	Compilation            Compilation
@@ -13,16 +18,18 @@ type CloudFoundry struct {
 
 // CloudFoundry 基本属性配置
 type CloudFoundryProperties struct {
+	Id              int
 	Name            string
 	Uuid            string
 	FloatingIp      string
 	SystemDomain    string
 	SystemDomainOrg string
-	CloudProperties CloudProperties
+	CloudProperties CloudProperties `orm:"-"`
 }
 
 // 编译机器配置
 type Compilation struct {
+	Id               int
 	InstanceType     string
 	AvailabilityZone string
 	Workers          int
@@ -35,6 +42,7 @@ type Compilation struct {
 //在CloudFoundry中使用map组装网络资源
 //默认情况下，允许定义一个私有网络和一个共有网络，IaaS2.0使用的共有网络为floating网络
 type NetWorks struct {
+	Id         int
 	Name       string
 	NetType    string
 	NetId      string
@@ -49,6 +57,7 @@ type NetWorks struct {
 //此对象仅配置一个资源池对象
 //在CloudFoundry中使用map组装资源池
 type ResourcesPools struct {
+	Id               int
 	Name             string
 	InstanceType     string
 	AvailabilityZone string
@@ -58,10 +67,11 @@ type ResourcesPools struct {
 
 type CloudFoundryJobs struct {
 	Name          string
-	JobName       string
+	JobName       string `orm:"pk"`
 	ResourcesPool string
-	Instances     int
-	StaticIp      []string
+	Instances     int      `orm:"default(1)"`
+	StaticIp      []string `orm:"-"`
+	StaticIps     string   `orm:"size(2048)"`
 }
 
 //Job属性配置
@@ -164,6 +174,9 @@ func NewCloudFoundryJobs(name, jobName, resourcePool string, instacnes int, stat
 	cloudFoundryJobs.ResourcesPool = resourcePool
 	cloudFoundryJobs.Instances = instacnes
 	cloudFoundryJobs.StaticIp = staticIp
+	if staticIp != nil {
+		cloudFoundryJobs.StaticIps = strings.Join(staticIp, ",")
+	}
 	return
 }
 
@@ -201,4 +214,8 @@ func NewStemcell(name, version string) (stemcell Stemcells) {
 func NewSimpleCloudFoundryProperties(name string) (cloudFoundryProperties CloudFoundryProperties) {
 	cloudFoundryProperties.Name = name
 	return
+}
+
+func init() {
+	orm.RegisterModel(new(CloudFoundryProperties), new(Compilation), new(NetWorks), new(CloudFoundryJobs), new(ResourcesPools))
 }
