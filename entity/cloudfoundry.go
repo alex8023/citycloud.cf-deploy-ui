@@ -2,6 +2,7 @@ package entity
 
 import (
 	"github.com/astaxie/beego/orm"
+	"strings"
 )
 
 type CloudFoundry struct {
@@ -68,8 +69,9 @@ type CloudFoundryJobs struct {
 	Name          string
 	JobName       string `orm:"pk"`
 	ResourcesPool string
-	Instances     int
+	Instances     int      `orm:"default(1)"`
 	StaticIp      []string `orm:"-"`
+	StaticIps     string   `orm:"size(2048)"`
 }
 
 //Job属性配置
@@ -172,6 +174,9 @@ func NewCloudFoundryJobs(name, jobName, resourcePool string, instacnes int, stat
 	cloudFoundryJobs.ResourcesPool = resourcePool
 	cloudFoundryJobs.Instances = instacnes
 	cloudFoundryJobs.StaticIp = staticIp
+	if staticIp != nil {
+		cloudFoundryJobs.StaticIps = strings.Join(staticIp, ",")
+	}
 	return
 }
 
