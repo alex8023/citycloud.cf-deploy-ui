@@ -30,40 +30,45 @@
 						<p class="form-control-static">{{.Name}}</p>
 					</div>
 				</div>
+				{{with .Network}}
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Vip</label>
 					<div class="col-sm-10">
-						<p class="form-control-static">{{with .Network}}{{.Vip}}{{end}}</p>
+						<p class="form-control-static">{{.Vip}}</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">NetId</label>
 					<div class="col-sm-10">
-						<p class="form-control-static">{{with .Network}}{{.NetId}}{{end}}</p>
+						<p class="form-control-static">{{.NetId}}</p>
 					</div>
 				</div>
+				{{end}}
+				{{with .Resources}}
 				<div class="form-group">
 					<label class="col-sm-2 control-label">PersistentDiskSize</label>
 					<div class="col-sm-10">
-						<p class="form-control-static">{{with .Resources}}{{.PersistentDisk}}{{end}}</p>
+						<p class="form-control-static">{{.PersistentDisk}}</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label  class="col-sm-2 control-label">InstanceType</label>
 					<div class="col-sm-10">
-						<p class="form-control-static">{{with .Resources}}{{.InstanceType}}{{end}}</p>
+						<p class="form-control-static">{{.InstanceType}}</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label  class="col-sm-2 control-label">AvailabilityZone</label>
 					<div class="col-sm-10">
-						<p class="form-control-static">{{with .Resources}}{{.AvailabilityZone}}{{end}}</p>
+						<p class="form-control-static">{{.AvailabilityZone}}</p>
 					</div>
 				</div>
+				{{end}}
+				{{with .CloudProperties}}
 				<div class="form-group">
 					<label  class="col-sm-2 control-label">AuthUrl</label>
 					<div class="col-sm-10">
-						<p class="form-control-static">{{with .CloudProperties}}{{.AuthUrl}}</p>
+						<p class="form-control-static">{{.AuthUrl}}</p>
 					</div>
 				</div>
 				<div class="form-group">
@@ -96,7 +101,7 @@
 						<p class="form-control-static">{{.PrivateKey}}</p>
 					</div>
 				</div>
-				
+				{{if ne $.IaaSVersion $.DefaultVersion}}
 				<div class="form-group">
 					<label  class="col-sm-2 control-label">NBSAuthUrl</label>
 					<div class="col-sm-10">
@@ -112,9 +117,11 @@
 				<div class="form-group">
 					<label  class="col-sm-2 control-label">NBSSecretkey</label>
 					<div class="col-sm-10">
-						<p class="form-control-static">{{.CciEbsSecretkey}}{{end}}</p>
+						<p class="form-control-static">{{.CciEbsSecretkey}}</p>
 					</div>
 				</div>
+				{{end}}
+				{{end}}
 				{{end}}
 			</div>
 		</div>

@@ -17,6 +17,8 @@ func (this *MicroBoshController) Get() {
 	action := this.GetString("action")
 	this.Layout = "index.tpl"
 	this.Data["NavBarFocus"] = "microbosh"
+	this.Data["IaaSVersion"] = iaasVersion
+	this.Data["DefaultVersion"] = defaultVersion
 	if action == "config" {
 		this.ConfigMicroBOSH()
 	} else if action == "deploy" {
@@ -104,7 +106,14 @@ func (this *MicroBoshController) LoadData() {
 //deploy
 func (this *MicroBoshController) Deploy() {
 	microBOSHTemplate := entity.NewMicroBOSHTemplate(mi)
-	ok, err := microBOSHTemplate.CreateMicroBOSHYaml(microPath)
+
+	template := entity.MicroBOSHTemplateTextV2
+
+	if iaasVersion == defaultVersion {
+		template = entity.MicroBOSHTemplateTextV3
+	}
+
+	ok, err := microBOSHTemplate.CreateMicroBOSHYaml(template, microPath)
 	if !ok {
 		this.Data["Message"] = fmt.Sprintf("Error: %s", err)
 	} else {

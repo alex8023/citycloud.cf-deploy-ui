@@ -8,6 +8,7 @@ type BOSH struct {
 	Director        string
 	MicroBOSHIP     string
 	CloudProperties CloudProperties
+	Release         Release
 }
 
 func NewBOSH(name,
