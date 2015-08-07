@@ -2,32 +2,31 @@ package entity
 
 import (
 	"github.com/astaxie/beego/orm"
-	"strconv"
 )
 
 type MicroBOSH struct {
-	Id              int
+	Id              int64
 	Name            string
-	Network         NetWork         `orm:"-"`
+	NetWork         NetWork         `orm:"-"`
 	Resources       Resources       `orm:"-"`
 	CloudProperties CloudProperties `orm:"-"`
 }
 
 type NetWork struct {
-	Id    int
+	Id    int64
 	Vip   string
 	NetId string
 }
 
 type Resources struct {
-	Id               int
+	Id               int64
 	PersistentDisk   string
 	InstanceType     string
 	AvailabilityZone string
 }
 
 type CloudProperties struct {
-	Id              int
+	Id              int64
 	AuthUrl         string
 	UserName        string
 	ApiKey          string
@@ -46,7 +45,7 @@ func NewMicroBOSH(
 	cloudproperties CloudProperties,
 ) (microbosh MicroBOSH) {
 	microbosh.Name = name
-	microbosh.Network = network
+	microbosh.NetWork = network
 	microbosh.Resources = resource
 	microbosh.CloudProperties = cloudproperties
 	return
@@ -93,16 +92,6 @@ func NewCloudProperties(
 	cloudproperties.CciEbsAccesskey = cci_ebs_accesskey
 	cloudproperties.CciEbsSecretkey = cci_ebs_secretkey
 	return
-}
-
-func (microbosh MicroBOSH) GetById(ids string) MicroBOSH {
-	id, err := strconv.Atoi(ids)
-	if err != nil {
-		return microbosh
-	}
-	microbosh.Id = id
-	orm.NewOrm().Read(&microbosh)
-	return microbosh
 }
 
 func (microbosh *MicroBOSH) TableName() string {

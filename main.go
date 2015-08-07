@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "github.com/astaxie/beego"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	_ "github.com/citycloud/citycloud.cf-deploy-ui/models"
@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	//	beego.Run()
-	initDB()
+	beego.Run()
+	//	initDB()
 
 }
 
@@ -20,5 +20,7 @@ func initDB() {
 
 	//import _ "github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	//import _ "github.com/citycloud/citycloud.cf-deploy-ui/models"
+	//import	 _ "github.com/go-sql-driver/mysql"
+	//import "github.com/astaxie/beego/orm"
 	// auto create tables
 }

@@ -30,7 +30,7 @@
 						<p class="form-control-static">{{.Name}}</p>
 					</div>
 				</div>
-				{{with .Network}}
+				{{with .NetWork}}
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Vip</label>
 					<div class="col-sm-10">

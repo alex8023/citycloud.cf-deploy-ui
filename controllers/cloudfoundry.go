@@ -50,7 +50,7 @@ func (this *CloudFoundryController) Post() {
 			this.GetString("private-netId"),
 			this.GetString("private-cidr"),
 			this.GetString("private-dns"),
-			mi.Network.Vip,
+			mi.NetWork.Vip,
 			this.GetString("private-reservedIp"),
 			this.GetString("private-staticIp"))
 		//rebuild
@@ -204,7 +204,7 @@ func (this *CloudFoundryController) ConfigCloudFoundry() {
 //read data from const or database
 func (this *CloudFoundryController) LoadData() {
 	//logger.Debug("cloudfoundry properties: %s", cf)
-	cf.CloudFoundryProperties.CloudProperties = mi.CloudProperties
+	//	cf.CloudFoundryProperties.CloudProperties = mi.CloudProperties
 	this.Data["CloudFoundry"] = cf
 }
 
