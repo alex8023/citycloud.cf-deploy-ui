@@ -15,7 +15,8 @@
 			  	<div class="form-group">
 			    	<label for="name" class="col-sm-2 control-label">Deployment Name</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="name" placeholder="Deployment Name" name="name" value = "{{.Name}}" required>
+						<input type="hidden" name="id" value="{{.Id}}">
+				      	<input type="text" class="form-control" id="name" placeholder="Deployment Name" name="name" value = "{{.Name}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">

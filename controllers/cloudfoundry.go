@@ -40,6 +40,10 @@ func (this *CloudFoundryController) Post() {
 			this.GetString("systemDomain"),
 			this.GetString("systemDomainOrg"))
 
+		id, err := this.GetInt64("id", 0)
+		if err == nil {
+			cloudFoundryProperties.Id = id
+		}
 		this.CommitData(cloudFoundryProperties)
 
 	} else if model == "NetWorks" {
@@ -73,13 +77,17 @@ func (this *CloudFoundryController) Post() {
 		}
 		netWorksMap[utils.Net_Public] = publicNetWorks
 
-		cf.Compilation.DefaultNetWork = privateNetWorks.Name
+		compilation = cf.Compilation
+		compilation.DefaultNetWork = privateNetWorks.Name
+		this.CommitData(compilation)
 
-		for key, _ := range cf.ResourcesPools {
-			cf.ResourcesPools[key].DefaultNetWork = privateNetWorks.Name
+		for key, _ := range resourcesPoolsMap {
+			resourcesPoolsMap[key].DefaultNetWork = privateNetWorks.Name
 		}
 
+		this.CommitData(resourcesPoolsMap)
 		this.CommitData(netWorksMap)
+
 	} else if model == "Compilation" {
 		workers, _ := this.GetInt("workers", 6)
 		if workers <= 0 {
@@ -89,6 +97,11 @@ func (this *CloudFoundryController) Post() {
 			this.GetString("availabilityZone"),
 			workers,
 			this.GetString("defaultNetWork"))
+
+		id, err := this.GetInt64("id", 0)
+		if err == nil {
+			compilation.Id = id
+		}
 		this.CommitData(compilation)
 	} else if model == "ResourcesPools" {
 		arrName := this.GetStrings("name")
@@ -148,16 +161,17 @@ func (this *CloudFoundryController) Post() {
 		}
 		this.CommitData(cloudFoundryJobsMap)
 
-		for index, value := range cf.ResourcesPools {
+		for index, value := range resourcesPoolsMap {
 			poolsize := 0
-			for _, v := range cf.CloudFoundryJobs {
+			for _, v := range cloudFoundryJobsMap {
 				if value.Name == v.ResourcesPool {
 					poolsize = poolsize + 1
 				}
 			}
 			value.Size = poolsize
-			cf.ResourcesPools[index] = value
+			resourcesPoolsMap[index] = value
 		}
+		this.CommitData(resourcesPoolsMap)
 	}
 	if len(erros) != 0 {
 		this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", erros)
@@ -259,15 +273,31 @@ func (this *CloudFoundryController) Deploy() {
 func (this *CloudFoundryController) CommitData(data interface{}) {
 	switch data.(type) {
 	case map[string]entity.CloudFoundryJobs:
-		cf.CloudFoundryJobs = data.(map[string]entity.CloudFoundryJobs)
+		cloudFoundryJobsMap = data.(map[string]entity.CloudFoundryJobs)
+		for key, value := range cloudFoundryJobsMap {
+			value.Update()
+			cloudFoundryJobsMap[key] = value
+		}
+		cf.CloudFoundryJobs = cloudFoundryJobsMap
 	case entity.CloudFoundryProperties:
-		cf.CloudFoundryProperties = data.(entity.CloudFoundryProperties)
+		cloudFoundryProperties = data.(entity.CloudFoundryProperties)
+		cloudFoundryProperties.Update()
+		cf.CloudFoundryProperties = cloudFoundryProperties
 	case entity.Compilation:
-		cf.Compilation = data.(entity.Compilation)
+		compilation = data.(entity.Compilation)
+		compilation.Update()
+		cf.Compilation = compilation
 	case entity.CloudFoundry:
 		cf = data.(entity.CloudFoundry)
+
 	case map[string]entity.NetWorks:
-		cf.NetWorks = data.(map[string]entity.NetWorks)
+		netWorksMap = data.(map[string]entity.NetWorks)
+		for key, value := range netWorksMap {
+			value.Update()
+			netWorksMap[key] = value
+		}
+		cf.NetWorks = netWorksMap
+
 	case []entity.ResourcesPools:
 		cf.ResourcesPools = data.([]entity.ResourcesPools)
 	default:

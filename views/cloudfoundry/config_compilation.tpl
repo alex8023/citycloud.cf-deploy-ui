@@ -15,6 +15,7 @@
 			  	<div class="form-group">
 			    	<label for="instanceType" class="col-sm-2 control-label">InstanceType</label>
 				    <div class="col-sm-10">
+						<input type="hidden" name="id" value="{{.Id}}">
 				      <input type="text" class="form-control" id="instanceType" placeholder="InstanceType" name="instanceType" value = "{{.InstanceType}}" required>
 				    </div>
 			  	</div>
