@@ -2,6 +2,7 @@ package entity
 
 import (
 	"github.com/astaxie/beego/orm"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"strings"
 )
 
@@ -18,7 +19,7 @@ type CloudFoundry struct {
 
 // CloudFoundry 基本属性配置
 type CloudFoundryProperties struct {
-	Id              int
+	Id              int64
 	Name            string
 	Uuid            string
 	FloatingIp      string
@@ -29,7 +30,7 @@ type CloudFoundryProperties struct {
 
 // 编译机器配置
 type Compilation struct {
-	Id               int
+	Id               int64
 	InstanceType     string
 	AvailabilityZone string
 	Workers          int
@@ -42,22 +43,22 @@ type Compilation struct {
 //在CloudFoundry中使用map组装网络资源
 //默认情况下，允许定义一个私有网络和一个共有网络，IaaS2.0使用的共有网络为floating网络
 type NetWorks struct {
-	Id         int
-	Name       string
-	NetType    string
-	NetId      string
-	Cidr       string
-	Dns        string
-	PowerDns   string
-	ReservedIp string
-	StaticIp   string
+	NetWorkName string `orm:"pk"`
+	Name        string
+	NetType     string
+	NetId       string
+	Cidr        string
+	Dns         string
+	PowerDns    string
+	ReservedIp  string
+	StaticIp    string
 }
 
 //资源池配置
 //此对象仅配置一个资源池对象
 //在CloudFoundry中使用map组装资源池
 type ResourcesPools struct {
-	Id               int
+	Id               int64
 	Name             string
 	InstanceType     string
 	AvailabilityZone string
@@ -136,6 +137,7 @@ func NewCompilation(
 
 func NewNetWorks(
 	name,
+	netWorkName,
 	netType,
 	netId,
 	cidr,
@@ -144,6 +146,7 @@ func NewNetWorks(
 	reservedIp,
 	staticIp string) (netWorks NetWorks) {
 	netWorks.Name = name
+	netWorks.NetWorkName = netWorkName
 	netWorks.NetType = netType
 	netWorks.NetId = netId
 	netWorks.Cidr = cidr
@@ -214,6 +217,85 @@ func NewStemcell(name, version string) (stemcell Stemcells) {
 func NewSimpleCloudFoundryProperties(name string) (cloudFoundryProperties CloudFoundryProperties) {
 	cloudFoundryProperties.Name = name
 	return
+}
+
+func (cloudFoundryProperties *CloudFoundryProperties) Load() error {
+
+	cloud := cloudFoundryProperties.CloudProperties
+	cloud.Load()
+
+	queryOneErr := orm.NewOrm().QueryTable(cloudFoundryProperties).One(cloudFoundryProperties, "Id")
+	if queryOneErr != nil {
+		logger.Error("Query One failed %s", queryOneErr)
+	}
+	errors := orm.NewOrm().Read(cloudFoundryProperties, "Id")
+	if errors != nil {
+		logger.Error("Read CloudFoundryProperties error : %s", errors)
+		_, err := orm.NewOrm().Insert(cloudFoundryProperties)
+		if err != nil {
+			logger.Error("Inert CloudFoundryProperties error %s ", err)
+		}
+	}
+
+	cloudFoundryProperties.CloudProperties = cloud
+
+	return errors
+}
+
+func (compilation *Compilation) Load() error {
+
+	queryOneErr := orm.NewOrm().QueryTable(compilation).One(compilation, "Id")
+	if queryOneErr != nil {
+		logger.Error("Query One failed %s", queryOneErr)
+	}
+	errors := orm.NewOrm().Read(compilation, "Id")
+	if errors != nil {
+		logger.Error("Read Compilation error : %s", errors)
+		_, err := orm.NewOrm().Insert(compilation)
+		if err != nil {
+			logger.Error("Inert Compilation error %s ", err)
+		}
+	}
+	return errors
+}
+
+func (netWorks *NetWorks) Load() error {
+
+	errors := orm.NewOrm().Read(netWorks, "Id")
+	if errors != nil {
+		logger.Error("Read NetWorks error : %s", errors)
+		_, err := orm.NewOrm().Insert(netWorks)
+		if err != nil {
+			logger.Error("Inert NetWorks error %s ", err)
+		}
+	}
+	return errors
+}
+
+func (resourcesPools *ResourcesPools) Load() error {
+
+	errors := orm.NewOrm().Read(resourcesPools, "Id")
+	if errors != nil {
+		logger.Error("Read ResourcesPools error : %s", errors)
+		_, err := orm.NewOrm().Insert(resourcesPools)
+		if err != nil {
+			logger.Error("Inert ResourcesPools error %s ", err)
+		}
+	}
+	return errors
+}
+
+func (cloudFoundryJobs *CloudFoundryJobs) Load() error {
+
+	errors := orm.NewOrm().Read(cloudFoundryJobs, "JobName")
+	if errors != nil {
+		logger.Error("Read CloudFoundryJobs error : %s", errors)
+		_, err := orm.NewOrm().Insert(cloudFoundryJobs)
+		if err != nil {
+			logger.Error("Inert CloudFoundryJobs error %s ", err)
+		}
+	}
+	return errors
 }
 
 func init() {

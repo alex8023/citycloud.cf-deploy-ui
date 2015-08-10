@@ -6,5 +6,5 @@ citycloud.cf-deploy-ui.log
 citycloud.cf-deploy-ui.tar.gz
 *.tar.gz
 pushcode.sh
-pushcode.sh
 initDB.sh
+exportDb.sh

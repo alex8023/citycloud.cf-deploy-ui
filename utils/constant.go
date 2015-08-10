@@ -23,3 +23,8 @@ const (
 const (
 	Job_Instance = 16
 )
+
+const (
+	Net_Public  = "public"
+	Net_Private = "private"
+)

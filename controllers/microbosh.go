@@ -109,6 +109,22 @@ func (this *MicroBoshController) DeployMicroBOSH() {
 
 //read data from const or database
 func (this *MicroBoshController) LoadData() {
+
+	net := mi.NetWork
+	net.Load()
+
+	resource := mi.Resources
+	resource.Load()
+
+	cloudproperties := mi.CloudProperties
+	cloudproperties.Load()
+
+	mi.Load()
+
+	mi.NetWork = net
+	mi.CloudProperties = cloudproperties
+	mi.Resources = resource
+
 	this.Data["MicroBOSH"] = mi
 }
 
@@ -133,6 +149,7 @@ func (this *MicroBoshController) Deploy() {
 //write data to const or database
 func (this *MicroBoshController) CommitData(microbosh entity.MicroBOSH) {
 	mi = microbosh
+	mi.Update()
 }
 
 var mi entity.MicroBOSH = entity.NewMicroBOSH("microbosh-openstack",

@@ -11,7 +11,8 @@
 						    	<label for="name" class="col-sm-2 control-label">Name</label>
 							    <div class="col-sm-10">
 							      <input type="text" class="form-control" id="name" placeholder="Name" name="private-name" value = "{{.Name}}" required>
-							    </div>
+							    <input type="hidden" name = "private-netWorkName" value = "{{.NetWorkName}}">
+								</div>
 						  	</div>
 						  	<div class="form-group">
 						    	<label for="netType" class="col-sm-2 control-label">NetType</label>
@@ -63,7 +64,8 @@
 						  	<div class="form-group">
 						    	<label for="name" class="col-sm-2 control-label">Name</label>
 							    <div class="col-sm-10">
-							      <input type="text" class="form-control" id="name" placeholder="Name" name="public-name" value = "{{.Name}}" required>
+							      	<input type="text" class="form-control" id="name" placeholder="Name" name="public-name" value = "{{.Name}}" required>
+									<input type="hidden" name = "public-netWorkName" value = "{{.NetWorkName}}">
 							    </div>
 						  	</div>
 						  	<div class="form-group">
