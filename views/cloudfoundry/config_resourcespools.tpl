@@ -24,6 +24,7 @@
 						  	<div class="form-group">
 						    	<label for="name" class="col-sm-2 control-label">Name</label>
 							    <div class="col-sm-10">
+									<input type="hidden" name ="id" value ="{{.Id}}">
 							      	<input type="text" class="form-control" id="name" placeholder="Name" name="name" value = "{{.Name}}" required>
 							    </div>
 						  	</div>

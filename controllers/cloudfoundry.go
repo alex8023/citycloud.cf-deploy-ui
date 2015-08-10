@@ -205,8 +205,30 @@ func (this *CloudFoundryController) ConfigCloudFoundry() {
 
 //read data from const or database
 func (this *CloudFoundryController) LoadData() {
-	//logger.Debug("cloudfoundry properties: %s", cf)
-	//	cf.CloudFoundryProperties.CloudProperties = mi.CloudProperties
+	compilation.Load()
+
+	cloudFoundryProperties.Load()
+
+	for key, network := range netWorksMap {
+		network.Load()
+		netWorksMap[key] = network
+	}
+
+	for key, jobs := range cloudFoundryJobsMap {
+		jobs.Load()
+		cloudFoundryJobsMap[key] = jobs
+	}
+
+	for index, value := range resourcesPoolsMap {
+		value.Load()
+		resourcesPoolsMap[index] = value
+	}
+
+	cf.Compilation = compilation
+	cf.CloudFoundryProperties = cloudFoundryProperties
+	cf.NetWorks = netWorksMap
+	cf.CloudFoundryJobs = cloudFoundryJobsMap
+	cf.ResourcesPools = resourcesPoolsMap
 	this.Data["CloudFoundry"] = cf
 }
 

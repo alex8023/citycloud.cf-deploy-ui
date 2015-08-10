@@ -242,6 +242,14 @@ func (cloudFoundryProperties *CloudFoundryProperties) Load() error {
 	return errors
 }
 
+func (cloudFoundryProperties *CloudFoundryProperties) Update() error {
+	_, err := orm.NewOrm().Update(cloudFoundryProperties)
+	if err != nil {
+		logger.Error("Update CloudFoundryProperties error %s ", err)
+	}
+	return err
+}
+
 func (compilation *Compilation) Load() error {
 
 	queryOneErr := orm.NewOrm().QueryTable(compilation).One(compilation, "Id")
@@ -259,9 +267,17 @@ func (compilation *Compilation) Load() error {
 	return errors
 }
 
+func (compilation *Compilation) Update() error {
+	_, err := orm.NewOrm().Update(compilation)
+	if err != nil {
+		logger.Error("Update Compilation error %s ", err)
+	}
+	return err
+}
+
 func (netWorks *NetWorks) Load() error {
 
-	errors := orm.NewOrm().Read(netWorks, "Id")
+	errors := orm.NewOrm().Read(netWorks, "NetWorkName")
 	if errors != nil {
 		logger.Error("Read NetWorks error : %s", errors)
 		_, err := orm.NewOrm().Insert(netWorks)
@@ -270,6 +286,14 @@ func (netWorks *NetWorks) Load() error {
 		}
 	}
 	return errors
+}
+
+func (netWorks *NetWorks) Update() error {
+	_, err := orm.NewOrm().Update(netWorks)
+	if err != nil {
+		logger.Error("Update NetWorks error %s ", err)
+	}
+	return err
 }
 
 func (resourcesPools *ResourcesPools) Load() error {
@@ -285,6 +309,23 @@ func (resourcesPools *ResourcesPools) Load() error {
 	return errors
 }
 
+func (resourcesPools *ResourcesPools) Update() error {
+	_, err := orm.NewOrm().Update(resourcesPools)
+	if err != nil {
+		logger.Error("Update ResourcesPools error %s ", err)
+	}
+	return err
+}
+
+func LoadResourcePools(resourcesPools []ResourcesPools) ([]ResourcesPools, error) {
+
+	for index, value := range resourcesPools {
+		logger.Debug("%s,%s", index, value)
+	}
+
+	return nil, nil
+}
+
 func (cloudFoundryJobs *CloudFoundryJobs) Load() error {
 
 	errors := orm.NewOrm().Read(cloudFoundryJobs, "JobName")
@@ -296,6 +337,14 @@ func (cloudFoundryJobs *CloudFoundryJobs) Load() error {
 		}
 	}
 	return errors
+}
+
+func (cloudFoundryJobs *CloudFoundryJobs) Update() error {
+	_, err := orm.NewOrm().Update(cloudFoundryJobs)
+	if err != nil {
+		logger.Error("Update CloudFoundryJobs error %s ", err)
+	}
+	return err
 }
 
 func init() {
