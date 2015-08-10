@@ -2,32 +2,32 @@ package entity
 
 import (
 	"github.com/astaxie/beego/orm"
-	"strconv"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 type MicroBOSH struct {
-	Id              int
+	Id              int64
 	Name            string
-	Network         NetWork         `orm:"-"`
+	NetWork         NetWork         `orm:"-"`
 	Resources       Resources       `orm:"-"`
 	CloudProperties CloudProperties `orm:"-"`
 }
 
 type NetWork struct {
-	Id    int
+	Id    int64
 	Vip   string
 	NetId string
 }
 
 type Resources struct {
-	Id               int
+	Id               int64
 	PersistentDisk   string
 	InstanceType     string
 	AvailabilityZone string
 }
 
 type CloudProperties struct {
-	Id              int
+	Id              int64
 	AuthUrl         string
 	UserName        string
 	ApiKey          string
@@ -46,7 +46,7 @@ func NewMicroBOSH(
 	cloudproperties CloudProperties,
 ) (microbosh MicroBOSH) {
 	microbosh.Name = name
-	microbosh.Network = network
+	microbosh.NetWork = network
 	microbosh.Resources = resource
 	microbosh.CloudProperties = cloudproperties
 	return
@@ -95,20 +95,110 @@ func NewCloudProperties(
 	return
 }
 
-func (microbosh MicroBOSH) GetById(ids string) MicroBOSH {
-	id, err := strconv.Atoi(ids)
-	if err != nil {
-		return microbosh
-	}
-	microbosh.Id = id
-	orm.NewOrm().Read(&microbosh)
-	return microbosh
-}
-
 func (microbosh *MicroBOSH) TableName() string {
 	return "micro_bosh"
 }
 
+func (microBOSH *MicroBOSH) Load() error {
+	queryOneErr := orm.NewOrm().QueryTable(microBOSH).One(microBOSH, "Id")
+	if queryOneErr != nil {
+		logger.Error("Query One failed %s", queryOneErr)
+	}
+
+	errors := orm.NewOrm().Read(microBOSH, "Id")
+	if errors != nil {
+		logger.Error("Read MicroBOSH error : %s", errors)
+		_, err := orm.NewOrm().Insert(microBOSH)
+		if err != nil {
+			logger.Error("Inert MicroBOSH error %s ", err)
+		}
+	}
+
+	return nil
+}
+
+func (microBOSH *MicroBOSH) Update() error {
+	_, err := orm.NewOrm().Update(microBOSH)
+	if err != nil {
+		logger.Error("Update MicroBOSH error %s ", err)
+	}
+	return err
+}
+
+func (netWork *NetWork) Load() error {
+	queryOneErr := orm.NewOrm().QueryTable(netWork).One(netWork, "Id")
+	if queryOneErr != nil {
+		logger.Error("Query One failed %s", queryOneErr)
+	}
+	errors := orm.NewOrm().Read(netWork, "Id")
+	if errors != nil {
+		logger.Error("Read NetWork error : %s", errors)
+		_, err := orm.NewOrm().Insert(netWork)
+		if err != nil {
+			logger.Error("Inert NetWork error %s ", err)
+		}
+	}
+	return errors
+}
+
+func (netWork *NetWork) Update() error {
+	_, err := orm.NewOrm().Update(netWork)
+	if err != nil {
+		logger.Error("Update NetWork error %s ", err)
+	}
+	return err
+}
+
+func (cloudProperties *CloudProperties) Load() error {
+
+	queryOneErr := orm.NewOrm().QueryTable(cloudProperties).One(cloudProperties, "Id")
+	if queryOneErr != nil {
+		logger.Error("Query One failed %s", queryOneErr)
+	}
+
+	errors := orm.NewOrm().Read(cloudProperties, "Id")
+	if errors != nil {
+		logger.Error("Read CloudProperties error : %s", errors)
+		_, err := orm.NewOrm().Insert(cloudProperties)
+		if err != nil {
+			logger.Error("Inert CloudProperties error %s ", err)
+		}
+	}
+	return errors
+}
+
+func (cloudProperties *CloudProperties) Update() error {
+	_, err := orm.NewOrm().Update(cloudProperties)
+	if err != nil {
+		logger.Error("Update CloudProperties error %s ", err)
+	}
+	return err
+}
+
+func (resources *Resources) Load() error {
+	queryOneErr := orm.NewOrm().QueryTable(resources).One(resources, "Id")
+	if queryOneErr != nil {
+		logger.Error("Query One failed %s", queryOneErr)
+	}
+	errors := orm.NewOrm().Read(resources, "Id")
+	if errors != nil {
+		logger.Error("Read Resources error : %s", errors)
+		_, err := orm.NewOrm().Insert(resources)
+		if err != nil {
+			logger.Error("Inert Resources error %s ", err)
+		}
+	}
+	return errors
+}
+
+func (resources *Resources) Update() error {
+	_, err := orm.NewOrm().Update(resources)
+	if err != nil {
+		logger.Error("Update Resources error %s ", err)
+	}
+	return err
+}
+
 func init() {
-	orm.RegisterModel(new(NetWork), new(CloudProperties), new(MicroBOSH))
+	orm.RegisterModel(new(NetWork), new(CloudProperties), new(MicroBOSH), new(Resources))
 }

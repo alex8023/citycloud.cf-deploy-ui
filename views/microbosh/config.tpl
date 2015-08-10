@@ -14,13 +14,15 @@
 			  	<div class="form-group">
 			    	<label for="name" class="col-sm-2 control-label">Deployment Name</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="name" placeholder="Deployment Name" name="name" value = "{{.Name}}" required>
+						<input type="hidden" name="id" value = "{{.Id}}">
+				      	<input type="text" class="form-control" id="name" placeholder="Deployment Name" name="name" value = "{{.Name}}" required>
 				    </div>
 			  	</div>
-				{{with .Network}}
+				{{with .NetWork}}
 			  	<div class="form-group">
 			    	<label for="vip" class="col-sm-2 control-label">Vip</label>
 				    <div class="col-sm-10">
+						<input type="hidden" name="networkId" value = "{{.Id}}">
 				      	<input type="text" class="form-control" id="vip" placeholder="Vip" name="vip" value = "{{.Vip}}" required>
 				    </div>
 			  	</div>
@@ -35,6 +37,7 @@
 			  	<div class="form-group">
 			    	<label for="persistent_disk" class="col-sm-2 control-label">PersistentDiskSize</label>
 				    <div class="col-sm-10">
+						<input type="hidden" name="resourcesId" value = "{{.Id}}">
 				      	<input type="text" class="form-control" id="persistent_disk" placeholder="16384" name="persistent_disk" value = "{{.PersistentDisk}}" required>
 				    </div>
 			  	</div>
@@ -47,7 +50,7 @@
 			  	<div class="form-group">
 			    	<label for="availability_zone" class="col-sm-2 control-label">AvailabilityZone</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="availability_zone" placeholder="AvailabilityZone" name="availability_zone" value = "{{.AvailabilityZone}}" required>
+			      	<input type="text" class="form-control" id="availability_zone" placeholder="AvailabilityZone" name="availability_zone" value = "{{.AvailabilityZone}}" required>
 			    	</div>
 			  	</div>
 				{{end}}
@@ -55,7 +58,8 @@
 			  	<div class="form-group">
 			    	<label for="auth_url" class="col-sm-2 control-label">AuthUrl</label>
 			    	<div class="col-sm-10">
-			      		<input type="text" class="form-control" id="auth_url" placeholder="AuthUrl" name="auth_url" value = "{{.AuthUrl}}" required>
+					<input type="hidden" name="cloudPropertiesId" value = "{{.Id}}">
+			      	<input type="text" class="form-control" id="auth_url" placeholder="AuthUrl" name="auth_url" value = "{{.AuthUrl}}" required>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">

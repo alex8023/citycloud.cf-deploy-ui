@@ -39,9 +39,15 @@ func (this *MicroBoshController) Post() {
 
 	network := entity.NewNetWork(this.GetString("vip"),
 		this.GetString("net_id"))
+
+	networkId, _ := this.GetInt64("networkId", 0)
+	network.Id = networkId
+
 	resources := entity.NewResources(this.GetString("persistent_disk"),
 		this.GetString("instance_type"),
 		this.GetString("availability_zone"))
+	resourcesId, _ := this.GetInt64("resourcesId", 0)
+	resources.Id = resourcesId
 	cloudproperties := entity.NewCloudProperties(this.GetString("auth_url"),
 		this.GetString("username"),
 		this.GetString("api_key"),
@@ -51,11 +57,14 @@ func (this *MicroBoshController) Post() {
 		this.GetString("cci_ebs_url"),
 		this.GetString("cci_ebs_accesskey"),
 		this.GetString("cci_ebs_secretkey"))
+	cloudPropertiesId, _ := this.GetInt64("cloudPropertiesId", 0)
+	cloudproperties.Id = cloudPropertiesId
 	microbosh := entity.NewMicroBOSH(this.GetString("name"),
 		network,
 		resources,
 		cloudproperties)
-
+	microboshId, _ := this.GetInt64("id", 0)
+	microbosh.Id = microboshId
 	this.CommitData(microbosh)
 	this.Get()
 }
@@ -100,6 +109,22 @@ func (this *MicroBoshController) DeployMicroBOSH() {
 
 //read data from const or database
 func (this *MicroBoshController) LoadData() {
+
+	net := mi.NetWork
+	net.Load()
+
+	resource := mi.Resources
+	resource.Load()
+
+	cloudproperties := mi.CloudProperties
+	cloudproperties.Load()
+
+	mi.Load()
+
+	mi.NetWork = net
+	mi.CloudProperties = cloudproperties
+	mi.Resources = resource
+
 	this.Data["MicroBOSH"] = mi
 }
 
@@ -124,6 +149,7 @@ func (this *MicroBoshController) Deploy() {
 //write data to const or database
 func (this *MicroBoshController) CommitData(microbosh entity.MicroBOSH) {
 	mi = microbosh
+	mi.Update()
 }
 
 var mi entity.MicroBOSH = entity.NewMicroBOSH("microbosh-openstack",

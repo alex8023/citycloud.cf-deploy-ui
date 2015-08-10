@@ -46,19 +46,21 @@ func (this *CloudFoundryController) Post() {
 		iaas := this.GetString("iaasVsersion")
 		// use default MicroBOSH vip
 		privateNetWorks = entity.NewNetWorks(this.GetString("private-name"),
+			this.GetString("private-netWorkName"),
 			this.GetString("private-netType"),
 			this.GetString("private-netId"),
 			this.GetString("private-cidr"),
 			this.GetString("private-dns"),
-			mi.Network.Vip,
+			mi.NetWork.Vip,
 			this.GetString("private-reservedIp"),
 			this.GetString("private-staticIp"))
 		//rebuild
 		netWorksMap = make(map[string]entity.NetWorks)
-		netWorksMap["private"] = privateNetWorks
+		netWorksMap[utils.Net_Private] = privateNetWorks
 
 		if iaas == defaultVersion {
 			publicNetWorks = entity.NewNetWorks(this.GetString("public-name"),
+				this.GetString("public-netWorkName"),
 				this.GetString("public-netType"),
 				this.GetString("public-netId"),
 				this.GetString("public-cidr"),
@@ -69,7 +71,7 @@ func (this *CloudFoundryController) Post() {
 		} else {
 			publicNetWorks = entity.NewFloatingNetWork(cf.CloudFoundryProperties.FloatingIp)
 		}
-		netWorksMap["public"] = publicNetWorks
+		netWorksMap[utils.Net_Public] = publicNetWorks
 
 		cf.Compilation.DefaultNetWork = privateNetWorks.Name
 
@@ -204,7 +206,7 @@ func (this *CloudFoundryController) ConfigCloudFoundry() {
 //read data from const or database
 func (this *CloudFoundryController) LoadData() {
 	//logger.Debug("cloudfoundry properties: %s", cf)
-	cf.CloudFoundryProperties.CloudProperties = mi.CloudProperties
+	//	cf.CloudFoundryProperties.CloudProperties = mi.CloudProperties
 	this.Data["CloudFoundry"] = cf
 }
 
@@ -258,6 +260,7 @@ var (
 	compilation = entity.NewCompilation("flavor_91", "zone2", 6, privateNetWorks.Name)
 
 	privateNetWorks = entity.NewNetWorks("cf1",
+		utils.Net_Private,
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
 		"192.168.129.0/24",
@@ -267,6 +270,7 @@ var (
 		"192.168.129.100 - 192.168.129.126")
 
 	publicNetWorks = entity.NewNetWorks("publc",
+		utils.Net_Public,
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
 		"10.162.2.0/24",
@@ -276,7 +280,7 @@ var (
 		"10.162.2.28 - 10.162.2.29")
 
 	netWorksMap map[string]entity.NetWorks = map[string]entity.NetWorks{
-		"private": privateNetWorks, "public": publicNetWorks,
+		utils.Net_Private: privateNetWorks, utils.Net_Public: publicNetWorks,
 	}
 
 	resourcesPool = entity.NewResourcesPools(
