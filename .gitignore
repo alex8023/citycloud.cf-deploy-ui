@@ -8,3 +8,4 @@ citycloud.cf-deploy-ui.tar.gz
 pushcode.sh
 initDB.sh
 exportDb.sh
+buildtgz.sh
