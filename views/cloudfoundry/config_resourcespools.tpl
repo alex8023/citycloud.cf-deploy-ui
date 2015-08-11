@@ -4,12 +4,12 @@
 			<h2 class="panel-title">PaaS ResourcesPools</h2>
 		</div>
   		<div class="panel-body">
-			<form class="form-horizontal" method="post" action="cloudfoundry">
+			<form class="form-horizontal" method="post" action="cloudfoundry" id="resourceform">
 				<input type = "hidden" name="model" value = "{{.Model}}">
 				<input type = "hidden" id="poollength" value = "{{.Pools}}">
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
-				      	<button type="submit" class="btn btn-default " data-loading-text="Saving...">Save</button>
+				      	<button type="submit" class="btn btn-default " data-loading-text="Saving..." >Save</button>
 						<button type="button" class="btn btn-default " id="add_resources_pool" >More>></button>
 				    </div>
 			  	</div>
