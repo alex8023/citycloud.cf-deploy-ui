@@ -233,10 +233,7 @@ func (this *CloudFoundryController) LoadData() {
 		cloudFoundryJobsMap[key] = jobs
 	}
 
-	for index, value := range resourcesPoolsMap {
-		value.Load()
-		resourcesPoolsMap[index] = value
-	}
+	resourcesPoolsMap, _ = entity.LoadResourcePools(resourcesPoolsMap)
 
 	cf.Compilation = compilation
 	cf.CloudFoundryProperties = cloudFoundryProperties
@@ -299,7 +296,9 @@ func (this *CloudFoundryController) CommitData(data interface{}) {
 		cf.NetWorks = netWorksMap
 
 	case []entity.ResourcesPools:
-		cf.ResourcesPools = data.([]entity.ResourcesPools)
+		resourcesPoolsMap = data.([]entity.ResourcesPools)
+		resourcesPoolsMap, _ = entity.UpdateResourcePools(resourcesPoolsMap)
+		cf.ResourcesPools = resourcesPoolsMap
 	default:
 		this.Data["MessageErr"] = fmt.Sprintf("Unknow type %s", reflect.TypeOf(data))
 	}

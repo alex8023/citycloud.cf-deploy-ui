@@ -318,19 +318,57 @@ func (resourcesPools *ResourcesPools) Update() error {
 }
 
 func LoadResourcePools(resourcesPools []ResourcesPools) ([]ResourcesPools, error) {
+	qs := orm.NewOrm().QueryTable(new(ResourcesPools))
 
-	for index, value := range resourcesPools {
-		logger.Debug("%s,%s", index, value)
+	cnt, _ := qs.Count()
+	if cnt == 0 {
+		for index, value := range resourcesPools {
+			value.Load()
+			resourcesPools[index] = value
+		}
+		return resourcesPools, nil
 	}
 
-	return nil, nil
+	var res []ResourcesPools
+	_, err := qs.All(&res)
+	return res, err
+}
+
+func UpdateResourcePools(resourcesPools []ResourcesPools) ([]ResourcesPools, error) {
+	qs := orm.NewOrm().QueryTable(new(ResourcesPools))
+	cond := orm.NewCondition()
+
+	cond1 := cond.And("id__isnull", false)
+	qs.SetCond(cond1).Delete()
+
+	insert, _ := qs.PrepareInsert()
+
+	for index, values := range resourcesPools {
+		id, err := insert.Insert(&values)
+
+		if err != nil {
+			logger.Error("Insert ResourcePools error :%s", err)
+		} else {
+			values.Id = id
+			resourcesPools[index] = values
+		}
+
+	}
+
+	insert.Close()
+
+	return resourcesPools, nil
 }
 
 func (cloudFoundryJobs *CloudFoundryJobs) Load() error {
-
+	logger.Debug(" before load jobs %s", cloudFoundryJobs)
 	errors := orm.NewOrm().Read(cloudFoundryJobs, "JobName")
+	if errors == nil {
+		cloudFoundryJobs.StaticIp = strings.Split(cloudFoundryJobs.StaticIps, ",")
+	}
 	if errors != nil {
 		logger.Error("Read CloudFoundryJobs error : %s", errors)
+		cloudFoundryJobs.StaticIps = strings.Join(cloudFoundryJobs.StaticIp, ",")
 		_, err := orm.NewOrm().Insert(cloudFoundryJobs)
 		if err != nil {
 			logger.Error("Inert CloudFoundryJobs error %s ", err)
@@ -340,6 +378,8 @@ func (cloudFoundryJobs *CloudFoundryJobs) Load() error {
 }
 
 func (cloudFoundryJobs *CloudFoundryJobs) Update() error {
+	logger.Debug(" before update jobs %s", cloudFoundryJobs)
+	cloudFoundryJobs.StaticIps = strings.Join(cloudFoundryJobs.StaticIp, ",")
 	_, err := orm.NewOrm().Update(cloudFoundryJobs)
 	if err != nil {
 		logger.Error("Update CloudFoundryJobs error %s ", err)
