@@ -302,6 +302,39 @@ func (this *CloudFoundryController) CommitData(data interface{}) {
 	default:
 		this.Data["MessageErr"] = fmt.Sprintf("Unknow type %s", reflect.TypeOf(data))
 	}
+
+	// //or
+	//	switch result := data.(type) {
+	//	case map[string]entity.CloudFoundryJobs:
+
+	//		for key, value := range result {
+	//			value.Update()
+	//			result[key] = value
+	//		}
+	//		cf.CloudFoundryJobs = result
+	//	case entity.CloudFoundryProperties:
+	//		result.Update()
+	//		cf.CloudFoundryProperties = result
+	//	case entity.Compilation:
+	//		result.Update()
+	//		cf.Compilation = result
+	//	case entity.CloudFoundry:
+	//		cf = result
+
+	//	case map[string]entity.NetWorks:
+	//		for key, value := range result {
+	//			value.Update()
+	//			result[key] = value
+	//		}
+	//		cf.NetWorks = result
+
+	//	case []entity.ResourcesPools:
+	//		result, _ = entity.UpdateResourcePools(result)
+	//		cf.ResourcesPools = result
+	//	default:
+	//		this.Data["MessageErr"] = fmt.Sprintf("Unknow type %s", reflect.TypeOf(data))
+	//	}
+
 }
 
 var (
