@@ -21,7 +21,7 @@ func (cft CloudFoundryTemplate) CreateCloudFoundryYaml(template, path string) (b
 
 func (cft CloudFoundryTemplate) CreateCloudFoundryV3Yaml(path string) (bool, error) {
 	logger.Debug("Create CloudFoundry deployment file : %s", path)
-	return utils.CreateYmlFile("cloudfoundry", CloudFoundryTemplateTextV33, path, cft.CloudFoundry)
+	return utils.CreateYmlFile("cloudfoundry", CloudFoundryTemplateV3, path, cft.CloudFoundry)
 }
 
 const (
