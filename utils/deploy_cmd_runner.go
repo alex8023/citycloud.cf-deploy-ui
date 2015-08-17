@@ -28,7 +28,7 @@ func NewDeployCmdRunner() DeployCmdRunner {
 	return DeployCmdRunner{}
 }
 
-func (this *DeployCmdRunner) RunCommand(cmdName, input string, out *bytes.Buffer, args ...string) {
+func (this *DeployCmdRunner) RunCommand(cmdName, input, dir string, out *bytes.Buffer, args ...string) {
 	cmd := exec.Command(cmdName, args...)
 	if input != "" {
 		cmd.Stdin = strings.NewReader(input)
@@ -36,7 +36,7 @@ func (this *DeployCmdRunner) RunCommand(cmdName, input string, out *bytes.Buffer
 	cmdString := strings.Join(cmd.Args, " ")
 	cmd.Stdout = out
 	cmd.Stderr = out
-	cmd.Dir = "/home/ubuntu/bosh-workspace/deploy/"
+	cmd.Dir = dir
 	err := cmd.Start()
 	this.Process = cmd.Process
 	err = cmd.Wait()
@@ -88,7 +88,7 @@ func (this *DeployCmdRunner) String() string {
 	return ""
 }
 
-func (this *DeployCmdRunner) RunCommandAsync(cmdName, input string, out *bytes.Buffer, args ...string) {
+func (this *DeployCmdRunner) RunCommandAsync(cmdName, input, dir string, out *bytes.Buffer, args ...string) {
 	cmd := exec.Command(cmdName, args...)
 
 	if input != "" {
@@ -99,6 +99,7 @@ func (this *DeployCmdRunner) RunCommandAsync(cmdName, input string, out *bytes.B
 	cmd.Stderr = out
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.SysProcAttr = &syscall.SysProcAttr{}
+	cmd.Dir = dir
 	err := cmd.Start()
 	this.Process = cmd.Process
 	if err != nil {

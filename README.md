@@ -57,7 +57,11 @@ $ git push origin dev
 ```
 $ git remote add gogit http://10.10.82.100:8800/cci-paas/citycloud.cf-deploy-ui.git
 
-$ git push gogit dev
+$ git push gogit dev --tag
 #or
-$ git push gogit master
+$ git push gogit master --tag
 ```
+
+## init db
+
+import createDb.sql,mysql.sql to mysql server 5.6
