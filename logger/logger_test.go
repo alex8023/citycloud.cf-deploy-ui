@@ -2,14 +2,18 @@ package logger
 
 import (
 	"fmt"
-	"testing"
+
+	. "github.com/onsi/ginkgo"
 	"time"
 )
 
-func TestLogger(test *testing.T) {
-	fmt.Println("Testing")
+var _ = Describe("Testing with Ginkgo", func() {
+	It("logger", func() {
 
-}
+		fmt.Println("Testing")
+	})
+})
+
 func funcs() {
 	for i := 1; i < 10; i = i + 1 {
 		go func() {
