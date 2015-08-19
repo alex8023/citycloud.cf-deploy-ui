@@ -1,15 +1,18 @@
 package entity
 
 import (
-	"testing"
+	. "github.com/onsi/ginkgo"
 )
 
-func TestBOSHTemplate(t *testing.T) {
-	var test = NewSimpleBOSH("deployment-bosh")
-	var bt = NewBOSHTemplate(test)
-	_, err := bt.CreateBOSHYaml("/home/ubuntu/temp/bosh.yml")
+var _ = Describe("Testing with Ginkgo", func() {
+	It("b o s h template", func() {
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		var test = NewSimpleBOSH("deployment-bosh")
+		var bt = NewBOSHTemplate(test)
+		_, err := bt.CreateBOSHYaml("/home/ubuntu/temp/bosh.yml")
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+})

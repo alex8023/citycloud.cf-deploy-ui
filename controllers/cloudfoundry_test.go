@@ -3,27 +3,28 @@ package controllers
 import (
 	"fmt"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
+	. "github.com/onsi/ginkgo"
 	"reflect"
-	"testing"
 )
 
-func TestCommitData(testing *testing.T) {
-	var cloud = cf
-	AssertType(cloud)
-	AssertType(cloud.CloudFoundryJobs)
-	AssertType(cloud.CloudFoundryProperties)
-	AssertType(cloud.Compilation)
-	AssertType(cloud.NetWorks)
-	AssertType(cloud.ResourcesPools)
-	AssertType("abc")
-}
+var _ = Describe("Testing with Ginkgo", func() {
+	It("commit data", func() {
 
-func TestCommitData2(testing *testing.T) {
-
-}
+		var cloud = cf
+		AssertType(cloud)
+		AssertType(cloud.CloudFoundryJobs)
+		AssertType(cloud.CloudFoundryProperties)
+		AssertType(cloud.Compilation)
+		AssertType(cloud.NetWorks)
+		AssertType(cloud.ResourcesPools)
+		AssertType("abc")
+	})
+	It("commit data2", func() {
+	})
+})
 
 func AssertType(a interface{}) {
-	// 使用类型断言
+
 	switch a.(type) {
 	case map[string]entity.CloudFoundryJobs:
 		fmt.Println("==========================")

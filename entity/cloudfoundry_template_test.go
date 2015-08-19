@@ -2,97 +2,101 @@ package entity
 
 import (
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
-	"testing"
+	. "github.com/onsi/ginkgo"
 )
 
-func TestCloudFoundryTemplate(t *testing.T) {
-	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryTemplateV2, "/home/ubuntu/temp/cloudfoundryv2.yml")
+var _ = Describe("Testing with Ginkgo", func() {
+	It("cloud foundry template", func() {
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryTemplateV2, "/home/ubuntu/temp/cloudfoundryv2.yml")
 
-func TestMeta(t *testing.T) {
-	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryMetaTemplateV2+`{{template "meta" .}}`, "/home/ubuntu/temp/metav2.yml")
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("meta", func() {
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryMetaTemplateV2+`{{template "meta" .}}`, "/home/ubuntu/temp/metav2.yml")
 
-func TestUpdate(t *testing.T) {
-	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryUpdateTempalte+`{{template "update" .}}`, "/home/ubuntu/temp/update.yml")
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("update", func() {
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryUpdateTempalte+`{{template "update" .}}`, "/home/ubuntu/temp/update.yml")
 
-func TestCompilation(t *testing.T) {
-	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryCompilationTemplate+`{{template "compilation" .}}`, "/home/ubuntu/temp/compilation.yml")
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("compilation", func() {
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryCompilationTemplate+`{{template "compilation" .}}`, "/home/ubuntu/temp/compilation.yml")
 
-func TestNetWorks(t *testing.T) {
-	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryNetworksTemplateV2+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv2.yml")
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("net works", func() {
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryNetworksTemplateV2+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv2.yml")
 
-func TestNetWorksV3(t *testing.T) {
-	var cft = InitCloudFoundryV3()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryNetworksTemplateV3+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv3.yml")
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("net works v3", func() {
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		var cft = InitCloudFoundryV3()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryNetworksTemplateV3+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv3.yml")
 
-func TestResourcePool(t *testing.T) {
-	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryResourcePoolTemplate+`{{template "resourcepool" .}}`, "/home/ubuntu/temp/resourcepool.yml")
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("resource pool", func() {
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryResourcePoolTemplate+`{{template "resourcepool" .}}`, "/home/ubuntu/temp/resourcepool.yml")
 
-func TestJobs(t *testing.T) {
-	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryJobsTemplate+`{{template "jobs" .}}`, "/home/ubuntu/temp/jobs.yml")
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("jobs", func() {
 
-	if err != nil {
-		t.Error(err)
-	}
-}
-func TestProperties(t *testing.T) {
-	var cft = InitCloudFoundryV2()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryPropertiesTemplate+`{{template "properties" .}}`, "/home/ubuntu/temp/properties.yml")
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryJobsTemplate+`{{template "jobs" .}}`, "/home/ubuntu/temp/jobs.yml")
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("properties", func() {
 
-func TestCloudFoundryV3Template(t *testing.T) {
-	var cft = InitCloudFoundryV3()
-	_, err := cft.CreateCloudFoundryYaml(CloudFoundryTemplateV3, "/home/ubuntu/temp/cloudfoundryv3.yml")
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryPropertiesTemplate+`{{template "properties" .}}`, "/home/ubuntu/temp/properties.yml")
 
-	if err != nil {
-		t.Error(err)
-	}
-}
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("cloud foundry v3 template", func() {
+
+		var cft = InitCloudFoundryV3()
+		_, err := cft.CreateCloudFoundryYaml(CloudFoundryTemplateV3, "/home/ubuntu/temp/cloudfoundryv3.yml")
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+})
 
 func InitCloudFoundryV2() CloudFoundryTemplate {
 	var cloudProperties = CloudProperties{
@@ -114,7 +118,7 @@ func InitCloudFoundryV2() CloudFoundryTemplate {
 
 	var compilation = NewCompilation("flavor_91", "zone2", 6, "cf1")
 
-	var networks = NewNetWorks("cf1",
+	var networks = NewNetWorks("cf1", "private",
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
 		"192.168.129.0/24",
@@ -284,7 +288,7 @@ func InitCloudFoundryV3() CloudFoundryTemplate {
 
 	var compilation = NewCompilation("flavor_91", "zone2", 6, "cf1")
 
-	var networks = NewNetWorks("cf1",
+	var networks = NewNetWorks("cf1", "private",
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
 		"192.168.129.0/24",
@@ -295,7 +299,7 @@ func InitCloudFoundryV3() CloudFoundryTemplate {
 
 	var mapNetWorks = make(map[string]NetWorks)
 	mapNetWorks["private"] = networks
-	mapNetWorks["public"] = NewNetWorks("publc",
+	mapNetWorks["public"] = NewNetWorks("publc", "publc",
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
 		"10.162.2.0/24",

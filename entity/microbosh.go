@@ -41,12 +41,12 @@ type CloudProperties struct {
 
 func NewMicroBOSH(
 	name string,
-	network NetWork,
+	netWork NetWork,
 	resource Resources,
 	cloudproperties CloudProperties,
 ) (microbosh MicroBOSH) {
 	microbosh.Name = name
-	microbosh.NetWork = network
+	microbosh.NetWork = netWork
 	microbosh.Resources = resource
 	microbosh.CloudProperties = cloudproperties
 	return
@@ -55,9 +55,9 @@ func NewMicroBOSH(
 func NewNetWork(
 	vip string,
 	net_id string,
-) (network NetWork) {
-	network.Vip = vip
-	network.NetId = net_id
+) (netWork NetWork) {
+	netWork.Vip = vip
+	netWork.NetId = net_id
 	return
 }
 

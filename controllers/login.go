@@ -34,14 +34,14 @@ func (this *LoginController) Post() {
 		this.Data["LoginAction"] = loginAction
 	} else {
 		this.SetSession("UserName", this.GetString("username"))
-		logger.Debug("%s Login",this.GetString("username"))
+		logger.Debug("%s Login", this.GetString("username"))
 		this.Redirect(indexAction, 302)
 	}
 
 }
 
 func (this *LogoutController) Logout() {
-	logger.Debug("%s","Logout Successful")
+	logger.Debug("%s", "Logout Successful")
 	this.DestroySession()
 	this.Redirect(loginAction, 302)
 }

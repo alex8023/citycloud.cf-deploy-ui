@@ -9,7 +9,7 @@ const (
 	MicroBOSHTemplateTextV2 string = `
 ---
 name: {{.Name}}
-{{with .Network}}
+{{with .NetWork}}
 network:
   type: manual
   vip: {{.Vip}}
@@ -58,7 +58,7 @@ apply_spec:
 	MicroBOSHTemplateTextV3 string = `
 ---
 name: {{.Name}}
-{{with .Network}}
+{{with .NetWork}}
 network:
   type: manual
   vip: {{.Vip}}
