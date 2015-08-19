@@ -19,6 +19,12 @@ $ cd $GOPATH/src
 $ go get github.com/gorilla/websocket
 $ go get github.com/astaxie/beego
 $ go get github.com/beego/bee
+
+#for BDD-style testing
+$ go get github.com/onsi/ginkgo/ginkgo
+$ go get github.com/onsi/gomega
+
+# for more information [ginkgo](http://onsi.github.io/ginkgo/)
 ```
 
 ## init workdir and checkout dev
