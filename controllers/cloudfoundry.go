@@ -20,11 +20,13 @@ func (this *CloudFoundryController) Get() {
 	this.Data["NavBarFocus"] = "cloudfoundry"
 	this.Data["IaaSVersion"] = iaasVersion
 	this.Data["DefaultVersion"] = defaultVersion
-	if action == "config" {
+
+	switch action {
+	case "config":
 		this.ConfigCloudFoundry()
-	} else if action == "deploy" {
+	case "deploy":
 		this.DeployCloudFoundry()
-	} else {
+	default:
 		this.IndexCloudFoundry()
 	}
 }
@@ -32,7 +34,8 @@ func (this *CloudFoundryController) Get() {
 func (this *CloudFoundryController) Post() {
 	model := this.GetString("model")
 	erros := make([]error, 0)
-	if model == "CloudFoundryProperties" {
+	switch model {
+	case utils.CloudFoundryProperties:
 		cloudFoundryProperties = entity.NewCloudFoundryProperties(
 			this.GetString("name"),
 			this.GetString("uuid"),
@@ -45,8 +48,7 @@ func (this *CloudFoundryController) Post() {
 			cloudFoundryProperties.Id = id
 		}
 		this.CommitData(cloudFoundryProperties)
-
-	} else if model == "NetWorks" {
+	case utils.NetWorks:
 		iaas := this.GetString("iaasVsersion")
 		// use default MicroBOSH vip
 		privateNetWorks = entity.NewNetWorks(this.GetString("private-name"),
@@ -87,8 +89,7 @@ func (this *CloudFoundryController) Post() {
 
 		this.CommitData(resourcesPoolsMap)
 		this.CommitData(netWorksMap)
-
-	} else if model == "Compilation" {
+	case utils.Compilation:
 		workers, _ := this.GetInt("workers", 6)
 		if workers <= 0 {
 			workers = 6
@@ -103,7 +104,7 @@ func (this *CloudFoundryController) Post() {
 			compilation.Id = id
 		}
 		this.CommitData(compilation)
-	} else if model == "ResourcesPools" {
+	case utils.ResourcesPools:
 		arrName := this.GetStrings("name")
 		arrInstanceType := this.GetStrings("instanceType")
 		arrAvailabilityZone := this.GetStrings("availabilityZone")
@@ -132,7 +133,7 @@ func (this *CloudFoundryController) Post() {
 			resourcesPoolsMap = append(resourcesPoolsMap, addResourcesPool)
 		}
 		this.CommitData(resourcesPoolsMap)
-	} else if model == "CloudFoundryJobs" {
+	case utils.CloudFoundryJobs:
 		iPFactory := utils.NewIPFactory()
 		ipArr := utils.SpliteIPs(privateNetWorks.StaticIp)
 
@@ -172,7 +173,10 @@ func (this *CloudFoundryController) Post() {
 			resourcesPoolsMap[index] = value
 		}
 		this.CommitData(resourcesPoolsMap)
+	default:
+		erros = append(erros, fmt.Errorf("Unknow model %s", model))
 	}
+
 	if len(erros) != 0 {
 		this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", erros)
 	}
@@ -199,22 +203,24 @@ func (this *CloudFoundryController) ConfigCloudFoundry() {
 	this.LoadData()
 	model := this.GetString("model")
 	if model == "" {
-		model = "CloudFoundryProperties"
+		model = utils.CloudFoundryProperties
 	}
 	this.Data["Model"] = model
-	if model == "CloudFoundryProperties" {
+	switch model {
+	case utils.CloudFoundryProperties:
 		this.TplNames = "cloudfoundry/config_properties.tpl"
-	} else if model == "NetWorks" {
+	case utils.NetWorks:
 		this.TplNames = "cloudfoundry/config_networks.tpl"
-	} else if model == "Compilation" {
+	case utils.Compilation:
 		this.TplNames = "cloudfoundry/config_compilation.tpl"
-	} else if model == "ResourcesPools" {
+	case utils.ResourcesPools:
 		this.Data["Pools"] = len(cf.ResourcesPools)
 		this.TplNames = "cloudfoundry/config_resourcespools.tpl"
-	} else if model == "CloudFoundryJobs" {
+	case utils.CloudFoundryJobs:
 		this.TplNames = "cloudfoundry/config_jobs.tpl"
-	}
+	default:
 
+	}
 }
 
 //read data from const or database

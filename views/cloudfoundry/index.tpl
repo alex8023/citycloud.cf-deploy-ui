@@ -18,11 +18,19 @@
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
 				      	<button class="btn btn-default " id = "config-deploy">Deploy</button>
+						<button class="btn btn-default " id = "config-more">MoreConf</button>
 				    </div>
 					<script type="text/javascript">
-						$('#config-deploy').on('click', function(){
-				    		window.location.href = "cloudfoundry?action=deploy";
-				  		})
+						if ($('#config-deploy')){
+							$('#config-deploy').on('click', function(){
+				    				window.location.href = "cloudfoundry?action=deploy";
+				  			})
+						}
+						if ($('#config-more')){
+							$('#config-more').on('click', function(){
+				    				window.location.href = "cloudfoundry?action=more";
+				  			})
+						}						
 					</script>
 				</div>
 				{{template "cloudfoundry/index_properties.tpl" .}}

@@ -28,3 +28,11 @@ const (
 	Net_Public  = "public"
 	Net_Private = "private"
 )
+
+const (
+	CloudFoundryProperties = "CloudFoundryProperties"
+	NetWorks               = "NetWorks"
+	Compilation            = "Compilation"
+	ResourcesPools         = "ResourcesPools"
+	CloudFoundryJobs       = "CloudFoundryJobs"
+)
