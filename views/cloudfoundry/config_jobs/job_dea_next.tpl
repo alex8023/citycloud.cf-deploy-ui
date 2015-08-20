@@ -27,7 +27,7 @@
 			  	<div class="form-group">
 			    	<label for="{{.dea_next.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
 				    <div class="col-sm-10">
-				      	<input type="number" class="form-control" id="{{.dea_next.JobName}}_instances" placeholder="Instances" name="{{.etcd.JobName}}_instances" value = "{{.dea_next.Instances}}" required >
+				      	<input type="number" class="form-control" id="{{.dea_next.JobName}}_instances" placeholder="Instances" name="{{.dea_next.JobName}}_instances" value = "{{.dea_next.Instances}}" required >
 				    </div>
 			  	</div>
 			</div>

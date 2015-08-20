@@ -27,7 +27,7 @@
 			  	<div class="form-group">
 			    	<label for="{{.uaa.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
 				    <div class="col-sm-10">
-				      	<input type="number" class="form-control" id="{{.uaa.JobName}}_instances" placeholder="Instances" name="{{.etcd.JobName}}_instances" value = "{{.uaa.Instances}}" required readonly>
+				      	<input type="number" class="form-control" id="{{.uaa.JobName}}_instances" placeholder="Instances" name="{{.uaa.JobName}}_instances" value = "{{.uaa.Instances}}" required readonly>
 				    </div>
 			  	</div>
 			</div>

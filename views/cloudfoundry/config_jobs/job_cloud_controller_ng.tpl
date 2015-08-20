@@ -27,7 +27,7 @@
 			  	<div class="form-group">
 			    	<label for="{{.cloud_controller_ng.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
 				    <div class="col-sm-10">
-				      	<input type="number" class="form-control" id="{{.cloud_controller_ng.JobName}}_instances" placeholder="Instances" name="{{.etcd.JobName}}_instances" value = "{{.cloud_controller_ng.Instances}}" required readonly>
+				      	<input type="number" class="form-control" id="{{.cloud_controller_ng.JobName}}_instances" placeholder="Instances" name="{{.cloud_controller_ng.JobName}}_instances" value = "{{.cloud_controller_ng.Instances}}" required readonly>
 				    </div>
 			  	</div>
 			</div>

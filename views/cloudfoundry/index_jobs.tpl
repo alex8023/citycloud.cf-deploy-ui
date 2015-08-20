@@ -18,6 +18,7 @@
 							{{with .CloudFoundryJobs}}
 								{{template "cloudfoundry/index_jobs/job_haproxy.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_gorouter.tpl" .}}
+								{{template "cloudfoundry/index_jobs/job_dea_next.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_postgres.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_nfs.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_nats.tpl" .}}
@@ -31,7 +32,6 @@
 								{{template "cloudfoundry/index_jobs/job_cloud_controller_clock.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_hm9000.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_stats.tpl" .}}
-								{{template "cloudfoundry/index_jobs/job_dea_next.tpl" .}}
 							{{end}}
 							
 						</div>

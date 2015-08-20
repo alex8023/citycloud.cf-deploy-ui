@@ -27,7 +27,7 @@
 			  	<div class="form-group">
 			    	<label for="{{.loggregator_traffic.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
 				    <div class="col-sm-10">
-				      	<input type="number" class="form-control" id="{{.loggregator_traffic.JobName}}_instances" placeholder="Instances" name="{{.etcd.JobName}}_instances" value = "{{.loggregator_traffic.Instances}}" required readonly>
+				      	<input type="number" class="form-control" id="{{.loggregator_traffic.JobName}}_instances" placeholder="Instances" name="{{.loggregator_traffic.JobName}}_instances" value = "{{.loggregator_traffic.Instances}}" required readonly>
 				    </div>
 			  	</div>
 			</div>
