@@ -1,6 +1,7 @@
 package entity_test
 
 import (
+	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	. "github.com/onsi/ginkgo"
 )
@@ -9,7 +10,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("cloud foundry template", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryTemplateV2, "/home/ubuntu/temp/cloudfoundryv2.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryTemplateV2, "/home/ubuntu/temp/cloudfoundryv2.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -18,7 +19,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("meta", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryMetaTemplateV2+`{{template "meta" .}}`, "/home/ubuntu/temp/metav2.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryMetaTemplateV2+`{{template "meta" .}}`, "/home/ubuntu/temp/metav2.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -27,7 +28,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("update", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryUpdateTempalte+`{{template "update" .}}`, "/home/ubuntu/temp/update.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryUpdateTempalte+`{{template "update" .}}`, "/home/ubuntu/temp/update.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -36,7 +37,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("compilation", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryCompilationTemplate+`{{template "compilation" .}}`, "/home/ubuntu/temp/compilation.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryCompilationTemplate+`{{template "compilation" .}}`, "/home/ubuntu/temp/compilation.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -45,7 +46,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("net works", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryNetworksTemplateV2+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv2.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryNetworksTemplateV2+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv2.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -54,7 +55,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("net works v3", func() {
 
 		var cft = InitCloudFoundryV3()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryNetworksTemplateV3+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv3.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryNetworksTemplateV3+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv3.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -63,7 +64,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("resource pool", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryResourcePoolTemplate+`{{template "resourcepool" .}}`, "/home/ubuntu/temp/resourcepool.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryResourcePoolTemplate+`{{template "resourcepool" .}}`, "/home/ubuntu/temp/resourcepool.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -72,7 +73,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("jobs", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryJobsTemplate+`{{template "jobs" .}}`, "/home/ubuntu/temp/jobs.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryJobsTemplate+`{{template "jobs" .}}`, "/home/ubuntu/temp/jobs.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -81,7 +82,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("properties", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryPropertiesTemplate+`{{template "properties" .}}`, "/home/ubuntu/temp/properties.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryPropertiesTemplate+`{{template "properties" .}}`, "/home/ubuntu/temp/properties.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -90,7 +91,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("cloud foundry v3 template", func() {
 
 		var cft = InitCloudFoundryV3()
-		_, err := cft.CreateCloudFoundryYaml(CloudFoundryTemplateV3, "/home/ubuntu/temp/cloudfoundryv3.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryTemplateV3, "/home/ubuntu/temp/cloudfoundryv3.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -98,8 +99,8 @@ var _ = Describe("Testing with Ginkgo", func() {
 	})
 })
 
-func InitCloudFoundryV2() CloudFoundryTemplate {
-	var cloudProperties = CloudProperties{
+func InitCloudFoundryV2() entity.CloudFoundryTemplate {
+	var cloudProperties = entity.CloudProperties{
 		AuthUrl:         "http://192.168.128.2:5000/v2.0",
 		UserName:        "paas",
 		ApiKey:          "paas123",
@@ -111,14 +112,14 @@ func InitCloudFoundryV2() CloudFoundryTemplate {
 		CciEbsSecretkey: "8e100b9430ab429397352359b16f01b0",
 	}
 
-	var cloudFoundryProperties = NewCloudFoundryProperties("cf-release",
+	var cloudFoundryProperties = entity.NewCloudFoundryProperties("cf-release",
 		"57cfc863-786d-4495-bb97-86d2f650a038", "192.168.133.102", "ccipaas.net", "cci")
 
 	cloudFoundryProperties.CloudProperties = cloudProperties
 
-	var compilation = NewCompilation("flavor_91", "zone2", 6, "cf1")
+	var compilation = entity.NewCompilation("flavor_91", "zone2", 6, "cf1")
 
-	var networks = NewNetWorks("cf1", "private",
+	var networks = entity.NewNetWorks("cf1", "private",
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
 		"192.168.129.0/24",
@@ -127,108 +128,108 @@ func InitCloudFoundryV2() CloudFoundryTemplate {
 		"192.168.129.1 - 192.168.129.99",
 		"192.168.129.100 - 192.168.129.126")
 
-	var mapNetWorks = make(map[string]NetWorks)
+	var mapNetWorks = make(map[string]entity.NetWorks)
 	mapNetWorks["private"] = networks
-	mapNetWorks["public"] = NewFloatingNetWork(cloudFoundryProperties.FloatingIp)
+	mapNetWorks["public"] = entity.NewFloatingNetWork(cloudFoundryProperties.FloatingIp)
 
-	var resourcesPool = NewResourcesPools("normal",
+	var resourcesPool = entity.NewResourcesPools("normal",
 		"flavor_91",
 		"zone2",
 		"cf1",
 		4)
-	var mapResourcesPools = make([]ResourcesPools, 0)
+	var mapResourcesPools = make([]entity.ResourcesPools, 0)
 	mapResourcesPools = append(mapResourcesPools, resourcesPool)
 
-	cloudFoundryJobsMap := map[string]CloudFoundryJobs{
-		utils.Job_Haproxy: NewCloudFoundryJobs(
+	cloudFoundryJobsMap := map[string]entity.CloudFoundryJobs{
+		utils.Job_Haproxy: entity.NewCloudFoundryJobs(
 			"haproxy",
 			utils.Job_Haproxy,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Gorouter: NewCloudFoundryJobs(
+		utils.Job_Gorouter: entity.NewCloudFoundryJobs(
 			"gorouter",
 			utils.Job_Gorouter,
 			"normal",
 			2,
 			[]string{""}),
-		utils.Job_Postgres: NewCloudFoundryJobs(
+		utils.Job_Postgres: entity.NewCloudFoundryJobs(
 			"postgres",
 			utils.Job_Postgres,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_NFS: NewCloudFoundryJobs(
+		utils.Job_NFS: entity.NewCloudFoundryJobs(
 			"nfs",
 			utils.Job_NFS,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_NATS: NewCloudFoundryJobs(
+		utils.Job_NATS: entity.NewCloudFoundryJobs(
 			"nats",
 			utils.Job_NATS,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Syslog: NewCloudFoundryJobs(
+		utils.Job_Syslog: entity.NewCloudFoundryJobs(
 			"syslog_aggregator",
 			utils.Job_Syslog,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Etcd: NewCloudFoundryJobs(
+		utils.Job_Etcd: entity.NewCloudFoundryJobs(
 			"etcd",
 			utils.Job_Etcd,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Loggregator: NewCloudFoundryJobs(
+		utils.Job_Loggregator: entity.NewCloudFoundryJobs(
 			"loggregator",
 			utils.Job_Loggregator,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Loggregator_Traffic: NewCloudFoundryJobs(
+		utils.Job_Loggregator_Traffic: entity.NewCloudFoundryJobs(
 			"loggregator_traffic",
 			utils.Job_Loggregator_Traffic,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Uaa: NewCloudFoundryJobs(
+		utils.Job_Uaa: entity.NewCloudFoundryJobs(
 			"uaa", utils.Job_Uaa,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Cloud_Controller_NG: NewCloudFoundryJobs(
+		utils.Job_Cloud_Controller_NG: entity.NewCloudFoundryJobs(
 			"cloud_controller_ng",
 			utils.Job_Cloud_Controller_NG,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Cloud_Controller_Worker: NewCloudFoundryJobs(
+		utils.Job_Cloud_Controller_Worker: entity.NewCloudFoundryJobs(
 			"cloud_controller_worker",
 			utils.Job_Cloud_Controller_Worker,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Cloud_Controller_Clock: NewCloudFoundryJobs(
+		utils.Job_Cloud_Controller_Clock: entity.NewCloudFoundryJobs(
 			"cloud_controller_clock",
 			utils.Job_Cloud_Controller_Clock,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Hm9000: NewCloudFoundryJobs(
+		utils.Job_Hm9000: entity.NewCloudFoundryJobs(
 			"hm9000",
 			utils.Job_Hm9000,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Stats: NewCloudFoundryJobs("stats",
+		utils.Job_Stats: entity.NewCloudFoundryJobs("stats",
 			utils.Job_Stats,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Dea_Next: NewCloudFoundryJobs(
+		utils.Job_Dea_Next: entity.NewCloudFoundryJobs(
 			"dea_next",
 			utils.Job_Dea_Next,
 			"normal",
@@ -259,20 +260,20 @@ func InitCloudFoundryV2() CloudFoundryTemplate {
 		mapResourcesPools[index] = value
 	}
 
-	var cft = NewCloudFoundryTemplate(CloudFoundry{
+	var cft = entity.NewCloudFoundryTemplate(entity.CloudFoundry{
 		CloudFoundryProperties: cloudFoundryProperties,
 		Compilation:            compilation,
 		NetWorks:               mapNetWorks,
 		ResourcesPools:         mapResourcesPools,
 		CloudFoundryJobs:       cloudFoundryJobsMap,
 	})
-	cft.CloudFoundry.Release = NewRelease("cf", "170")
-	cft.CloudFoundry.Stemcells = NewStemcell("", "")
+	cft.CloudFoundry.Release = entity.NewRelease("cf", "170")
+	cft.CloudFoundry.Stemcells = entity.NewStemcell("", "")
 	return cft
 }
 
-func InitCloudFoundryV3() CloudFoundryTemplate {
-	var cloudProperties = CloudProperties{
+func InitCloudFoundryV3() entity.CloudFoundryTemplate {
+	var cloudProperties = entity.CloudProperties{
 		AuthUrl:        "http://192.168.128.2:5000/v2.0",
 		UserName:       "paas",
 		ApiKey:         "paas123",
@@ -281,14 +282,14 @@ func InitCloudFoundryV3() CloudFoundryTemplate {
 		PrivateKey:     "~/bosh-workspace/key/test_microbosh.private",
 	}
 
-	var cloudFoundryProperties = NewCloudFoundryProperties("cf-release",
+	var cloudFoundryProperties = entity.NewCloudFoundryProperties("cf-release",
 		"57cfc863-786d-4495-bb97-86d2f650a038", "10.162.2.28", "ccipaas.net", "cci")
 
 	cloudFoundryProperties.CloudProperties = cloudProperties
 
-	var compilation = NewCompilation("flavor_91", "zone2", 6, "cf1")
+	var compilation = entity.NewCompilation("flavor_91", "zone2", 6, "cf1")
 
-	var networks = NewNetWorks("cf1", "private",
+	var networks = entity.NewNetWorks("cf1", "private",
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
 		"192.168.129.0/24",
@@ -297,9 +298,9 @@ func InitCloudFoundryV3() CloudFoundryTemplate {
 		"192.168.129.1 - 192.168.129.99",
 		"192.168.129.100 - 192.168.129.126")
 
-	var mapNetWorks = make(map[string]NetWorks)
+	var mapNetWorks = make(map[string]entity.NetWorks)
 	mapNetWorks["private"] = networks
-	mapNetWorks["public"] = NewNetWorks("publc", "publc",
+	mapNetWorks["public"] = entity.NewNetWorks("publc", "publc",
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
 		"10.162.2.0/24",
@@ -308,104 +309,104 @@ func InitCloudFoundryV3() CloudFoundryTemplate {
 		"",
 		"10.162.2.28 - 10.162.2.29")
 
-	var resourcesPool = NewResourcesPools("normal",
+	var resourcesPool = entity.NewResourcesPools("normal",
 		"flavor_91",
 		"zone2",
 		"cf1",
 		4)
-	var mapResourcesPools = make([]ResourcesPools, 0)
+	var mapResourcesPools = make([]entity.ResourcesPools, 0)
 	mapResourcesPools = append(mapResourcesPools, resourcesPool)
 
-	cloudFoundryJobsMap := map[string]CloudFoundryJobs{
-		utils.Job_Haproxy: NewCloudFoundryJobs(
+	cloudFoundryJobsMap := map[string]entity.CloudFoundryJobs{
+		utils.Job_Haproxy: entity.NewCloudFoundryJobs(
 			"haproxy",
 			utils.Job_Haproxy,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Gorouter: NewCloudFoundryJobs(
+		utils.Job_Gorouter: entity.NewCloudFoundryJobs(
 			"gorouter",
 			utils.Job_Gorouter,
 			"normal",
 			2,
 			[]string{""}),
-		utils.Job_Postgres: NewCloudFoundryJobs(
+		utils.Job_Postgres: entity.NewCloudFoundryJobs(
 			"postgres",
 			utils.Job_Postgres,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_NFS: NewCloudFoundryJobs(
+		utils.Job_NFS: entity.NewCloudFoundryJobs(
 			"nfs",
 			utils.Job_NFS,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_NATS: NewCloudFoundryJobs(
+		utils.Job_NATS: entity.NewCloudFoundryJobs(
 			"nats",
 			utils.Job_NATS,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Syslog: NewCloudFoundryJobs(
+		utils.Job_Syslog: entity.NewCloudFoundryJobs(
 			"syslog_aggregator",
 			utils.Job_Syslog,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Etcd: NewCloudFoundryJobs(
+		utils.Job_Etcd: entity.NewCloudFoundryJobs(
 			"etcd",
 			utils.Job_Etcd,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Loggregator: NewCloudFoundryJobs(
+		utils.Job_Loggregator: entity.NewCloudFoundryJobs(
 			"loggregator",
 			utils.Job_Loggregator,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Loggregator_Traffic: NewCloudFoundryJobs(
+		utils.Job_Loggregator_Traffic: entity.NewCloudFoundryJobs(
 			"loggregator_traffic",
 			utils.Job_Loggregator_Traffic,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Uaa: NewCloudFoundryJobs(
+		utils.Job_Uaa: entity.NewCloudFoundryJobs(
 			"uaa", utils.Job_Uaa,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Cloud_Controller_NG: NewCloudFoundryJobs(
+		utils.Job_Cloud_Controller_NG: entity.NewCloudFoundryJobs(
 			"cloud_controller_ng",
 			utils.Job_Cloud_Controller_NG,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Cloud_Controller_Worker: NewCloudFoundryJobs(
+		utils.Job_Cloud_Controller_Worker: entity.NewCloudFoundryJobs(
 			"cloud_controller_worker",
 			utils.Job_Cloud_Controller_Worker,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Cloud_Controller_Clock: NewCloudFoundryJobs(
+		utils.Job_Cloud_Controller_Clock: entity.NewCloudFoundryJobs(
 			"cloud_controller_clock",
 			utils.Job_Cloud_Controller_Clock,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Hm9000: NewCloudFoundryJobs(
+		utils.Job_Hm9000: entity.NewCloudFoundryJobs(
 			"hm9000",
 			utils.Job_Hm9000,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Stats: NewCloudFoundryJobs("stats",
+		utils.Job_Stats: entity.NewCloudFoundryJobs("stats",
 			utils.Job_Stats,
 			"normal",
 			1,
 			[]string{""}),
-		utils.Job_Dea_Next: NewCloudFoundryJobs(
+		utils.Job_Dea_Next: entity.NewCloudFoundryJobs(
 			"dea_next",
 			utils.Job_Dea_Next,
 			"normal",
@@ -436,7 +437,7 @@ func InitCloudFoundryV3() CloudFoundryTemplate {
 		mapResourcesPools[index] = value
 	}
 
-	var cft = NewCloudFoundryTemplate(CloudFoundry{
+	var cft = entity.NewCloudFoundryTemplate(entity.CloudFoundry{
 		CloudFoundryProperties: cloudFoundryProperties,
 		Compilation:            compilation,
 		NetWorks:               mapNetWorks,
@@ -444,7 +445,7 @@ func InitCloudFoundryV3() CloudFoundryTemplate {
 		CloudFoundryJobs:       cloudFoundryJobsMap,
 	})
 
-	cft.CloudFoundry.Release = NewRelease("cf", "170")
-	cft.CloudFoundry.Stemcells = NewStemcell("", "")
+	cft.CloudFoundry.Release = entity.NewRelease("cf", "170")
+	cft.CloudFoundry.Stemcells = entity.NewStemcell("", "")
 	return cft
 }
