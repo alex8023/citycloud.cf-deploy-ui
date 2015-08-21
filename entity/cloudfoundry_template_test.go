@@ -1,4 +1,4 @@
-package entity
+package entity_test
 
 import (
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"

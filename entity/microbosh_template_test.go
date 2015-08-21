@@ -1,4 +1,4 @@
-package entity
+package entity_test
 
 import (
 	. "github.com/onsi/ginkgo"
