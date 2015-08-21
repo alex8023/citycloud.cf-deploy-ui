@@ -1,9 +1,10 @@
-package utils
+package utils_test
 
 import (
 	"fmt"
 
 	"bytes"
+	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	. "github.com/onsi/ginkgo"
 	"time"
 )
@@ -11,7 +12,7 @@ import (
 var _ = Describe("Testing with Ginkgo", func() {
 })
 
-func ReadAndWriteBytes(out *bytes.Buffer, cmdRunner *DeployCmdRunner) {
+func ReadAndWriteBytes(out *bytes.Buffer, cmdRunner *utils.DeployCmdRunner) {
 	for {
 	loop:
 		if out.Len() == 0 {

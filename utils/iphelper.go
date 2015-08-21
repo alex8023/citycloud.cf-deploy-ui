@@ -122,6 +122,11 @@ func parseStaticIP(start, end string) []string {
 	return ips
 }
 
+//将给定的起始ip和结束ip之间的ip返回，前24位相同
+func ParseStaticIP(start, end string) []string {
+	return parseStaticIP(start, end)
+}
+
 //验证指定ip是否在指定的cidr范围内
 func CheckCIDRContainsIP(cidr string, ip string) bool {
 	_, ipnet, err := net.ParseCIDR(cidr)
