@@ -23,33 +23,33 @@
 									<div class="form-horizontal">
 								  		<div class="panel-body">
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Name</label>
-												<div class="col-sm-10">
+												<label class="col-sm-3 control-label">Name</label>
+												<div class="col-sm-5">
 													<p class="form-control-static">{{.Name}}</p>
 												</div>
 											</div>
 			
 											<div class="form-group">
-												<label class="col-sm-2 control-label">InstanceType</label>
-												<div class="col-sm-10">
+												<label class="col-sm-3 control-label">InstanceType</label>
+												<div class="col-sm-5">
 													<p class="form-control-static">{{.InstanceType}}</p>
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">AvailabilityZone</label>
-												<div class="col-sm-10">
+												<label class="col-sm-3 control-label">AvailabilityZone</label>
+												<div class="col-sm-5">
 													<p class="form-control-static">{{.AvailabilityZone}}</p>
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">Size</label>
-												<div class="col-sm-10">
+												<label class="col-sm-3 control-label">Size</label>
+												<div class="col-sm-5">
 													<p class="form-control-static">{{.Size}}</p>
 												</div>
 											</div>
 											<div class="form-group">
-												<label class="col-sm-2 control-label">DefaultNetWork</label>
-												<div class="col-sm-10">
+												<label class="col-sm-3 control-label">DefaultNetWork</label>
+												<div class="col-sm-5">
 													<p class="form-control-static">{{.DefaultNetWork}}</p>
 												</div>
 											</div>

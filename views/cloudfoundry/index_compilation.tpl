@@ -17,26 +17,26 @@
 							</div>
 							{{with .Compilation}}
 							<div class="form-group">
-								<label class="col-sm-2 control-label">InstanceType</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">InstanceType</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.InstanceType}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">AvailabilityZone</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">AvailabilityZone</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.AvailabilityZone}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Workers</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">Workers</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.Workers}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">DefaultNetWork</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">DefaultNetWork</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.DefaultNetWork}}</p>
 								</div>
 							</div>

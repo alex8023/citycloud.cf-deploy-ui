@@ -14,27 +14,27 @@
 				{{with .CloudFoundry}}
 				{{with .Compilation}}
 			  	<div class="form-group">
-			    	<label for="instanceType" class="col-sm-2 control-label">InstanceType</label>
-				    <div class="col-sm-10">
+			    	<label for="instanceType" class="col-sm-3 control-label">InstanceType</label>
+				    <div class="col-sm-7">
 						<input type="hidden" name="id" value="{{.Id}}">
 				      <input type="text" class="form-control" id="instanceType" placeholder="InstanceType" name="instanceType" value = "{{.InstanceType}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="availabilityZone" class="col-sm-2 control-label">AvailabilityZone</label>
-				    <div class="col-sm-10">
+			    	<label for="availabilityZone" class="col-sm-3 control-label">AvailabilityZone</label>
+				    <div class="col-sm-7">
 				      <input type="text" class="form-control" id="availabilityZone" placeholder="AvailabilityZone" name="availabilityZone" value = "{{.AvailabilityZone}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="workers" class="col-sm-2 control-label">Workers</label>
-				    <div class="col-sm-10">
+			    	<label for="workers" class="col-sm-3 control-label">Workers</label>
+				    <div class="col-sm-7">
 				      <input type="number" class="form-control" id="workers" placeholder="Workers" name="workers" value = "{{.Workers}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="defaultNetWork" class="col-sm-2 control-label">DefaultNetWork</label>
-				    <div class="col-sm-10">
+			    	<label for="defaultNetWork" class="col-sm-3 control-label">DefaultNetWork</label>
+				    <div class="col-sm-7">
 				      <input type="text" class="form-control" id="defaultNetWork" placeholder="DefaultNetWork" name="defaultNetWork" value = "{{.DefaultNetWork}}" readonly required>
 				    </div>
 			  	</div>

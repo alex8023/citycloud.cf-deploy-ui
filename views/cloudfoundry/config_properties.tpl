@@ -14,15 +14,15 @@
 				{{with .CloudFoundry}}
 				{{with .CloudFoundryProperties}}
 			  	<div class="form-group">
-			    	<label for="name" class="col-sm-2 control-label">Deployment Name</label>
-				    <div class="col-sm-10">
+			    	<label for="name" class="col-sm-3 control-label">Deployment Name</label>
+				    <div class="col-sm-7">
 						<input type="hidden" name="id" value="{{.Id}}">
 				      	<input type="text" class="form-control" id="name" placeholder="Deployment Name" name="name" value = "{{.Name}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="uuid" class="col-sm-2 control-label">Director UUID</label>
-				    <div class="col-sm-10">
+			    	<label for="uuid" class="col-sm-3 control-label">Director UUID</label>
+				    <div class="col-sm-7">
 				      <input type="text" class="form-control" id="uuid" placeholder="Director UUID" name="uuid" value = "{{.Uuid}}" required>
 				    </div>
 			  	</div>
@@ -30,20 +30,20 @@
 				{{else}}
 			  	<div class="form-group">
 			    	<label for="floatingIp" class="col-sm-2 control-label">FloatingIp</label>
-				    <div class="col-sm-10">
+				    <div class="col-sm-7">
 				      <input type="text" class="form-control" id="floatingIp" placeholder="FloatingIp" name="floatingIp" value = "{{.FloatingIp}}" required>
 				    </div>
 			  	</div>
 				{{end}}
 			  	<div class="form-group">
-			    	<label for="systemDomain" class="col-sm-2 control-label">SystemDomain</label>
-				    <div class="col-sm-10">
+			    	<label for="systemDomain" class="col-sm-3 control-label">SystemDomain</label>
+				    <div class="col-sm-7">
 				      <input type="text" class="form-control" id="systemDomain" placeholder="SystemDomain" name="systemDomain" value = "{{.SystemDomain}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="systemDomainOrg" class="col-sm-2 control-label">SystemOrg</label>
-				    <div class="col-sm-10">
+			    	<label for="systemDomainOrg" class="col-sm-3 control-label">SystemOrg</label>
+				    <div class="col-sm-7">
 				      <input type="text" class="form-control" id="systemDomainOrg" placeholder="SystemOrg" name="systemDomainOrg" value = "{{.SystemDomainOrg}}" required>
 				    </div>
 			  	</div>

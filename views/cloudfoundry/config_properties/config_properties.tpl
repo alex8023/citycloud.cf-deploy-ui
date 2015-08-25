@@ -14,8 +14,8 @@
 				{{with .Properties}}
 				{{range .JobProperties}}
 			  	<div class="form-group">
-			    	<label for="{{.Name}}" class="col-sm-2 control-label">{{.Name}}</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.Name}}" class="col-sm-5 control-label">{{.Name}}</label>
+				    <div class="col-sm-4">
 				      <input type="text" class="form-control" id="{{.Name}}" placeholder="{{.Name}}" name="{{.Name}}" value = "{{.Value}}" required>
 				    </div>
 			  	</div>

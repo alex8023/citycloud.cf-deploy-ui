@@ -6,14 +6,14 @@
 		<div class="form-horizontal">
 		  	<div class="panel-body">
 			  	<div class="form-group">
-			    	<label for="{{.gorouter.JobName}}_name" class="col-sm-2 control-label">Name</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.gorouter.JobName}}_name" class="col-sm-3 control-label">Name</label>
+				    <div class="col-sm-7">
 				      	<input type="text" class="form-control" id="{{.gorouter.JobName}}_name" placeholder="Name" name="{{.gorouter.JobName}}_name" value = "{{.gorouter.Name}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.gorouter.JobName}}_resourcesPool" class="col-sm-2 control-label">ResourcesPool</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.gorouter.JobName}}_resourcesPool" class="col-sm-3 control-label">ResourcesPool</label>
+				    <div class="col-sm-7">
 				      	<input type="hidden" id="{{.gorouter.JobName}}_resourcesPool" name="{{.gorouter.JobName}}_resourcesPool" value = "{{.gorouter.ResourcesPool}}">
 				    	<select class="form-control" id="{{.gorouter.JobName}}_resourcesPool" name="{{.gorouter.JobName}}_resourcesPool_select" >
 						{{$gorouter := .gorouter.JobName}}
@@ -25,8 +25,8 @@
 					</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.gorouter.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.gorouter.JobName}}_instances" class="col-sm-3 control-label">Instances</label>
+				    <div class="col-sm-7">
 				      	<input type="number" class="form-control" id="{{.gorouter.JobName}}_instances" placeholder="Instances" name="{{.gorouter.JobName}}_instances" value = "{{.gorouter.Instances}}" required >
 				    </div>
 			  	</div>

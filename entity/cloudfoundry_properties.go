@@ -190,8 +190,8 @@ properties:
     db_encryption_key: c1oudc0w
     quota_definitions:
       default:
-        memory_limit: 524288
-        total_services: 1000
+        memory_limit: {{with .Properties.JobProperties}}{{if .cc_quota_definitions_memory_limit}}{{.cc_quota_definitions_memory_limit.Value}}{{else}}524288{{end}}{{end}}
+        total_services: {{with .Properties.JobProperties}}{{if .cc_quota_definitions_total_services}}{{.cc_quota_definitions_total_services.Value}}{{else}}1000{{end}}{{end}}
         non_basic_services_allowed: true
         total_routes: 1000
         trial_db_allowed: true

@@ -17,35 +17,35 @@
 							</div>
 							{{with .CloudFoundryProperties}}
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Deployment Name</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">Deployment Name</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.Name}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Director UUID</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">Director UUID</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.Uuid}}</p>
 								</div>
 							</div>
 							{{if eq $.IaaSVersion $.DefaultVersion}}
 							{{else}}
 							<div class="form-group">
-								<label class="col-sm-2 control-label">FloatingIp</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">FloatingIp</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.FloatingIp}}</p>
 								</div>
 							</div>
 							{{end}}
 							<div class="form-group">
-								<label class="col-sm-2 control-label">SystemDomain</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">SystemDomain</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.SystemDomain}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">SystemOrg</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">SystemOrg</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.SystemDomainOrg}}</p>
 								</div>
 							</div>
