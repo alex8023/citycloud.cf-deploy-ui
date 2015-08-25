@@ -28,6 +28,16 @@ CREATE TABLE `job_properties` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `job_properties`
+--
+
+LOCK TABLES `job_properties` WRITE;
+/*!40000 ALTER TABLE `job_properties` DISABLE KEYS */;
+INSERT INTO `job_properties` VALUES ('cc_quota_definitions_memory_limit','524288'),('cc_quota_definitions_total_services','1000');
+/*!40000 ALTER TABLE `job_properties` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -38,4 +48,4 @@ CREATE TABLE `job_properties` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-25 16:08:54
+-- Dump completed on 2015-08-25 16:25:58
