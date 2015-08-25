@@ -1,0 +1,1 @@
+{{template "cloudfoundry/config_properties/config_properties.tpl" .}}

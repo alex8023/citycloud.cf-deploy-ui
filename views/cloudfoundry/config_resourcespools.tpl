@@ -11,6 +11,7 @@
 				    <div class="col-sm-offset-2 col-sm-10">
 				      	<button type="submit" class="btn btn-default " data-loading-text="Saving..." >Save</button>
 						<button type="button" class="btn btn-default " id="add_resources_pool" >More>></button>
+						<a class="btn btn-default " href="cloudfoundry">Back</a>
 				    </div>
 			  	</div>
 				{{with .CloudFoundry}}

@@ -37,7 +37,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 		iPFactory := utils.NewIPFactory()
 		iPFactory.InitFactory("192.168.1.1", "192.168.1.20")
 
-		fmt.Println()
+		fmt.Println("iiiiiiiiiiiiiiiiii")
 		fmt.Printf("%s", iPFactory.GetAssignaIP4Job(utils.Job_Cloud_Controller_Clock))
 		fmt.Println()
 		abs, e := iPFactory.AssignaIP2Job(utils.Job_Cloud_Controller_Clock, 2)

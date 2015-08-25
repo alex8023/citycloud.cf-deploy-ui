@@ -35,4 +35,5 @@ const (
 	Compilation            = "Compilation"
 	ResourcesPools         = "ResourcesPools"
 	CloudFoundryJobs       = "CloudFoundryJobs"
+	Properties             = "Properties"
 )

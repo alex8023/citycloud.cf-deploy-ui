@@ -28,7 +28,7 @@
 						}
 						if ($('#config-more')){
 							$('#config-more').on('click', function(){
-				    				window.location.href = "cloudfoundry?action=more";
+				    				window.location.href = "cloudfoundry?action=moreconf";
 				  			})
 						}						
 					</script>

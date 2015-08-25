@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"strings"
@@ -77,6 +78,12 @@ type CloudFoundryJobs struct {
 
 //Job属性配置
 type Properties struct {
+	JobProperties map[string]JobProperties
+}
+
+type JobProperties struct {
+	Name  string `orm:"pk"`
+	Value string `orm:"size(2048)"`
 }
 
 type Release struct {
@@ -211,6 +218,10 @@ func NewStemcell(name, version string) (stemcell Stemcells) {
 	}
 	stemcell.Name = name
 	stemcell.Version = version
+	return
+}
+
+func NewProperties() (properties Properties) {
 	return
 }
 
@@ -387,6 +398,42 @@ func (cloudFoundryJobs *CloudFoundryJobs) Update() error {
 	return err
 }
 
+func (properties *Properties) Load() error {
+	qs := orm.NewOrm().QueryTable(new(JobProperties))
+	var jobProperties []JobProperties
+	_, err := qs.All(&jobProperties)
+	jobsPro := make(map[string]JobProperties)
+	for _, value := range jobProperties {
+		jobsPro[value.Name] = value
+	}
+	properties.JobProperties = jobsPro
+	return err
+}
+
+func (properties *Properties) Update() error {
+	qs := orm.NewOrm().QueryTable(new(JobProperties))
+	cond := orm.NewCondition()
+
+	cond1 := cond.And("name__isnull", false)
+	qs.SetCond(cond1).Delete()
+
+	insert, _ := qs.PrepareInsert()
+	erros := make([]error, 0)
+	for _, values := range properties.JobProperties {
+		_, err := insert.Insert(&values)
+		if err != nil {
+			erros = append(erros, err)
+			logger.Error("Update JobProperties error :%s", err)
+		}
+	}
+	insert.Close()
+
+	if len(erros) != 0 {
+		return fmt.Errorf("Update Error %s", erros)
+	}
+	return nil
+}
+
 func init() {
-	orm.RegisterModel(new(CloudFoundryProperties), new(Compilation), new(NetWorks), new(CloudFoundryJobs), new(ResourcesPools))
+	orm.RegisterModel(new(CloudFoundryProperties), new(Compilation), new(NetWorks), new(CloudFoundryJobs), new(ResourcesPools), new(JobProperties))
 }
