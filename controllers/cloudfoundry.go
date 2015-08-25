@@ -26,6 +26,8 @@ func (this *CloudFoundryController) Get() {
 		this.ConfigCloudFoundry()
 	case "deploy":
 		this.DeployCloudFoundry()
+	case "moreconf":
+		this.ConfigProperties()
 	default:
 		this.IndexCloudFoundry()
 	}
@@ -173,6 +175,17 @@ func (this *CloudFoundryController) Post() {
 			resourcesPoolsMap[index] = value
 		}
 		this.CommitData(resourcesPoolsMap)
+
+	case utils.Properties:
+		property := properties.JobProperties
+		for key, val := range property {
+			val.Name = key
+			val.Value = this.GetString(key)
+			property[key] = val
+		}
+		properties.JobProperties = property
+		this.CommitData(properties)
+
 	default:
 		erros = append(erros, fmt.Errorf("Unknow model %s", model))
 	}
@@ -219,8 +232,21 @@ func (this *CloudFoundryController) ConfigCloudFoundry() {
 	case utils.CloudFoundryJobs:
 		this.TplNames = "cloudfoundry/config_jobs.tpl"
 	default:
-
+		this.IndexCloudFoundry()
 	}
+}
+
+func (this *CloudFoundryController) ConfigProperties() {
+	logger.Debug("%s", "Config CloudFoundry Properties")
+	model := this.GetString("model")
+	if model == "" {
+		model = utils.Properties
+	}
+	this.Data["Model"] = model
+	properties.Load()
+	cf.Properties = properties
+	this.Data["Properties"] = properties
+	this.TplNames = "cloudfoundry/config_more.tpl"
 }
 
 //read data from const or database
@@ -242,10 +268,15 @@ func (this *CloudFoundryController) LoadData() {
 	resourcesPoolsMap, _ = entity.LoadResourcePools(resourcesPoolsMap)
 
 	cf.Compilation = compilation
+
 	cf.CloudFoundryProperties = cloudFoundryProperties
+
 	cf.NetWorks = netWorksMap
+
 	cf.CloudFoundryJobs = cloudFoundryJobsMap
+
 	cf.ResourcesPools = resourcesPoolsMap
+
 	this.Data["CloudFoundry"] = cf
 }
 
@@ -282,14 +313,17 @@ func (this *CloudFoundryController) CommitData(data interface{}) {
 			cloudFoundryJobsMap[key] = value
 		}
 		cf.CloudFoundryJobs = cloudFoundryJobsMap
+
 	case entity.CloudFoundryProperties:
 		cloudFoundryProperties = data.(entity.CloudFoundryProperties)
 		cloudFoundryProperties.Update()
 		cf.CloudFoundryProperties = cloudFoundryProperties
+
 	case entity.Compilation:
 		compilation = data.(entity.Compilation)
 		compilation.Update()
 		cf.Compilation = compilation
+
 	case entity.CloudFoundry:
 		cf = data.(entity.CloudFoundry)
 
@@ -305,6 +339,12 @@ func (this *CloudFoundryController) CommitData(data interface{}) {
 		resourcesPoolsMap = data.([]entity.ResourcesPools)
 		resourcesPoolsMap, _ = entity.UpdateResourcePools(resourcesPoolsMap)
 		cf.ResourcesPools = resourcesPoolsMap
+
+	case entity.Properties:
+		properties = data.(entity.Properties)
+		properties.Update()
+		cf.Properties = properties
+
 	default:
 		this.Data["MessageErr"] = fmt.Sprintf("Unknow type %s", reflect.TypeOf(data))
 	}
