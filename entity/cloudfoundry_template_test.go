@@ -269,6 +269,9 @@ func InitCloudFoundryV2() entity.CloudFoundryTemplate {
 	})
 	cft.CloudFoundry.Release = entity.NewRelease("cf", "170")
 	cft.CloudFoundry.Stemcells = entity.NewStemcell("", "")
+
+	cft.CloudFoundry.Properties = InitProperties()
+
 	return cft
 }
 
@@ -447,5 +450,17 @@ func InitCloudFoundryV3() entity.CloudFoundryTemplate {
 
 	cft.CloudFoundry.Release = entity.NewRelease("cf", "170")
 	cft.CloudFoundry.Stemcells = entity.NewStemcell("", "")
+
+	cft.CloudFoundry.Properties = InitProperties()
 	return cft
+}
+
+func InitProperties() entity.Properties {
+	var properties = entity.NewProperties()
+
+	propertiesMap := make(map[string]entity.JobProperties)
+	propertiesMap["cc_quota_definitions_memory_limit"] = entity.JobProperties{Name: "cc_quota_definitions_memory_limit", Value: "1234"}
+	propertiesMap["cc_quota_definitions_total_services"] = entity.JobProperties{Name: "cc_quota_definitions_total_services", Value: "1000"}
+	properties.JobProperties = propertiesMap
+	return properties
 }

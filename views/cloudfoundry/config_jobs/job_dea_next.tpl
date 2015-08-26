@@ -6,14 +6,14 @@
 		<div class="form-horizontal">
 		  	<div class="panel-body">
 			  	<div class="form-group">
-			    	<label for="{{.dea_next.JobName}}_name" class="col-sm-2 control-label">Name</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.dea_next.JobName}}_name" class="col-sm-3 control-label">Name</label>
+				    <div class="col-sm-7">
 				      	<input type="text" class="form-control" id="{{.dea_next.JobName}}_name" placeholder="Name" name="{{.dea_next.JobName}}_name" value = "{{.dea_next.Name}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.dea_next.JobName}}_resourcesPool" class="col-sm-2 control-label">ResourcesPool</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.dea_next.JobName}}_resourcesPool" class="col-sm-3 control-label">ResourcesPool</label>
+				    <div class="col-sm-7">
 				      	<input type="hidden" id="{{.dea_next.JobName}}_resourcesPool" name="{{.dea_next.JobName}}_resourcesPool" value = "{{.dea_next.ResourcesPool}}">
 				    	<select class="form-control" id="{{.dea_next.JobName}}_resourcesPool" name="{{.dea_next.JobName}}_resourcesPool_select" >
 						{{$dea_next := .dea_next.JobName}}
@@ -25,8 +25,8 @@
 					</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.dea_next.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.dea_next.JobName}}_instances" class="col-sm-3 control-label">Instances</label>
+				    <div class="col-sm-7">
 				      	<input type="number" class="form-control" id="{{.dea_next.JobName}}_instances" placeholder="Instances" name="{{.dea_next.JobName}}_instances" value = "{{.dea_next.Instances}}" required >
 				    </div>
 			  	</div>

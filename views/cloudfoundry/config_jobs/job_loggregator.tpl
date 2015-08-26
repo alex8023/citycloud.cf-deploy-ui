@@ -6,14 +6,14 @@
 		<div class="form-horizontal">
 		  	<div class="panel-body">
 			  	<div class="form-group">
-			    	<label for="{{.loggregator.JobName}}_name" class="col-sm-2 control-label">Name</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.loggregator.JobName}}_name" class="col-sm-3 control-label">Name</label>
+				    <div class="col-sm-7">
 				      	<input type="text" class="form-control" id="{{.loggregator.JobName}}_name" placeholder="Name" name="{{.loggregator.JobName}}_name" value = "{{.loggregator.Name}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.loggregator.JobName}}_resourcesPool" class="col-sm-2 control-label">ResourcesPool</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.loggregator.JobName}}_resourcesPool" class="col-sm-3 control-label">ResourcesPool</label>
+				    <div class="col-sm-7">
 				      	<input type="hidden" id="{{.loggregator.JobName}}_resourcesPool" name="{{.loggregator.JobName}}_resourcesPool" value = "{{.loggregator.ResourcesPool}}">
 				    	<select class="form-control" id="{{.loggregator.JobName}}_resourcesPool" name="{{.loggregator.JobName}}_resourcesPool_select" >
 						{{$loggregator := .loggregator.JobName}}
@@ -25,8 +25,8 @@
 					</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.loggregator.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.loggregator.JobName}}_instances" class="col-sm-3 control-label">Instances</label>
+				    <div class="col-sm-7">
 				      	<input type="number" class="form-control" id="{{.loggregator.JobName}}_instances" placeholder="Instances" name="{{.loggregator.JobName}}_instances" value = "{{.loggregator.Instances}}" required readonly>
 				    </div>
 			  	</div>

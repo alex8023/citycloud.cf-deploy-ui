@@ -6,14 +6,14 @@
 		<div class="form-horizontal">
 		  	<div class="panel-body">
 			  	<div class="form-group">
-			    	<label for="{{.haproxy.JobName}}_name" class="col-sm-2 control-label">Name</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.haproxy.JobName}}_name" class="col-sm-3 control-label">Name</label>
+				    <div class="col-sm-7">
 				      	<input type="text" class="form-control" id="{{.haproxy.JobName}}_name" placeholder="Name" name="{{.haproxy.JobName}}_name" value = "{{.haproxy.Name}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.haproxy.JobName}}_resourcesPool" class="col-sm-2 control-label">ResourcesPool</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.haproxy.JobName}}_resourcesPool" class="col-sm-3 control-label">ResourcesPool</label>
+				    <div class="col-sm-7">
 				      	<input type="hidden" id="{{.haproxy.JobName}}_resourcesPool" name="{{.haproxy.JobName}}_resourcesPool" value = "{{.haproxy.ResourcesPool}}">
 				    	<select class="form-control" id="{{.haproxy.JobName}}_resourcesPool" name="{{.haproxy.JobName}}_resourcesPool_select" >
 						{{$haproxy := .haproxy.JobName}}
@@ -25,8 +25,8 @@
 					</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.haproxy.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.haproxy.JobName}}_instances" class="col-sm-3 control-label">Instances</label>
+				    <div class="col-sm-7">
 				      	<input type="number" class="form-control" id="{{.haproxy.JobName}}_instances" placeholder="Instances" name="{{.haproxy.JobName}}_instances" value = "{{.haproxy.Instances}}" required readonly>
 				    </div>
 			  	</div>

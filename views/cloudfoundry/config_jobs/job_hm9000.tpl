@@ -6,14 +6,14 @@
 		<div class="form-horizontal">
 		  	<div class="panel-body">
 			  	<div class="form-group">
-			    	<label for="{{.hm9000.JobName}}_name" class="col-sm-2 control-label">Name</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.hm9000.JobName}}_name" class="col-sm-3 control-label">Name</label>
+				    <div class="col-sm-7">
 				      	<input type="text" class="form-control" id="{{.hm9000.JobName}}_name" placeholder="Name" name="{{.hm9000.JobName}}_name" value = "{{.hm9000.Name}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.hm9000.JobName}}_resourcesPool" class="col-sm-2 control-label">ResourcesPool</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.hm9000.JobName}}_resourcesPool" class="col-sm-3 control-label">ResourcesPool</label>
+				    <div class="col-sm-7">
 				      	<input type="hidden" id="{{.hm9000.JobName}}_resourcesPool" name="{{.hm9000.JobName}}_resourcesPool" value = "{{.hm9000.ResourcesPool}}">
 				    	<select class="form-control" id="{{.hm9000.JobName}}_resourcesPool" name="{{.hm9000.JobName}}_resourcesPool_select" >
 						{{$hm9000 := .hm9000.JobName}}
@@ -25,8 +25,8 @@
 					</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.hm9000.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.hm9000.JobName}}_instances" class="col-sm-3 control-label">Instances</label>
+				    <div class="col-sm-7">
 				      	<input type="number" class="form-control" id="{{.hm9000.JobName}}_instances" placeholder="Instances" name="{{.hm9000.JobName}}_instances" value = "{{.hm9000.Instances}}" required readonly>
 				    </div>
 			  	</div>

@@ -17,44 +17,44 @@
 							</div>
 							{{with .NetWorks}}{{with .private}}
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Name</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">Name</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.Name}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">NetType</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">NetType</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.NetType}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">NetId</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">NetId</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.NetId}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Cidr</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">Cidr</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.Cidr}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Dns</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">Dns</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.Dns}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">ReservedIp</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">ReservedIp</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.ReservedIp}}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">StaticIp</label>
-								<div class="col-sm-10">
+								<label class="col-sm-3 control-label">StaticIp</label>
+								<div class="col-sm-5">
 									<p class="form-control-static">{{.StaticIp}}</p>
 								</div>
 							</div>

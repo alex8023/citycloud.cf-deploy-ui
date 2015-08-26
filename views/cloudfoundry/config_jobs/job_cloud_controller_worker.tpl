@@ -6,14 +6,14 @@
 		<div class="form-horizontal">
 		  	<div class="panel-body">
 			  	<div class="form-group">
-			    	<label for="{{.cloud_controller_worker.JobName}}_name" class="col-sm-2 control-label">Name</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.cloud_controller_worker.JobName}}_name" class="col-sm-3 control-label">Name</label>
+				    <div class="col-sm-7">
 				      	<input type="text" class="form-control" id="{{.cloud_controller_worker.JobName}}_name" placeholder="Name" name="{{.cloud_controller_worker.JobName}}_name" value = "{{.cloud_controller_worker.Name}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.cloud_controller_worker.JobName}}_resourcesPool" class="col-sm-2 control-label">ResourcesPool</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.cloud_controller_worker.JobName}}_resourcesPool" class="col-sm-3 control-label">ResourcesPool</label>
+				    <div class="col-sm-7">
 				      	<input type="hidden" id="{{.cloud_controller_worker.JobName}}_resourcesPool" name="{{.cloud_controller_worker.JobName}}_resourcesPool" value = "{{.cloud_controller_worker.ResourcesPool}}">
 				    	<select class="form-control" id="{{.cloud_controller_worker.JobName}}_resourcesPool" name="{{.cloud_controller_worker.JobName}}_resourcesPool_select" >
 						{{$cloud_controller_worker := .cloud_controller_worker.JobName}}
@@ -25,8 +25,8 @@
 					</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="{{.cloud_controller_worker.JobName}}_instances" class="col-sm-2 control-label">Instances</label>
-				    <div class="col-sm-10">
+			    	<label for="{{.cloud_controller_worker.JobName}}_instances" class="col-sm-3 control-label">Instances</label>
+				    <div class="col-sm-7">
 				      	<input type="number" class="form-control" id="{{.cloud_controller_worker.JobName}}_instances" placeholder="Instances" name="{{.cloud_controller_worker.JobName}}_instances" value = "{{.cloud_controller_worker.Instances}}" required readonly>
 				    </div>
 			  	</div>
