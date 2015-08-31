@@ -2,7 +2,7 @@
 			<div class="footer">
 				<p>Official website:<a href="http://www.citycloud.com.cn">城云科技</a> /
 				Contact me:
-				<a class="email" href="mailto:huanghy@citycloud.com.cn">huanghy@citycloud.com.cn</a></p>
+				<a class="email" href="mailto:cci-paas@citycloud.com.cn">cci-paas@citycloud.com.cn</a></p>
 			</div>
 		</footer>
 	</body>

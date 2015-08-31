@@ -36,6 +36,10 @@ $(document).ready(function(){
 	$('#login-microbosh').on('click',function(){
 		SendMessage("Login");
 	})
+	
+	$('#status-microbosh').on('click',function(){
+		SendMessage("Status");
+	})
 		
     } else {
         $("<div><b>Your browser does not support WebSockets.</b></div>").appendTo(log);

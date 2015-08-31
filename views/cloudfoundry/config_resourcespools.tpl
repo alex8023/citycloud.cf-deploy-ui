@@ -23,7 +23,7 @@
 					<div class="form-horizontal">
 					  	<div class="panel-body">
 						  	<div class="form-group">
-						    	<label for="name" class="col-sm-2 control-label">Name</label>
+						    	<label for="name" class="col-sm-3 control-label">Name</label>
 							    <div class="col-sm-7">
 									<input type="hidden" name ="id" value ="{{.Id}}">
 							      	<input type="text" class="form-control" id="name" placeholder="Name" name="name" value = "{{.Name}}" required>

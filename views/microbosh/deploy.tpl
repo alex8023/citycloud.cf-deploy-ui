@@ -13,6 +13,7 @@
 						<button class="btn btn-default " id = "set-microbosh" data-toggle="tooltip" data-placement="right" title="设置部署文件">SetDeployment</button>
 						<button class="btn btn-default " id = "deploy-microbosh" data-toggle="tooltip" data-placement="right" title="部署MicroBOSH">Deploy</button>
 						<button class="btn btn-default " id = "login-microbosh" data-toggle="tooltip" data-placement="right" title="登录MicroBOSH">Login</button>
+						<button class="btn btn-default " id = "status-microbosh" data-toggle="tooltip" data-placement="right" title="查看MicroBOSH">Status</button>
 					</div>
 					<div id = "websocketmessage">
 					<div><b>{{.Message}}</b></div>

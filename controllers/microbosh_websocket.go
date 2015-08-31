@@ -62,6 +62,13 @@ func (this *MicroBOSHWebSocketController) Get() {
 						writeStringMessage(ws, "登录失败！")
 					}
 				}
+
+				if success {
+					success = this.statusMicroBOSH(ws)
+					if !success {
+						writeStringMessage(ws, "查看信息失败！")
+					}
+				}
 			case action == "SetDeploy":
 				var success bool = false
 				success = this.setMicroBOSHDeployment(ws)
@@ -85,6 +92,13 @@ func (this *MicroBOSHWebSocketController) Get() {
 					if !success {
 						writeStringMessage(ws, "登录失败！")
 					}
+				}
+
+			case action == "Status":
+				var success bool = false
+				success = this.statusMicroBOSH(ws)
+				if !success {
+					writeStringMessage(ws, "查看信息失败！")
 				}
 			default:
 				writeStringMessage(ws, fmt.Sprintf("未知的执行命令！%s", action))
@@ -164,6 +178,24 @@ func (this *MicroBOSHWebSocketController) loginMicroBOSH(ws *websocket.Conn) boo
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
 	writeStringMessage(ws, "Finished login MicroBosh instances")
+	writeStringMessage(ws, "============================================")
+	return cmdRunner.Success()
+}
+
+func (this *MicroBOSHWebSocketController) statusMicroBOSH(ws *websocket.Conn) bool {
+	writeStringMessage(ws, "============================================")
+	writeStringMessage(ws, "Status MicroBosh instances")
+	var out bytes.Buffer
+
+	loginCommand := utils.Command{Name: "bosh", Args: []string{"status"}, Dir: workDir, Stdin: ""}
+
+	cmdRunner := utils.NewDeployCmdRunner()
+
+	cmdRunner.RunCommandAsyncCmd(loginCommand, &out)
+
+	writeBytesBufferMessage(&out, &cmdRunner, ws)
+
+	writeStringMessage(ws, "Finished Status MicroBosh")
 	writeStringMessage(ws, "============================================")
 	return cmdRunner.Success()
 }
