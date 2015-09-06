@@ -149,7 +149,15 @@ func (this *MicroBoshController) Deploy() {
 //write data to const or database
 func (this *MicroBoshController) CommitData(microbosh entity.MicroBOSH) {
 	mi = microbosh
+
 	mi.Update()
+
+	mi.NetWork.Update()
+
+	mi.CloudProperties.Update()
+
+	mi.Resources.Update()
+
 }
 
 var mi entity.MicroBOSH = entity.NewMicroBOSH("microbosh-openstack",
