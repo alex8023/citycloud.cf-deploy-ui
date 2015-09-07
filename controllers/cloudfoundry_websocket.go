@@ -49,14 +49,14 @@ func (this *CloudFoundryWebSocketController) Get() {
 				if success {
 					success = this.setCloudFoundryDeployment(ws)
 					if !success {
-						writeStringMessage(ws, "设置deployment出现了错误，需要检查PaaS Deployment的配置")
+						writeStringMessage(ws, "设置deployment出现了错误!")
 					}
 				}
 
 				if success {
 					success = this.deployCloudFoundry(ws)
 					if !success {
-						writeStringMessage(ws, "部署PaaS实例出现了错误！需要检查PaaS Deployment的配置")
+						writeStringMessage(ws, "部署PaaS实例出现了错误！")
 					}
 				}
 			case action == "UpRelease":
@@ -75,13 +75,13 @@ func (this *CloudFoundryWebSocketController) Get() {
 				var success bool = false
 				success = this.setCloudFoundryDeployment(ws)
 				if !success {
-					writeStringMessage(ws, "设置deployment出现了错误，需要检查PaaS Deployment的配置")
+					writeStringMessage(ws, "设置deployment出现了错误!")
 				}
 			case action == "Deploy":
 				var success bool = false
 				success = this.deployCloudFoundry(ws)
 				if !success {
-					writeStringMessage(ws, "部署PaaS实例出现了错误！需要检查PaaS Deployment的配置")
+					writeStringMessage(ws, "部署PaaS实例出现了错误！")
 				}
 			default:
 				writeStringMessage(ws, fmt.Sprintf("未知的执行命令！%s", action))
