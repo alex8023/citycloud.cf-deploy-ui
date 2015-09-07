@@ -61,7 +61,7 @@ name: {{.Name}}
 {{with .NetWork}}
 network:
   type: manual
-  vip: {{.Vip}}
+  ip: {{.Vip}}
   cloud_properties:
     net_id: {{.NetId}}
 {{end}}
