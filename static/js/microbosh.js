@@ -33,6 +33,12 @@ $(document).ready(function(){
 		SendMessage("Deploy");
 	})
 	
+	$('#redeploy-microbosh').on('click',function(){
+		SendMessage("ReDeploy");
+	})
+	
+	
+	
 	$('#login-microbosh').on('click',function(){
 		SendMessage("Login");
 	})

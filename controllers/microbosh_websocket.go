@@ -81,6 +81,18 @@ func (this *MicroBOSHWebSocketController) Get() {
 				if !success {
 					writeStringMessage(ws, "部署 MicroBOSH 实例出现了错误！需要检查MicroBOSH Deployment的配置")
 				}
+			case action == "ReDeploy":
+				var success bool = false
+				success = this.deleteMicroBOSH(ws)
+				if !success {
+					writeStringMessage(ws, "检查IaaS中是否还有MicroBOSH的实例，如过有，请删除。")
+				}
+				if success {
+					success = this.deployMicroBOSH(ws)
+					if !success {
+						writeStringMessage(ws, "部署 MicroBOSH 实例出现了错误！需要检查MicroBOSH Deployment的配置")
+					}
+				}
 			case action == "Login":
 				var success bool = false
 				success = this.targetMicroBOSH(ws)
@@ -112,7 +124,7 @@ func (this *MicroBOSHWebSocketController) Get() {
 //set deployment
 func (this *MicroBOSHWebSocketController) setMicroBOSHDeployment(ws *websocket.Conn) bool {
 	writeStringMessage(ws, "============================================")
-	writeStringMessage(ws, "Set MicroBosh Deployment")
+	writeStringMessage(ws, "Set MicroBOSH Deployment")
 
 	var out bytes.Buffer
 	cmdCommand := utils.Command{Name: "bosh", Args: []string{"micro", "deployment", microManiest}, Dir: workDir, Stdin: ""}
@@ -121,7 +133,7 @@ func (this *MicroBOSHWebSocketController) setMicroBOSHDeployment(ws *websocket.C
 	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
-	writeStringMessage(ws, "Finished Set MicroBosh Deployment")
+	writeStringMessage(ws, "Finished Set MicroBOSH Deployment")
 	writeStringMessage(ws, "============================================")
 
 	return cmdRunner.Success()
@@ -130,14 +142,33 @@ func (this *MicroBOSHWebSocketController) setMicroBOSHDeployment(ws *websocket.C
 //deploy microbosh
 func (this *MicroBOSHWebSocketController) deployMicroBOSH(ws *websocket.Conn) bool {
 	writeStringMessage(ws, "============================================")
-	writeStringMessage(ws, "Deploying MicroBosh instances")
+	writeStringMessage(ws, "Deploying MicroBOSH instances")
 	var out bytes.Buffer
 	cmdCommand := utils.Command{Name: "bosh", Args: []string{"micro", "deploy", stemcellRelease}, Dir: workDir, Stdin: "yes"}
 	cmdRunner := utils.NewDeployCmdRunner()
 	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
-	writeStringMessage(ws, "Finished deploying MicroBosh instances")
+	writeStringMessage(ws, "Finished deploying MicroBOSH instances")
+	writeStringMessage(ws, "============================================")
+	return cmdRunner.Success()
+}
+
+//delete microbosh
+func (this *MicroBOSHWebSocketController) deleteMicroBOSH(ws *websocket.Conn) bool {
+	writeStringMessage(ws, "============================================")
+	writeStringMessage(ws, "Deleting MicroBOSH instances")
+	var out bytes.Buffer
+	cmdCommand := utils.Command{Name: "bosh", Args: []string{"micro", "delete"}, Dir: workDir, Stdin: "yes"}
+	cmdRunner := utils.NewDeployCmdRunner()
+	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
+	writeBytesBufferMessage(&out, &cmdRunner, ws)
+
+	cleanCmdCommand := utils.Command{Name: "sh", Args: []string{"rm_bosh_deployment.sh"}, Dir: workDir, Stdin: ""}
+	cleanCmdRunner := utils.NewDeployCmdRunner()
+	cleanCmdRunner.RunCommandAsyncCmd(cleanCmdCommand, &out)
+	writeBytesBufferMessage(&out, &cleanCmdRunner, ws)
+	writeStringMessage(ws, "Finished deleting MicroBOSH instances")
 	writeStringMessage(ws, "============================================")
 	return cmdRunner.Success()
 }
@@ -145,7 +176,7 @@ func (this *MicroBOSHWebSocketController) deployMicroBOSH(ws *websocket.Conn) bo
 //target to microbosh
 func (this *MicroBOSHWebSocketController) targetMicroBOSH(ws *websocket.Conn) bool {
 	writeStringMessage(ws, "============================================")
-	writeStringMessage(ws, "Target to MicroBosh instances")
+	writeStringMessage(ws, "Target to MicroBOSH instances")
 	var out bytes.Buffer
 	var ip string = mi.NetWork.Vip
 	target := fmt.Sprintf("https://%s:25555", ip)
@@ -158,7 +189,7 @@ func (this *MicroBOSHWebSocketController) targetMicroBOSH(ws *websocket.Conn) bo
 
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
-	writeStringMessage(ws, "Finished target to MicroBosh instances")
+	writeStringMessage(ws, "Finished target to MicroBOSH instances")
 	writeStringMessage(ws, "============================================")
 	return cmdRunner.Success()
 }
@@ -166,7 +197,7 @@ func (this *MicroBOSHWebSocketController) targetMicroBOSH(ws *websocket.Conn) bo
 //login into
 func (this *MicroBOSHWebSocketController) loginMicroBOSH(ws *websocket.Conn) bool {
 	writeStringMessage(ws, "============================================")
-	writeStringMessage(ws, "Login MicroBosh instances")
+	writeStringMessage(ws, "Login MicroBOSH instances")
 	var out bytes.Buffer
 
 	loginCommand := utils.Command{Name: "bosh", Args: []string{"login"}, Dir: workDir, Stdin: "admin\nadmin\n"}
@@ -177,14 +208,14 @@ func (this *MicroBOSHWebSocketController) loginMicroBOSH(ws *websocket.Conn) boo
 
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
-	writeStringMessage(ws, "Finished login MicroBosh instances")
+	writeStringMessage(ws, "Finished login MicroBOSH instances")
 	writeStringMessage(ws, "============================================")
 	return cmdRunner.Success()
 }
 
 func (this *MicroBOSHWebSocketController) statusMicroBOSH(ws *websocket.Conn) bool {
 	writeStringMessage(ws, "============================================")
-	writeStringMessage(ws, "Status MicroBosh instances")
+	writeStringMessage(ws, "Status MicroBOSH instances")
 	var out bytes.Buffer
 
 	loginCommand := utils.Command{Name: "bosh", Args: []string{"status"}, Dir: workDir, Stdin: ""}
@@ -195,7 +226,7 @@ func (this *MicroBOSHWebSocketController) statusMicroBOSH(ws *websocket.Conn) bo
 
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
-	writeStringMessage(ws, "Finished Status MicroBosh")
+	writeStringMessage(ws, "Finished Status MicroBOSH")
 	writeStringMessage(ws, "============================================")
 	return cmdRunner.Success()
 }
