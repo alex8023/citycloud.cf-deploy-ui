@@ -284,7 +284,7 @@ func (this *CloudFoundryController) LoadData() {
 func (this *CloudFoundryController) Deploy() {
 	cf.Release = entity.NewRelease(cloudFoundryName, cloudFoundryVersion)
 	cf.Stemcells = entity.NewStemcell(stemcellName, stemcellVersion)
-	cloudFoundryTemplate := entity.NewCloudFoundryTemplate(cf)
+
 	templateText := ""
 	if iaasVersion == defaultVersion {
 		templateText = entity.CloudFoundryTemplateV3
@@ -294,6 +294,8 @@ func (this *CloudFoundryController) Deploy() {
 	} else {
 		templateText = entity.CloudFoundryTemplateV2
 	}
+
+	cloudFoundryTemplate := entity.NewCloudFoundryTemplate(cf)
 
 	ok, err := cloudFoundryTemplate.CreateCloudFoundryYaml(templateText, cloudFoundryPath)
 	if !ok {
