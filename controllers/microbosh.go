@@ -130,6 +130,10 @@ func (this *MicroBoshController) LoadData() {
 
 //deploy
 func (this *MicroBoshController) Deploy() {
+
+	// reload data
+	this.LoadData()
+
 	microBOSHTemplate := entity.NewMicroBOSHTemplate(mi)
 
 	template := entity.MicroBOSHTemplateTextV2

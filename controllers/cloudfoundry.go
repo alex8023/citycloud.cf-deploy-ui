@@ -277,11 +277,18 @@ func (this *CloudFoundryController) LoadData() {
 
 	cf.ResourcesPools = resourcesPoolsMap
 
+	properties.Load()
+
+	cf.Properties = properties
+
 	this.Data["CloudFoundry"] = cf
 }
 
 //deploy,only set deployment
 func (this *CloudFoundryController) Deploy() {
+	// reload data
+	this.LoadData()
+
 	cf.Release = entity.NewRelease(cloudFoundryName, cloudFoundryVersion)
 	cf.Stemcells = entity.NewStemcell(stemcellName, stemcellVersion)
 
