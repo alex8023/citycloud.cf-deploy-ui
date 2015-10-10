@@ -20,13 +20,7 @@
 					<th>#</th>
 					<th>Name</th>
 					<th>Description</th>
-					<th>Opertion</th>
-					<th>						<button type="button" class="btn btn-default">
-							<span class="glyphicon glyphicon-edit"></span> 编辑
-						</button>
-						<button type="button" class="btn btn-default">
-							<span class="glyphicon glyphicon-remove"></span> 删除
-						</button></th>
+					<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -35,13 +29,7 @@
 					<td>{{$index}}</td>
 					<td>{{$element.Name}}</td>
 					<td>{{$element.Description}}</td>
-					<td>
-						<button type="button" class="btn btn-default">
-							<span class="glyphicon glyphicon-edit"></span> 编辑
-						</button>
-						<button type="button" class="btn btn-default">
-							<span class="glyphicon glyphicon-remove"></span> 删除
-						</button>
+					<td><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Config</button>	<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Delete</button>
 					</td>
 					</tr>
 				{{end}}
