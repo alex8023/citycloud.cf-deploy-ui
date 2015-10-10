@@ -7,10 +7,8 @@
 			<ul class="nav navbar-nav" id="navbarul">
 				<li id = "home"><a href="index?action=home">Home</a></li>
 				<li id = "microbosh"><a href="microbosh">Deploy MicroBOSH</a></li>
-				<!--<li><a href="#contact">Deploy BOSH</a></li>-->
-				<!--<li id = "bosh"><a href="bosh">BOSH Status</a></li>-->
 				<li id = "cloudfoundry"><a href="cloudfoundry">Deploy PaaS</a></li>
-				<li id = "paasstatus"><a href="index?action=paasstatus">PaaS Status</a></li>
+				<li id = "templates"><a href="templates">Deploy Custom</a></li>
 				<li id = "maintain"><a href="index?action=maintain">PaaS Maintain</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -26,7 +24,7 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-			  	<li><a href="logout">LogOut</a></li>
+			  	<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> LogOut</a></li>
 			</ul>
 		</div>
 	</div>

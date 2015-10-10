@@ -7,8 +7,8 @@
 	  		<div class="panel-body">
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
-				      	<button class="btn btn-default " id = "config-microbosh">Config</button>
-					  	<button class="btn btn-default " id = "deploy-microbosh">Deploy</button>
+				      	<button class="btn btn-default " id = "config-microbosh"><span class="glyphicon glyphicon-edit"></span> Config</button>
+					  	<button class="btn btn-default " id = "deploy-microbosh"><span class="glyphicon glyphicon-cog"></span> Deploy</button>
 					<!--<button class="btn btn-primary ">primary</button>
 						<button class="btn btn-warning ">warning</button>
 						<button class="btn btn-danger ">danger</button>

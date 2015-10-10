@@ -1,17 +1,53 @@
 package utils_test
 
 import (
-//	"testing"
+	"fmt"
+	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
+	. "github.com/onsi/ginkgo"
+	"io/ioutil"
+	"os"
+	"path/filepath"
 )
 
-type String struct {
+var _ = Describe("Testing Template with Ginkgo", func() {
+	It("single file can be parsed", func() {
+		p := Person{
+			Name: "ginkgo",
+			Age:  "20",
+		}
+
+		fileDir, _ := os.Getwd()
+
+		// test.yml
+		//{{.Name}}
+		//{{.Age}}
+		templatefile := filepath.Join(fileDir, "test.yml")
+		templatefile1 := filepath.Join(fileDir, "test1.yml")
+		bytes, _ := ioutil.ReadFile(templatefile)
+		fmt.Println(string(bytes))
+		bytes1, _ := ioutil.ReadFile(templatefile1)
+		fmt.Println(string(bytes1))
+
+		result, errors := utils.CreateYmlFileFromFile("/home/ubuntu/temp/test.yml", p, templatefile, templatefile1)
+		bytes2, _ := ioutil.ReadFile("/home/ubuntu/temp/test.yml")
+		fmt.Println(string(bytes2))
+
+		fmt.Println(result)
+		fmt.Println(errors)
+	})
+
+	It("Test ...string for args []string", func() {
+		//		str := []string{"hello", "kity", "hi", "lucy"}
+
+		Tarry("hello", "kity", "hi", "lucy")
+	})
+})
+
+type Person struct {
 	Name string
-	Age  int
+	Age  string
 }
 
-//func TestTemplate(t *testing.T) {
-//	//	var templates = `{{.Name}}`
-//	//	var path = "/home/ubuntu/abc.yml"
-//	//	data := &String{Name:"lucy",Age:20}
-//	//	CreateYmlFile("helloworld",templates,path,data)
-//}
+func Tarry(str ...string) {
+	fmt.Println(str)
+}

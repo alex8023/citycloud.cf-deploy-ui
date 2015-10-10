@@ -6,6 +6,9 @@ import (
 )
 
 const (
+	MicroBOSHTemplateTextV2File = "yaml/microbosh/microboshv2.yml"
+	MicroBOSHTemplateTextV3File = "yaml/microbosh/microboshv3.yml"
+
 	MicroBOSHTemplateTextV2 string = `
 ---
 name: {{.Name}}
@@ -112,4 +115,12 @@ func (mt MicroBOSHTemplate) CreateMicroBOSHYaml(template, path string) (bool, er
 	logger.Debug("Create MicroBOSH deployment file : %s", path)
 
 	return utils.CreateYmlFile("microbosh", template, path, mt.microbosh)
+}
+
+func (mt MicroBOSHTemplate) CreateMicroBOSHYamlFile(version, path string) (bool, error) {
+	logger.Debug("Create MicroBOSH deployment file : %s", path)
+	if version == "CCI-IaaS3.0" {
+		return utils.CreateYmlFileFromFile(path, mt.microbosh, MicroBOSHTemplateTextV3File)
+	}
+	return utils.CreateYmlFileFromFile(path, mt.microbosh, MicroBOSHTemplateTextV2File)
 }

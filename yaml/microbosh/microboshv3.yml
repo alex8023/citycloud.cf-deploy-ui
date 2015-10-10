@@ -1,0 +1,40 @@
+---
+name: {{.Name}}
+{{with .NetWork}}
+network:
+  type: manual
+  ip: {{.Vip}}
+  cloud_properties:
+    net_id: {{.NetId}}
+{{end}}
+
+{{with .Resources}}
+resources:
+  persistent_disk: {{.PersistentDisk}}
+  cloud_properties:
+    instance_type: {{.InstanceType}}
+    {{if .AvailabilityZone}}availability_zone: {{.AvailabilityZone}}{{end}}
+{{end}}
+{{with .CloudProperties}}
+cloud:
+  plugin: openstack
+  properties:
+    openstack:
+      auth_url: {{.AuthUrl}}
+      tenant: {{.Tenant}}
+      username: {{.UserName}}
+      api_key: {{.ApiKey}}
+      default_key_name: {{.DefaultKeyName}}
+      private_key: {{.PrivateKey}}
+      default_security_groups: ["default"]
+{{end}}
+
+apply_spec:
+  properties:
+    director:
+      max_threads: 1
+    hm:
+      resurrector_enabled: true
+    ntp: # This example uses the North American NTP servers. Edit for your region.
+      - 0.asia.pool.ntp.org
+      - 1.asia.pool.ntp.org

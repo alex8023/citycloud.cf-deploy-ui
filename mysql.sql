@@ -90,6 +90,23 @@ CREATE TABLE `compilation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `components`
+--
+
+DROP TABLE IF EXISTS `components`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `components` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `value` varchar(255) NOT NULL DEFAULT '',
+  `group` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`,`group`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `job_properties`
 --
 
@@ -184,7 +201,23 @@ CREATE TABLE `resources_pools` (
   `size` int(11) NOT NULL DEFAULT '0',
   `default_net_work` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `templates`
+--
+
+DROP TABLE IF EXISTS `templates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `templates` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `template_file` varchar(255) NOT NULL DEFAULT '',
+  `desciption` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -196,4 +229,4 @@ CREATE TABLE `resources_pools` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-25 16:08:52
+-- Dump completed on 2015-10-08 16:13:51

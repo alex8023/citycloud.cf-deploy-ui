@@ -17,8 +17,8 @@
 	  		<div class="panel-body">
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
-				      	<button class="btn btn-default " id = "config-deploy">Deploy</button>
-						<button class="btn btn-default " id = "config-more">MoreConf</button>
+				      	<button class="btn btn-default " id = "config-deploy"><span class="glyphicon glyphicon-cog"></span> Deploy</button>
+						<button class="btn btn-default " id = "config-more"><span class="glyphicon glyphicon-edit"></span> MoreConf</button>
 				    </div>
 					<script type="text/javascript">
 						if ($('#config-deploy')){

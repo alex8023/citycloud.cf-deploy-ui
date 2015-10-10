@@ -7,7 +7,7 @@
 				  		<div class="panel-body">
 							<div class="form-group">
 							    <div class="col-sm-offset-2 col-sm-10">
-							      	<button class="btn btn-default " id = "config-CloudFoundryJobs">Config</button>
+							      	<button class="btn btn-default " id = "config-CloudFoundryJobs"><span class="glyphicon glyphicon-edit"></span> Config</button>
 							    </div>
 								<script type="text/javascript">
 									$('#config-CloudFoundryJobs').on('click', function(){

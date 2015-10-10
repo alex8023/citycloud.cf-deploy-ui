@@ -7,7 +7,7 @@
 				  		<div class="panel-body">
 							<div class="form-group">
 							    <div class="col-sm-offset-2 col-sm-10">
-							      	<button class="btn btn-default " id = "config-NetWorks">Config</button>
+							      	<button class="btn btn-default " id = "config-NetWorks"><span class="glyphicon glyphicon-edit"></span> Config</button>
 							    </div>
 								<script type="text/javascript">
 									$('#config-NetWorks').on('click', function(){

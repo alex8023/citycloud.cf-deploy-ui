@@ -292,19 +292,22 @@ func (this *CloudFoundryController) Deploy() {
 	cf.Release = entity.NewRelease(cloudFoundryName, cloudFoundryVersion)
 	cf.Stemcells = entity.NewStemcell(stemcellName, stemcellVersion)
 
-	templateText := ""
+	//	templateText := ""
 	if iaasVersion == defaultVersion {
-		templateText = entity.CloudFoundryTemplateV3
+		//		templateText = entity.CloudFoundryTemplateV3
 		ipArr := utils.SpliteIPs(publicNetWorks.StaticIp)
 		cf.CloudFoundryProperties.FloatingIp = ipArr[0]
 		//设置ip段的第一个ip为haproxy的浮动ip
-	} else {
-		templateText = entity.CloudFoundryTemplateV2
 	}
+	//	else {
+	//		templateText = entity.CloudFoundryTemplateV2
+	//	}
 
 	cloudFoundryTemplate := entity.NewCloudFoundryTemplate(cf)
 
-	ok, err := cloudFoundryTemplate.CreateCloudFoundryYaml(templateText, cloudFoundryPath)
+	//	ok, err := cloudFoundryTemplate.CreateCloudFoundryYaml(templateText, cloudFoundryPath)
+
+	ok, err := cloudFoundryTemplate.CreateDefaultCloudFoundryYamlFileWithAppPath(iaasVersion, cloudFoundryPath, beego.AppPath)
 	if !ok {
 		this.Data["Message"] = fmt.Sprintf("Error: %s", err)
 	} else {

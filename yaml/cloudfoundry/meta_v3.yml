@@ -1,0 +1,20 @@
+
+---
+name: {{.CloudFoundryProperties.Name}}
+director_uuid: {{.CloudFoundryProperties.Uuid}}
+releases:
+- name: {{.Release.Name}}
+  version: {{.Release.Version}}
+meta:
+  environment: {{.CloudFoundryProperties.Name}}
+  stemcell:
+    name: {{.Stemcells.Name}}
+    version: {{.Stemcells.Version}}
+  openstack:
+    auth_url: {{.CloudFoundryProperties.CloudProperties.AuthUrl}}
+    tenant: {{.CloudFoundryProperties.CloudProperties.Tenant}}
+    username: {{.CloudFoundryProperties.CloudProperties.UserName}}
+    api_key: {{.CloudFoundryProperties.CloudProperties.ApiKey}}
+    security_groups: ["default"]
+    default_key_name: {{.CloudFoundryProperties.CloudProperties.DefaultKeyName}}
+    private_key: {{.CloudFoundryProperties.CloudProperties.PrivateKey}}

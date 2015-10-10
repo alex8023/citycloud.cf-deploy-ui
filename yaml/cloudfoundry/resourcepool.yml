@@ -1,0 +1,13 @@
+
+{{with .ResourcesPools}}
+resource_pools:{{range .}}
+- cloud_properties:
+    {{if .AvailabilityZone}}availability_zone: {{.AvailabilityZone}}{{end}}
+    instance_type: {{.InstanceType}}
+  name: {{.Name}}
+  network: {{.DefaultNetWork}}
+  size: {{.Size}}
+  stemcell:
+    name: {{$.Stemcells.Name}}
+    version: {{$.Stemcells.Version}}
+{{end}}{{end}}

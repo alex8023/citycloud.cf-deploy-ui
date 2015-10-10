@@ -4,13 +4,17 @@ import (
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	. "github.com/onsi/ginkgo"
+	"os"
+	"strings"
 )
 
 var _ = Describe("Testing with Ginkgo", func() {
+	workdir := workDir + "/iaas2dot0"
+
 	It("cloud foundry template", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryTemplateV2, "/home/ubuntu/temp/cloudfoundryv2.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryTemplateV2, workdir+"/cloudfoundryv2.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -19,7 +23,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("meta", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryMetaTemplateV2+`{{template "meta" .}}`, "/home/ubuntu/temp/metav2.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryMetaTemplateV2+`{{template "meta" .}}`, workdir+"/metav2.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -28,7 +32,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("update", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryUpdateTempalte+`{{template "update" .}}`, "/home/ubuntu/temp/update.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryUpdateTempalte+`{{template "update" .}}`, workdir+"/update.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -37,7 +41,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("compilation", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryCompilationTemplate+`{{template "compilation" .}}`, "/home/ubuntu/temp/compilation.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryCompilationTemplate+`{{template "compilation" .}}`, workdir+"/compilation.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -46,7 +50,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("net works", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryNetworksTemplateV2+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv2.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryNetworksTemplateV2+`{{template "networks" .}}`, workdir+"/networksv2.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -55,7 +59,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("net works v3", func() {
 
 		var cft = InitCloudFoundryV3()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryNetworksTemplateV3+`{{template "networks" .}}`, "/home/ubuntu/temp/networksv3.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryNetworksTemplateV3+`{{template "networks" .}}`, workdir+"/networksv3.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -64,7 +68,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("resource pool", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryResourcePoolTemplate+`{{template "resourcepool" .}}`, "/home/ubuntu/temp/resourcepool.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryResourcePoolTemplate+`{{template "resourcepool" .}}`, workdir+"/resourcepool.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -73,7 +77,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("jobs", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryJobsTemplate+`{{template "jobs" .}}`, "/home/ubuntu/temp/jobs.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryJobsTemplate+`{{template "jobs" .}}`, workdir+"/jobs.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -82,7 +86,7 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("properties", func() {
 
 		var cft = InitCloudFoundryV2()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryPropertiesTemplate+`{{template "properties" .}}`, "/home/ubuntu/temp/properties.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryPropertiesTemplate+`{{template "properties" .}}`, workdir+"/properties.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -91,7 +95,109 @@ var _ = Describe("Testing with Ginkgo", func() {
 	It("cloud foundry v3 template", func() {
 
 		var cft = InitCloudFoundryV3()
-		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryTemplateV3, "/home/ubuntu/temp/cloudfoundryv3.yml")
+		_, err := cft.CreateCloudFoundryYaml(entity.CloudFoundryTemplateV3, workdir+"/cloudfoundryv3.yml")
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+})
+
+var defaultVersion = "CCI-IaaS3.0"
+
+var iaas2dot0 = "CCI-IaaS2.0"
+
+var workDir = "/home/ubuntu/temp"
+
+var _ = Describe("Testing Create Deployment With TemplateFile", func() {
+	workdir := workDir + "/iaas3dot0"
+
+	It("cloud foundry v2", func() {
+
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateDefaultCloudFoundryYamlFile(iaas2dot0, workdir+"/cloudfoundryv2.yml")
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+
+	It("meta", func() {
+
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYamlFile(iaas2dot0, workdir+"/metav2.yml", templateDir+entity.CloudFoundryMetaTemplateV2File)
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("update", func() {
+
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYamlFile(iaas2dot0, workdir+"/update.yml", templateDir+entity.CloudFoundryUpdateTempalteFile)
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("compilation", func() {
+
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYamlFile(iaas2dot0, workdir+"/compilation.yml", templateDir+entity.CloudFoundryCompilationTemplateFile)
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("net works", func() {
+
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYamlFile(iaas2dot0, workdir+"/networksv2.yml", templateDir+entity.CloudFoundryNetworksTemplateV2File)
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("net works v3", func() {
+
+		var cft = InitCloudFoundryV3()
+		_, err := cft.CreateCloudFoundryYamlFile(defaultVersion, workdir+"/networksv3.yml", templateDir+entity.CloudFoundryNetworksTemplateV3File)
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("resource pool", func() {
+
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYamlFile(iaas2dot0, workdir+"/resourcepool.yml", templateDir+entity.CloudFoundryResourcePoolTemplateFile)
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("jobs", func() {
+
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYamlFile(iaas2dot0, workdir+"/jobs.yml", templateDir+entity.CloudFoundryJobsTemplateFile)
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("properties", func() {
+
+		var cft = InitCloudFoundryV2()
+		_, err := cft.CreateCloudFoundryYamlFile(iaas2dot0, workdir+"/properties.yml", templateDir+entity.CloudFoundryPropertiesTemplateFile)
+
+		if err != nil {
+			GinkgoT().Error(err)
+		}
+	})
+	It("cloud foundry v3 template", func() {
+
+		var cft = InitCloudFoundryV3()
+		_, err := cft.CreateDefaultCloudFoundryYamlFile(defaultVersion, workdir+"/cloudfoundryv3.yml")
 
 		if err != nil {
 			GinkgoT().Error(err)
@@ -464,3 +570,11 @@ func InitProperties() entity.Properties {
 	properties.JobProperties = propertiesMap
 	return properties
 }
+func init() {
+	templateDir, _ = os.Getwd()
+	end := strings.LastIndex(templateDir, "/")
+	rs := []rune(templateDir)
+	templateDir = string(rs[:end+1])
+}
+
+var templateDir = ""
