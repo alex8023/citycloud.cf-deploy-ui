@@ -161,7 +161,7 @@ func (service *Service) Delete() error {
 
 func LoadServiceList() ([]Service, error) {
 	var service []Service
-	qs := orm.NewOrm().QueryTable(new(Service))
+	qs := orm.NewOrm().QueryTable(new(Service)).OrderBy("-id")
 	_, err := qs.All(&service)
 	if err != nil {
 		logger.Error("Load Service List error %s ", err)

@@ -8,7 +8,7 @@
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
 				      <button type="submit" class="btn btn-default " data-loading-text="Saving..."><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
-					<a class="btn btn-default " href="microbosh">Back</a>
+					<a class="btn btn-default " href="microbosh"><span class="glyphicon glyphicon-step-backward"></span> Back</a>
 				    </div>
 			  	</div>
 				{{with .MicroBOSH}}
