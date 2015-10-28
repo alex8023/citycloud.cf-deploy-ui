@@ -26,7 +26,11 @@ func (this *TemplatesControllers) Get() {
 }
 
 func (this *TemplatesControllers) Post() {
-
+	service := entity.Service{}
+	service.Name = this.GetString("name")
+	service.Description = this.GetString("description")
+	service.Save()
+	this.Get()
 }
 
 func (this *TemplatesControllers) List() {

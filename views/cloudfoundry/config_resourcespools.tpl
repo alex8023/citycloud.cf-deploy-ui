@@ -10,7 +10,7 @@
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
 				      	<button type="submit" class="btn btn-default " data-loading-text="Saving..." ><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
-						<button type="button" class="btn btn-default " id="add_resources_pool" >More>></button>
+						<button type="button" class="btn btn-default " id="add_resources_pool" ><span class="glyphicon glyphicon-plus"></span> More>></button>
 						<a class="btn btn-default " href="cloudfoundry">Back</a>
 				    </div>
 			  	</div>
