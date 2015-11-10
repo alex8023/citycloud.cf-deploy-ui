@@ -5,14 +5,15 @@ import (
 )
 
 var (
-	globaleAppName        string = "/" + beego.AppConfig.String("appname")
-	defaultUserName       string = beego.AppConfig.String("username")
-	defaultPassword       string = beego.AppConfig.String("password")
-	loginAction           string = globaleAppName + "/login"
-	indexAction           string = globaleAppName + "/index"
-	microWebsocket        string = "/microboshwebsocket"
-	cloudfoundryWebsocket string = "/cloudfoundrywebsocket"
-	boshWebsocket         string = "/boshwebsocket"
+	globaleAppName         string = "/" + beego.AppConfig.String("appname")
+	defaultUserName        string = beego.AppConfig.String("username")
+	defaultPassword        string = beego.AppConfig.String("password")
+	loginAction            string = globaleAppName + "/login"
+	indexAction            string = globaleAppName + "/index"
+	microWebsocket         string = "/microboshwebsocket"
+	cloudfoundryWebsocket  string = "/cloudfoundrywebsocket"
+	boshWebsocket          string = "/boshwebsocket"
+	serviceDeployWebScoket string = "/servicedeploywebsocket"
 
 	workSpace    string = beego.AppConfig.String("workSpace")
 	workDir      string = workSpace + "/" + beego.AppConfig.String("workDir")

@@ -9,7 +9,7 @@
 	<title>CityCloud Cf-Deploy-UI</title>
 	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
 	<script src="/static/js/jquery.min.js"></script>
-	<script src="/static/js/bootstrap.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
 	<script src="/static/js/index-navbar.js"></script>
 	<link href="/static/css/footer.css" rel="stylesheet">
 	<link href="/static/css/non-responsive.css" rel="stylesheet">

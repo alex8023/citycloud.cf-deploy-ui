@@ -37,3 +37,8 @@ const (
 	CloudFoundryJobs       = "CloudFoundryJobs"
 	Properties             = "Properties"
 )
+
+const (
+	Deploy_On_PaaS = "PaaS"
+	Deploy_On_Vms  = "Vms"
+)
