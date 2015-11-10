@@ -11,7 +11,7 @@ type Component struct {
 	Id    int64
 	Name  string
 	Value string
-	Group int64
+	Sid   int64
 }
 
 // 模板
@@ -24,16 +24,18 @@ type Template struct {
 	Sid          int64
 }
 
+//服务
 type Service struct {
 	Id          int64
 	Name        string
 	Description string
+	Where       string
 }
 
 //联合主键
 func (component *Component) TableUnique() [][]string {
 	return [][]string{
-		[]string{"Name", "Group"},
+		[]string{"Name", "Sid"},
 	}
 }
 
@@ -101,11 +103,10 @@ func (component *Component) Delete() error {
 	return err
 }
 
-func LoadComponentList(group int64) ([]*Component, error) {
-	var component []*Component
-	qs := orm.NewOrm().QueryTable(new(Component)).Filter("group", group)
-	_, err := qs.All(component)
-
+func LoadComponentList(group int64) ([]Component, error) {
+	var component []Component
+	qs := orm.NewOrm().QueryTable(new(Component)).Filter("sid", group)
+	_, err := qs.All(&component)
 	if err != nil {
 		logger.Error("Load Component List error %s ", err)
 		e := fmt.Errorf("Load Component List error %s ", err)
@@ -114,10 +115,10 @@ func LoadComponentList(group int64) ([]*Component, error) {
 	return component, nil
 }
 
-func LoadTemplateList(sid int64) ([]*Template, error) {
-	var template []*Template
+func LoadTemplateList(sid int64) ([]Template, error) {
+	var template []Template
 	qs := orm.NewOrm().QueryTable(new(Template)).Filter("sid", sid)
-	_, err := qs.All(template)
+	_, err := qs.All(&template)
 	if err != nil {
 		logger.Error("Load Template List error %s ", err)
 		e := fmt.Errorf("Load Template List error %s ", err)
@@ -172,5 +173,5 @@ func LoadServiceList() ([]Service, error) {
 }
 
 func init() {
-	orm.RegisterModel(new(Component), new(Template), new(Service))
+	orm.RegisterModel(new(Service), new(Template), new(Component))
 }
