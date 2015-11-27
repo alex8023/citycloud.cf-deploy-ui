@@ -38,7 +38,15 @@ const (
 	Properties             = "Properties"
 )
 
+//部署类型 PaaS 部署在cci-paas云上，Vms 部署在虚拟机上
 const (
 	Deploy_On_PaaS = "PaaS"
 	Deploy_On_Vms  = "Vms"
+)
+
+//文件类型，war 代表程序包 template代表模板文件 exec 代表执行脚本
+const (
+	FileTypes_War      = "War"
+	FileTypes_Template = "Template"
+	FileTypes_EXEC     = "Exec"
 )

@@ -32,7 +32,8 @@ func init() {
 			beego.NSRouter("/templates", &controllers.TemplatesController{}),
 			beego.NSRouter("/templatesdetail", &controllers.TemplatesDetailController{}),
 			beego.NSRouter("/servicedeploy", &controllers.ServiceDeployController{}),
-			beego.NSRouter("/servicedeploywebsocket", &controllers.ServiceDeployWebScoketController{}),
+			beego.NSRouter("/servicedeploywebsocket", &controllers.ServiceDeployWebSocketController{}),
+			beego.NSRouter("/servicecomponent", &controllers.ServiceComponentController{}),
 		)
 	beego.AddNamespace(login)
 }

@@ -97,6 +97,13 @@ $(document).ready(function(){
 				modal.find('.modal-body #customTemplateName').val(data.Name);
 				modal.find('.modal-body #customTemplateFile').val(data.TemplateFile);
 				modal.find('.modal-body #customTemplateDescription').val(data.Description);
+				if (data.FileType == "War"){
+					modal.find('.modal-body input[name="fileType"][value="War"]').prop("checked",true);
+				}
+				if (data.FileType == "Template"){
+					modal.find('.modal-body input[name="fileType"][value="Template"]').prop("checked",true);
+				}
+				
 			},
 			error:function(data){
 				$("#warning-block-service").attr("class","alert alert-danger alert-dismissible")
@@ -154,4 +161,36 @@ $(document).ready(function(){
 		$("#customServiceVmPasswd").attr("disabled",!bool);
 	}
 	
+	$("#config-custom-component").on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget);
+  		var componentId = button.data('whatever');
+		var modal = $(this)
+		if (componentId == "add") {
+			modal.find('.modal-title').text('Add Custom Service Component');
+			modal.find('.modal-body #customComponentsId').val(0);
+			modal.find('.modal-body #customComponentName').val('');
+			modal.find('.modal-body #customComponentValue').val('');
+			return 
+		}
+		modal.find('.modal-title').text('Update Custom Service Component')
+		modal.find('.modal-body #customComponentId').val(componentId);
+		$.ajax({
+			url:'servicecomponent',
+			dataType:'json',
+			data:{id:componentId},
+			success:function(data){
+				modal.find('.modal-body #customComponentName').val(data.Name);
+				modal.find('.modal-body #customComponentValue').val(data.Value);
+			},
+			error:function(data){
+				$("#warning-block-service").attr("class","alert alert-danger alert-dismissible")
+			}
+		});
+	});
+	$("#delete-custom-component").on('show.bs.modal', function (event) {
+  		var button = $(event.relatedTarget);
+  		var componentId = button.data('whatever');
+		var modal = $(this)
+		modal.find('.modal-body #deleteservicecomponentId').val(componentId);
+	});
 });

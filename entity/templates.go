@@ -19,6 +19,7 @@ type Template struct {
 	Id           int64
 	Name         string
 	TemplateFile string               //模板路径
+	FileType     string               // file type
 	Component    map[string]Component `orm:"-"`
 	Description  string
 	Sid          int64
@@ -103,9 +104,9 @@ func (component *Component) Delete() error {
 	return err
 }
 
-func LoadComponentList(group int64) ([]Component, error) {
+func LoadComponentList(sid int64) ([]Component, error) {
 	var component []Component
-	qs := orm.NewOrm().QueryTable(new(Component)).Filter("sid", group)
+	qs := orm.NewOrm().QueryTable(new(Component)).Filter("sid", sid)
 	_, err := qs.All(&component)
 	if err != nil {
 		logger.Error("Load Component List error %s ", err)

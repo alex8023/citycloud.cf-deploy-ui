@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/gorilla/websocket"
 	"net/http"
@@ -19,6 +20,10 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
+const (
+	EndEOF = "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+)
+
 // becareful
 //此处未判断任务是否完成，需前端判断控制任务流程
 func (this *MicroBOSHWebSocketController) Get() {
@@ -30,8 +35,8 @@ func (this *MicroBOSHWebSocketController) Get() {
 	} else if err != nil {
 		return
 	}
-
 	for {
+		time.Sleep(2 * time.Second)
 		mesgType, message, _ := ws.ReadMessage()
 		if message != nil && mesgType == websocket.TextMessage {
 
@@ -115,9 +120,11 @@ func (this *MicroBOSHWebSocketController) Get() {
 			default:
 				writeStringMessage(ws, fmt.Sprintf("未知的执行命令！%s", action))
 			}
+
+			//write a message to tell me running over
+			writeStringMessage(ws, EndEOF)
 		}
-		//write a message to tell me running over
-		writeStringMessage(ws, "da39a3ee5e6b4b0d3255bfef95601890afd80709")
+
 	}
 }
 
@@ -232,10 +239,12 @@ func (this *MicroBOSHWebSocketController) statusMicroBOSH(ws *websocket.Conn) bo
 }
 
 func writeStringMessage(ws *websocket.Conn, message string) {
+	logger.Debug("[Command INFO]: %s", message)
 	ws.WriteMessage(websocket.TextMessage, []byte(message))
 }
 
 func writeBytesMessage(ws *websocket.Conn, message []byte) {
+	logger.Debug("[Command INFO]: %s", string(message))
 	ws.WriteMessage(websocket.TextMessage, message)
 }
 
@@ -257,6 +266,18 @@ func writeBytesBufferMessage(out *bytes.Buffer, cmdRunner *utils.DeployCmdRunner
 			goto again
 		} else {
 			goto loop
+		}
+	}
+}
+
+func writeBufferMessage(ws *websocket.Conn, out *bytes.Buffer) {
+	for {
+		line, _ := out.ReadBytes('\n') //按行读取
+		if line != nil {
+			writeBytesMessage(ws, line)
+		}
+		if out.Len() == 0 {
+			break
 		}
 	}
 }

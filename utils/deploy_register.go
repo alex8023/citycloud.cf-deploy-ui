@@ -1,8 +1,6 @@
 package utils
 
-import (
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
-)
+import ()
 
 const (
 	DeployMicroBOSH    string = "MicroBOSH"
@@ -26,9 +24,7 @@ var adapters = make(map[string]DeployStat)
 func Register(name string, adapter DeployStat) (bool, error) {
 
 	if _, ok := adapters[name]; ok {
-		logger.Debug("OK")
 	}
-	logger.Debug("")
 	adapters[name] = adapter
 	return false, nil
 }
