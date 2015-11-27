@@ -57,6 +57,14 @@ func (this *TemplatesDetailController) List(serviceId int64) {
 	if errs != nil {
 		this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", errs)
 	}
+
+	component, componenterrors := entity.LoadComponentList(serviceId)
+
+	this.Data["Component"] = component
+	if componenterrors != nil {
+		this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", componenterrors)
+	}
+
 	this.TplNames = "templates/index_detail.tpl"
 }
 
@@ -82,6 +90,7 @@ func (this *TemplatesDetailController) Post() {
 		template.Sid = sid
 		template.Name = this.GetString("name")
 		template.Description = this.GetString("description")
+		template.FileType = this.GetString("fileType")
 		template.TemplateFile = this.GetString("templatefile")
 		id, err := this.GetInt64("id", 0)
 		if err == nil {

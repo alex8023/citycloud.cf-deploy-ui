@@ -7,6 +7,7 @@ import (
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/gorilla/websocket"
 	"net/http"
+	"time"
 )
 
 type CloudFoundryWebSocketController struct {
@@ -26,6 +27,7 @@ func (this *CloudFoundryWebSocketController) Get() {
 	}
 
 	for {
+		time.Sleep(2 * time.Second)
 		mesgType, message, _ := ws.ReadMessage()
 		if message != nil && mesgType == websocket.TextMessage {
 
@@ -86,9 +88,9 @@ func (this *CloudFoundryWebSocketController) Get() {
 			default:
 				writeStringMessage(ws, fmt.Sprintf("未知的执行命令！%s", action))
 			}
+			//write a message to tell me running over
+			writeStringMessage(ws, EndEOF)
 		}
-		//write a message to tell me running over
-		writeStringMessage(ws, "da39a3ee5e6b4b0d3255bfef95601890afd80709")
 	}
 }
 

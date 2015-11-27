@@ -21,38 +21,27 @@ $(document).ready(function(){
 		conn.onopen = function(){
 			$("<div/>").html($("<b/>").text("Connection connected")).appendTo(log);
 		}
-	$('#deploy-all').on('click',function(){
-		SendMessage("AllStep");
-	})
-	
-	$('#set-deployment').on('click',function(){
-		SendMessage("SetDeploy");
-	})
-	
-	$('#upload-release').on('click',function(){
-		SendMessage("UpRelease");
-	})
-	
-	$('#upload-stemcell').on('click',function(){
-		SendMessage("UpStemcell");
-	})
-	
-	$('#deploy-cloudfoundry').on('click',function(){
-		SendMessage("Deploy");
-	})
-	
-	$('#login-microbosh').on('click',function(){
-		SendMessage("Login");
-	})
-		
     } else {
         $("<div><b>Your browser does not support WebSockets.</b></div>").appendTo(log);
     }
 	
-	$('#config-cloudfoundry').on('click', function(){
-		window.location.href = "cloudfoundry";
-	})
-	
+	if(window["WebSocket"]){
+		$("#deploy-custom-service").on('click',function(event){
+			var button = $(event.currentTarget);// currentTarget == this
+			var serviceId = button.data('service');
+			SendMessage('deploy-'+serviceId);
+		})
+		$("#restart-custom-service").on('click',function(event){
+			var button = $(event.currentTarget);// currentTarget == this
+			var serviceId = button.data('service');
+			SendMessage('restart-'+serviceId);
+		})
+		$("#stop-custom-service").on('click',function(event){
+			var button = $(event.currentTarget);// currentTarget == this
+			var serviceId = button.data('service');
+			SendMessage('stop-'+serviceId);
+		})
+	}
 	function SendMessage(msg){
 		if (cango == "yes") {
 			conn.send(msg);
