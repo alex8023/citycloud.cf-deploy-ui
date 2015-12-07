@@ -9,3 +9,4 @@ pushcode.sh
 initDb.sh
 exportDb.sh
 buildtgz.sh
+mysql_all.sql
