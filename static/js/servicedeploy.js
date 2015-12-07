@@ -41,6 +41,11 @@ $(document).ready(function(){
 			var serviceId = button.data('service');
 			SendMessage('stop-'+serviceId);
 		})
+		$("#start-custom-service").on('click',function(event){
+			var button = $(event.currentTarget);// currentTarget == this
+			var serviceId = button.data('service');
+			SendMessage('start-'+serviceId);
+		})
 	}
 	function SendMessage(msg){
 		if (cango == "yes") {

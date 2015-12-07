@@ -41,11 +41,17 @@ func (service *ServiceDeployWebSocketController) Get() {
 				var serviceId = param[1]
 				service.Deploying(ws, serviceId)
 				writeStringMessage(ws, EndEOF)
-			case "restart":
-				writeStringMessage(ws, "Unrelease method")
+			case "start":
+				var serviceId = param[1]
+				service.OperateService(ws, serviceId, utils.Service_Start)
 				writeStringMessage(ws, EndEOF)
 			case "stop":
-				writeStringMessage(ws, "Unrelease method")
+				var serviceId = param[1]
+				service.OperateService(ws, serviceId, utils.Service_Stop)
+				writeStringMessage(ws, EndEOF)
+			case "restart":
+				var serviceId = param[1]
+				service.OperateService(ws, serviceId, utils.Service_Restart)
 				writeStringMessage(ws, EndEOF)
 			default:
 				writeStringMessage(ws, "Error parameter")
@@ -78,13 +84,14 @@ func (serviceDeploy *ServiceDeployWebSocketController) Deploying(ws *websocket.C
 	case utils.Deploy_On_Vms:
 		serviceDeploy.Deploy2Vms(ws, service)
 	default:
-		writeStringMessage(ws, fmt.Sprintf("Unknow target %s", service.Where))
+		writeStringMessage(ws, fmt.Sprintf("Unknow Platform %s", service.Where))
 	}
 }
 
+// deploy 2 vms
 func (serviceDeploy *ServiceDeployWebSocketController) Deploy2Vms(ws *websocket.Conn, service entity.Service) {
 	//加载serviceDto
-	writeStringMessage(ws, "Load ServiceDto")
+	//	writeStringMessage(ws, "Load ServiceDto")
 	serviceDto := entity.ServiceDto{}
 	serviceDto.Service = service
 	err := serviceDto.Load()
@@ -144,7 +151,7 @@ func (serviceDeploy *ServiceDeployWebSocketController) pushFiles(ws *websocket.C
 		//		writeStringMessage(ws, fmt.Sprintf("%d,检测文件%s是文件夹，打包完毕", index, template.Name))
 	}
 
-	writeStringMessage(ws, fmt.Sprintf("%d,传输%s,路径%s", index, template.Name, template.TemplateFile))
+	writeStringMessage(ws, fmt.Sprintf("deploy index:%d,fileName:%s,filePath:%s", index, template.Name, template.TemplateFile))
 
 	filetgz := template.TemplateFile
 	if isDir {
@@ -166,9 +173,11 @@ func (serviceDeploy *ServiceDeployWebSocketController) pushFiles(ws *websocket.C
 	}
 }
 
+//deploy 2 vms
+
 func (serviceDeploy *ServiceDeployWebSocketController) Deploy2PaaS(ws *websocket.Conn, service entity.Service) {
 	//加载serviceDto
-	writeStringMessage(ws, "Load ServiceDto")
+	//	writeStringMessage(ws, "Load ServiceDto")
 	serviceDto := entity.ServiceDto{}
 	serviceDto.Service = service
 	err := serviceDto.Load()
@@ -194,7 +203,7 @@ func (serviceDeploy *ServiceDeployWebSocketController) Deploy2PaaS(ws *websocket
 
 	onPaaS := serviceDto.OnPaaS
 
-	var deployDir = "/home/ubuntu/deploy/example"
+	var deployDir = customServiceDir + "/" + service.Name
 
 	success := serviceDeploy.setApi(ws, onPaaS, deployDir)
 
@@ -228,6 +237,38 @@ func (serviceDeploy *ServiceDeployWebSocketController) Deploy2PaaS(ws *websocket
 	}
 
 }
+
+// operate service
+func (serviceDeploy *ServiceDeployWebSocketController) OperateService(ws *websocket.Conn, serviceIds string, operate string) {
+	serviceId, err := strconv.ParseInt(serviceIds, 10, 64)
+	if err != nil {
+		writeStringMessage(ws, fmt.Sprintf("Error ServiceId,%s", err))
+		return
+	}
+	//加载service
+	writeStringMessage(ws, "Load Service")
+	service := entity.Service{}
+	service.Id = serviceId
+	err = service.Load()
+
+	if err != nil {
+		writeStringMessage(ws, fmt.Sprintf("Error,%s", err))
+		return
+	}
+
+	switch service.Where {
+	case utils.Deploy_On_PaaS:
+		serviceDeploy.OperateOnPaaS(ws, service, operate)
+	case utils.Deploy_On_Vms:
+		serviceDeploy.OperateOnVms(ws, service, operate)
+	default:
+		writeStringMessage(ws, fmt.Sprintf("Unknow Platform %s", service.Where))
+	}
+}
+
+// operate service
+
+// operate service on paas
 
 func (this *ServiceDeployWebSocketController) setApi(ws *websocket.Conn, onPaaS entity.OnPaaS, deployDir string) bool {
 	writeStringMessage(ws, "============================================")
@@ -308,3 +349,153 @@ func (this *ServiceDeployWebSocketController) pushApp(ws *websocket.Conn, onPaaS
 
 	return cmdRunner.Success()
 }
+
+func (this *ServiceDeployWebSocketController) operateAppOnPaaS(ws *websocket.Conn, onPaaS entity.OnPaaS, deployDir string, operate string) bool {
+	writeStringMessage(ws, "============================================")
+	writeStringMessage(ws, "Operate app ")
+
+	var out bytes.Buffer
+	mapps, err := utils.ReadYamlFile(deployDir + "/manifest.yml")
+	var apps []string
+	if err != nil {
+		writeStringMessage(ws, fmt.Sprintf("Operate app failed ,errors :%v", err))
+		return false
+	}
+
+	if err == nil {
+		apps, err = utils.GetValuesByKey(mapps, "name")
+		if err != nil {
+			writeStringMessage(ws, fmt.Sprintf("Operate app failed ,errors :%v", err))
+			return false
+		}
+		if err == nil {
+			for _, app := range apps {
+				if app != "" {
+					cfOperateCommand := utils.Command{Name: "cf", Args: []string{operate, app}, Dir: deployDir, Stdin: ""}
+					cmdRunner := utils.NewDeployCmdRunner()
+					cmdRunner.RunCommandAsyncCmd(cfOperateCommand, &out)
+					writeBytesBufferMessage(&out, &cmdRunner, ws)
+				}
+			}
+			writeStringMessage(ws, "Operate app successful")
+		}
+	}
+
+	writeStringMessage(ws, "============================================")
+
+	return true
+}
+
+func (serviceDeploy *ServiceDeployWebSocketController) OperateOnPaaS(ws *websocket.Conn, service entity.Service, operate string) {
+	//加载serviceDto
+	//	writeStringMessage(ws, "Load ServiceDto")
+	serviceDto := entity.ServiceDto{}
+	serviceDto.Service = service
+	err := serviceDto.Load()
+
+	if err != nil {
+		writeStringMessage(ws, fmt.Sprintf("Error,%s", err))
+		return
+	}
+
+	onPaaS := serviceDto.OnPaaS
+
+	var deployDir = customServiceDir + "/" + service.Name
+
+	success := serviceDeploy.setApi(ws, onPaaS, deployDir)
+
+	if !success {
+		writeStringMessage(ws, "Set endpoint failed")
+	}
+
+	if success {
+		success = serviceDeploy.loginPaaS(ws, onPaaS, deployDir)
+		if !success {
+			writeStringMessage(ws, "Login PaaS failed")
+		}
+	}
+
+	if success {
+		success = serviceDeploy.targetPaaS(ws, onPaaS, deployDir)
+		if !success {
+			writeStringMessage(ws, "Target PaaS failed")
+		}
+	}
+
+	if success {
+		switch operate {
+		case utils.Service_Restart:
+			success = serviceDeploy.operateAppOnPaaS(ws, onPaaS, deployDir, "rs")
+		case utils.Service_Start:
+			success = serviceDeploy.operateAppOnPaaS(ws, onPaaS, deployDir, "start")
+		case utils.Service_Stop:
+			success = serviceDeploy.operateAppOnPaaS(ws, onPaaS, deployDir, "stop")
+		}
+		if !success {
+			writeStringMessage(ws, fmt.Sprintf("%s app failed", operate))
+		}
+	}
+
+	if success {
+		switch operate {
+		case utils.Service_Restart:
+			writeStringMessage(ws, fmt.Sprintf("%s app successful", "Restart"))
+		case utils.Service_Start:
+			writeStringMessage(ws, fmt.Sprintf("%s app successful", "Start"))
+		case utils.Service_Stop:
+			writeStringMessage(ws, fmt.Sprintf("%s app successful", "Stop"))
+		}
+	}
+
+}
+
+// operate service on paas
+
+// operate service on vms
+func (serviceDeploy *ServiceDeployWebSocketController) OperateOnVms(ws *websocket.Conn, service entity.Service, operate string) {
+	//加载serviceDto
+	//	writeStringMessage(ws, "Load ServiceDto")
+	serviceDto := entity.ServiceDto{}
+	serviceDto.Service = service
+	err := serviceDto.Load()
+
+	if err != nil {
+		writeStringMessage(ws, fmt.Sprintf("Error,%s", err))
+		return
+	}
+
+	onCustom := serviceDto.OnCustom
+	sshRunner := utils.NewDeploySSHRunner(onCustom.Ip, onCustom.User, onCustom.Passwd)
+
+	operation := entity.Operation{}
+	operation.Sid = service.Id
+	err = operation.LoadBySid()
+
+	var out bytes.Buffer
+
+	if err == nil {
+		switch operate {
+		case utils.Service_Restart:
+			err = sshRunner.RunCommand(operation.Restart, &out)
+			if err == nil {
+				writeStringMessage(ws, fmt.Sprintf("%s app successful", "Restart"))
+			}
+		case utils.Service_Start:
+			err = sshRunner.RunCommand(operation.Start, &out)
+			if err == nil {
+				writeStringMessage(ws, fmt.Sprintf("%s app successful", "Start"))
+			}
+		case utils.Service_Stop:
+			err = sshRunner.RunCommand(operation.Stop, &out)
+			if err == nil {
+				writeStringMessage(ws, fmt.Sprintf("%s app successful", "Stop"))
+			}
+		}
+		if err != nil {
+			writeStringMessage(ws, fmt.Sprintf("%s app failed ,errors: %v", operate, err))
+		}
+	}
+
+}
+
+// operate service on vms

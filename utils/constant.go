@@ -50,3 +50,10 @@ const (
 	FileTypes_Template = "Template"
 	FileTypes_EXEC     = "Exec"
 )
+
+//custom service operation
+const (
+	Service_Start   = "START"
+	Service_Stop    = "STOP"
+	Service_Restart = "RESTART"
+)

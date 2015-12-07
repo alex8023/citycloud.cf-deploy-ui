@@ -14,22 +14,19 @@ var (
 	cloudfoundryWebsocket  string = "/cloudfoundrywebsocket"
 	boshWebsocket          string = "/boshwebsocket"
 	serviceDeployWebScoket string = "/servicedeploywebsocket"
-
-	workSpace    string = beego.AppConfig.String("workSpace")
-	workDir      string = workSpace + "/" + beego.AppConfig.String("workDir")
-	microManiest string = "microbosh/micro_bosh.yml"
-	microPath    string = workDir + "/" + microManiest
-
-	cloudFoundryManiest string = "cloudfoundry/cloudfoundry.yml"
-	cloudFoundryPath    string = workDir + "/" + cloudFoundryManiest
-	cloudFoundryName           = beego.AppConfig.String("paasName")
-	cloudFoundryVersion        = beego.AppConfig.String("paasVersion")
-	cloudFoundryRelease string = workSpace + "/" + beego.AppConfig.String("paasRelease")
-
-	iaasVersion    = beego.AppConfig.String("iaas-version")
-	defaultVersion = "CCI-IaaS3.0"
-
-	stemcellName           = beego.AppConfig.String("stemcellName")
-	stemcellVersion        = beego.AppConfig.String("stemcellVersion")
-	stemcellRelease string = workSpace + "/" + beego.AppConfig.String("stemcellRelease")
+	workSpace              string = beego.AppConfig.String("workSpace")
+	workDir                string = workSpace + "/" + beego.AppConfig.String("workDir")
+	microManiest           string = "microbosh/micro_bosh.yml"
+	microPath              string = workDir + "/" + microManiest
+	cloudFoundryManiest    string = "cloudfoundry/cloudfoundry.yml"
+	cloudFoundryPath       string = workDir + "/" + cloudFoundryManiest
+	cloudFoundryName       string = beego.AppConfig.String("paasName")
+	cloudFoundryVersion    string = beego.AppConfig.String("paasVersion")
+	cloudFoundryRelease    string = workSpace + "/" + beego.AppConfig.String("paasRelease")
+	iaasVersion            string = beego.AppConfig.String("iaas-version")
+	defaultVersion         string = "CCI-IaaS3.0"
+	stemcellName           string = beego.AppConfig.String("stemcellName")
+	stemcellVersion        string = beego.AppConfig.String("stemcellVersion")
+	stemcellRelease        string = workSpace + "/" + beego.AppConfig.String("stemcellRelease")
+	customServiceDir       string = beego.AppConfig.String("customServiceDeployDir")
 )

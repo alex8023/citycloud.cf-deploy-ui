@@ -26,7 +26,7 @@
 					<tr>
 					<th class ="col-sm-2">Name</th>
 					<th class ="col-sm-4">Description</th>
-					<th class ="col-sm-2">Where</th>
+					<th class ="col-sm-2">Platform</th>
 					<th class ="col-sm-4">Action</th>
 					</tr>
 				</thead>

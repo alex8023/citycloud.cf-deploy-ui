@@ -1,7 +1,6 @@
 package utils_test
 
 import (
-	"fmt"
 	. "github.com/citycloud/citycloud.cf-deploy-ui/utils"
 
 	. "github.com/onsi/ginkgo"
