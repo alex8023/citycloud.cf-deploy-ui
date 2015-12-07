@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 	    <div class="navbar-header">
-			<a class="navbar-brand" href="#">CityCloud PDU</a>
+			<a class="navbar-brand" href="#">PaaS Ops</a>
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav" id="navbarul">

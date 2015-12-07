@@ -86,6 +86,15 @@ func (operation *Operation) Delete() error {
 	return err
 }
 
+func (operation *Operation) LoadBySid() error {
+	err := orm.NewOrm().QueryTable(new(Operation)).Filter("sid", operation.Sid).One(operation)
+	if err != nil {
+		logger.Error("Read Operation error : %s", err)
+		return err
+	}
+	return nil
+}
+
 // sid = deploy.id
 type OnPaaS struct {
 	Id     int64

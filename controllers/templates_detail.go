@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
+	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 )
 
 type TemplatesDetailController struct {
@@ -51,6 +52,10 @@ func (this *TemplatesDetailController) CheckService(serviceId int64) bool {
 }
 
 func (this *TemplatesDetailController) List(serviceId int64) {
+	service := entity.Service{}
+	service.Id = serviceId
+	service.Load()
+
 	template, errs := entity.LoadTemplateList(serviceId)
 	this.Data["Template"] = template
 
@@ -65,6 +70,16 @@ func (this *TemplatesDetailController) List(serviceId int64) {
 		this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", componenterrors)
 	}
 
+	if service.Where == utils.Deploy_On_Vms {
+		operation := entity.Operation{}
+		operation.Sid = serviceId
+		operationerrors := operation.LoadBySid()
+
+		this.Data["Operation"] = operation
+		if operationerrors != nil {
+			this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", operationerrors)
+		}
+	}
 	this.TplNames = "templates/index_detail.tpl"
 }
 
