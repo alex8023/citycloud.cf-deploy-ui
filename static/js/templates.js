@@ -84,6 +84,7 @@ $(document).ready(function(){
 			modal.find('.modal-body #customTemplateId').val(0);
 			modal.find('.modal-body #customTemplateName').val('');
 			modal.find('.modal-body #customTemplateFile').val('');
+			modal.find('.modal-body #customTargetFile').val('');
 			modal.find('.modal-body #customTemplateDescription').val('');
 			return 
 		}
@@ -96,6 +97,7 @@ $(document).ready(function(){
 			success:function(data){
 				modal.find('.modal-body #customTemplateName').val(data.Name);
 				modal.find('.modal-body #customTemplateFile').val(data.TemplateFile);
+				modal.find('.modal-body #customTargetFile').val(data.TargetFile);
 				modal.find('.modal-body #customTemplateDescription').val(data.Description);
 				if (data.FileType == "War"){
 					modal.find('.modal-body input[name="fileType"][value="War"]').prop("checked",true);

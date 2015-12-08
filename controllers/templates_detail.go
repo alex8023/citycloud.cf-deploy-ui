@@ -107,6 +107,7 @@ func (this *TemplatesDetailController) Post() {
 		template.Description = this.GetString("description")
 		template.FileType = this.GetString("fileType")
 		template.TemplateFile = this.GetString("templatefile")
+		template.TargetFile = this.GetString("targetfile")
 		id, err := this.GetInt64("id", 0)
 		if err == nil {
 			if id == 0 {

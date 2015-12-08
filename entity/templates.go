@@ -19,6 +19,7 @@ type Template struct {
 	Id           int64
 	Name         string
 	TemplateFile string               //模板路径
+	TargetFile   string               //目标路径
 	FileType     string               // file type
 	Component    map[string]Component `orm:"-"`
 	Description  string
