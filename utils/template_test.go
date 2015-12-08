@@ -41,6 +41,17 @@ var _ = Describe("Testing Template with Ginkgo", func() {
 
 		Tarry("hello", "kity", "hi", "lucy")
 	})
+
+	FIt("Test parse from map", func() {
+		mmap := make(map[string]string)
+		mmap["mysql_ip"] = "10.162.2.146"
+		mmap["mysql_port"] = "3306"
+		mmap["mysql_user"] = "root"
+		mmap["mysql_passwd"] = "123456"
+		templatesfile := "/home/ubuntu/customservice/cfweb/templates/app-data.xml"
+
+		utils.ParseTemplateFile2File("/home/ubuntu/temp/app-data.xml", mmap, templatesfile)
+	})
 })
 
 type Person struct {
