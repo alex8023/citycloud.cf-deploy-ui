@@ -101,9 +101,13 @@ $(document).ready(function(){
 				modal.find('.modal-body #customTemplateDescription').val(data.Description);
 				if (data.FileType == "War"){
 					modal.find('.modal-body input[name="fileType"][value="War"]').prop("checked",true);
+					$("#templatedetail_targetfile").attr("class","form-group hidden");
+					$("#customTargetFile").attr("required",false);
 				}
 				if (data.FileType == "Template"){
 					modal.find('.modal-body input[name="fileType"][value="Template"]').prop("checked",true);
+					$("#templatedetail_targetfile").attr("class","form-group");
+					$("#customTargetFile").attr("required",true);
 				}
 				
 			},
@@ -195,4 +199,20 @@ $(document).ready(function(){
 		var modal = $(this)
 		modal.find('.modal-body #deleteservicecomponentId').val(componentId);
 	});
+	
+	if ($("#fileType1")){
+		$("#fileType1").on('click',function(){
+			$("#templatedetail_targetfile").attr("class","form-group hidden");
+			$("#customTargetFile").attr("required",false);
+		})
+	}
+	if ($("#fileType2")){
+		$("#fileType2").on('click',function(){
+			$("#templatedetail_targetfile").attr("class","form-group");
+			$("#customTargetFile").attr("required",true);
+		})
+	}
+	
+	
+	
 });
