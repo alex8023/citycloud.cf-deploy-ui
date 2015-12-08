@@ -8,7 +8,7 @@ import (
 )
 
 var _ = Describe("Yamlhelper", func() {
-	FIt("Test read key", func() {
+	It("Test read key", func() {
 		mapp, err := utils.ReadYamlFile("/home/ubuntu/deploy/example/manifest.yml")
 		str, err := utils.GetValuesByKey(mapp, "name")
 		if err != nil {

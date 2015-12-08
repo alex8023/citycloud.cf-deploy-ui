@@ -35,6 +35,10 @@ func (cft CloudFoundryTemplate) CreateDefaultCloudFoundryYamlFileWithAppPath(ver
 	if !strings.HasSuffix(appPath, "/") {
 		appPath = appPath + "/"
 	}
+	if version == "CCI-IaaS3.0" {
+		return cft.CreateCloudFoundryYamlFile(version, path, appPath+CloudFoundryMetaTemplateV3File, appPath+CloudFoundryUpdateTempalteFile, appPath+CloudFoundryCompilationTemplateFile, appPath+CloudFoundryNetworksTemplateV3File, appPath+CloudFoundryResourcePoolTemplateFile, appPath+CloudFoundryJobsTemplateFile, appPath+CloudFoundryPropertiesTemplateFile)
+	}
+
 	return cft.CreateCloudFoundryYamlFile(version, path, appPath+CloudFoundryMetaTemplateV2File, appPath+CloudFoundryUpdateTempalteFile, appPath+CloudFoundryCompilationTemplateFile, appPath+CloudFoundryNetworksTemplateV2File, appPath+CloudFoundryResourcePoolTemplateFile, appPath+CloudFoundryJobsTemplateFile, appPath+CloudFoundryPropertiesTemplateFile)
 }
 
