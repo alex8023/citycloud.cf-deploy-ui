@@ -456,7 +456,7 @@ func (serviceDeploy *ServiceDeployWebSocketController) OperateOnVms(ws *websocke
 		writeStringMessage(ws, fmt.Sprintf("Error,%s", err))
 		return
 	}
-
+	writeStringMessage(ws, "Load custom vms info")
 	onCustom := serviceDto.OnCustom
 	sshRunner := utils.NewDeploySSHRunner(onCustom.Ip, onCustom.User, onCustom.Passwd)
 
@@ -469,16 +469,19 @@ func (serviceDeploy *ServiceDeployWebSocketController) OperateOnVms(ws *websocke
 	if err == nil {
 		switch operate {
 		case utils.Service_Restart:
+			writeStringMessage(ws, fmt.Sprintf("Start run command： %s app, please wait for a monent", "Restart"))
 			err = sshRunner.RunCommand(operation.Restart, &out)
 			if err == nil {
 				writeStringMessage(ws, fmt.Sprintf("%s app successful", "Restart"))
 			}
 		case utils.Service_Start:
+			writeStringMessage(ws, fmt.Sprintf("Start run command： %s app, please wait for a monent", "Start"))
 			err = sshRunner.RunCommand(operation.Start, &out)
 			if err == nil {
 				writeStringMessage(ws, fmt.Sprintf("%s app successful", "Start"))
 			}
 		case utils.Service_Stop:
+			writeStringMessage(ws, fmt.Sprintf("Start run command： %s app, please wait for a monent", "Stop"))
 			err = sshRunner.RunCommand(operation.Stop, &out)
 			if err == nil {
 				writeStringMessage(ws, fmt.Sprintf("%s app successful", "Stop"))
