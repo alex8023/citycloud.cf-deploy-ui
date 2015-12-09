@@ -1,7 +1,7 @@
 <div class="container" >
     <div class="panel panel-default">
 		<div class="panel-heading" >
-			<h2 class="panel-title">Deploying Custom Service</h2>
+			<h2 class="panel-title">Deploying Custom Service - {{.Service.Name}}</h2>
 		</div>
 	  		<div class="panel-body">
 				<!--   <div class="col-sm-offset-2 col-sm-10">-->
