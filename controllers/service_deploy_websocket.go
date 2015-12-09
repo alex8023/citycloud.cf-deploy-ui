@@ -269,7 +269,7 @@ func (this *ServiceDeployWebSocketController) setApi(ws *websocket.Conn, onPaaS 
 
 	var out bytes.Buffer
 
-	cfEndpointCommand := utils.Command{Name: "cf", Args: []string{"api", onPaaS.Api}, Dir: deployDir, Stdin: ""}
+	cfEndpointCommand := utils.Command{Name: "cf", Args: []string{"api", onPaaS.Api}, Dir: deployDir, Stdin: "", Env: []string{"CF_COLOR=false"}}
 
 	cmdRunner := utils.NewDeployCmdRunner()
 
@@ -289,7 +289,7 @@ func (this *ServiceDeployWebSocketController) loginPaaS(ws *websocket.Conn, onPa
 
 	var out bytes.Buffer
 
-	cfLoginCommand := utils.Command{Name: "cf", Args: []string{"login", onPaaS.Api}, Dir: deployDir, Stdin: onPaaS.User + "\n" + onPaaS.Passwd + "\n"}
+	cfLoginCommand := utils.Command{Name: "cf", Args: []string{"login", onPaaS.Api}, Dir: deployDir, Stdin: onPaaS.User + "\n" + onPaaS.Passwd + "\n", Env: []string{"CF_COLOR=false"}}
 
 	cmdRunner := utils.NewDeployCmdRunner()
 
@@ -309,7 +309,7 @@ func (this *ServiceDeployWebSocketController) targetPaaS(ws *websocket.Conn, onP
 
 	var out bytes.Buffer
 
-	cfTargetCommand := utils.Command{Name: "cf", Args: []string{"target", "-o", onPaaS.Org, "-s", onPaaS.Space}, Dir: deployDir, Stdin: ""}
+	cfTargetCommand := utils.Command{Name: "cf", Args: []string{"target", "-o", onPaaS.Org, "-s", onPaaS.Space}, Dir: deployDir, Stdin: "", Env: []string{"CF_COLOR=false"}}
 
 	cmdRunner := utils.NewDeployCmdRunner()
 
@@ -329,7 +329,7 @@ func (this *ServiceDeployWebSocketController) pushApp(ws *websocket.Conn, onPaaS
 
 	var out bytes.Buffer
 
-	cfDeployCommand := utils.Command{Name: "cf", Args: []string{"push", "-f", "manifest.yml"}, Dir: deployDir, Stdin: ""}
+	cfDeployCommand := utils.Command{Name: "cf", Args: []string{"push", "-f", "manifest.yml"}, Dir: deployDir, Stdin: "", Env: []string{"CF_COLOR=false"}}
 
 	cmdRunner := utils.NewDeployCmdRunner()
 
@@ -364,7 +364,7 @@ func (this *ServiceDeployWebSocketController) operateAppOnPaaS(ws *websocket.Con
 		if err == nil {
 			for _, app := range apps {
 				if app != "" {
-					cfOperateCommand := utils.Command{Name: "cf", Args: []string{operate, app}, Dir: deployDir, Stdin: ""}
+					cfOperateCommand := utils.Command{Name: "cf", Args: []string{operate, app}, Dir: deployDir, Stdin: "", Env: []string{"CF_COLOR=false"}}
 					cmdRunner := utils.NewDeployCmdRunner()
 					cmdRunner.RunCommandAsyncCmd(cfOperateCommand, &out)
 					writeBytesBufferMessage(&out, &cmdRunner, ws)

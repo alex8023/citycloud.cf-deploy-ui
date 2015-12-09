@@ -15,6 +15,7 @@ type Command struct {
 	Args  []string
 	Dir   string
 	Stdin string
+	Env   []string
 }
 
 type DeployCmdRunner struct {
@@ -52,6 +53,10 @@ func (this *DeployCmdRunner) RunCommandCmd(command Command, out *bytes.Buffer) {
 	cmd := exec.Command(command.Name, command.Args...)
 	if command.Stdin != "" {
 		cmd.Stdin = strings.NewReader(command.Stdin)
+	}
+
+	if command.Env != nil {
+		cmd.Env = command.Env
 	}
 	cmdString := strings.Join(cmd.Args, " ")
 	cmd.Stdout = out
@@ -119,6 +124,9 @@ func (this *DeployCmdRunner) RunCommandAsyncCmd(command Command, out *bytes.Buff
 	cmd := exec.Command(command.Name, command.Args...)
 	if command.Stdin != "" {
 		cmd.Stdin = strings.NewReader(command.Stdin)
+	}
+	if command.Env != nil {
+		cmd.Env = command.Env
 	}
 	cmdString := strings.Join(cmd.Args, " ")
 	cmd.Stdout = out
