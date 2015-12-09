@@ -5,7 +5,7 @@
 		</div>
 	  		<div class="panel-body">
 				<!--   <div class="col-sm-offset-2 col-sm-10">-->
-				<div class="btn-group btn-group" role="group">
+					<div class="btn-group btn-group" role="group">
 				      	<button class="btn btn-default " id = "config-cloudfoundry" data-toggle="tooltip" data-placement="right" title="配置部署文件"><span class="glyphicon glyphicon-edit"></span> Config</button>
 					  	<button class="btn btn-default " id = "deploy-all" data-toggle="tooltip" data-placement="right" title="一键部署PaaS"><span class="glyphicon glyphicon-cog"></span> All-In-One</button>
 				    </div>

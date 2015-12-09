@@ -25,10 +25,10 @@
 		    <table class="table table-responsive ">
 				<thead>
 					<tr>
-					<th class ="col-sm-1">Name</th>
-					<th class ="col-sm-4">Description</th>
+					<th class ="col-sm-3">Name</th>
+					<th class ="col-sm-5">Description</th>
 					<th class ="col-sm-2">FileType</th>
-					<th class ="col-sm-4">Action</th>
+					<th class ="col-sm-2">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -59,9 +59,9 @@
 		    <table class="table table-responsive ">
 				<thead>
 					<tr>
-					<th class ="col-sm-2">Name</th>
-					<th class ="col-sm-5">Value</th>
-					<th class ="col-sm-4">Action</th>
+					<th class ="col-sm-3">Name</th>
+					<th class ="col-sm-7">Value</th>
+					<th class ="col-sm-2">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -138,6 +138,10 @@
 				  			<div class="form-group">
 				    				<label for="customTemplateFile" class="control-label">TemplateFile</label>
 					      		<input type="text" class="form-control" id="customTemplateFile" placeholder="TemplateFile" name="templatefile"  required>
+				  			</div>
+							<div class="form-group hidden" id="templatedetail_targetfile">
+				    				<label for="customTargetFile" class="control-label">TargetFile</label>
+					      		<input type="text" class="form-control" id="customTargetFile" placeholder="TargetFile" name="targetfile" >
 				  			</div>
 
 							<div class="radio">

@@ -110,10 +110,11 @@ func (serviceDeploy *ServiceDeployWebSocketController) Deploy2Vms(ws *websocket.
 	}
 
 	//模板输出文件
-	writeStringMessage(ws, "Parse Template")
-	//TODO
-
-	//TODO
+	result := serviceDeploy.ParseTemplate(ws, service)
+	if !result {
+		return
+	}
+	//模板输出文件
 	//传输文件
 	writeStringMessage(ws, "传输文件...")
 
@@ -186,21 +187,13 @@ func (serviceDeploy *ServiceDeployWebSocketController) Deploy2PaaS(ws *websocket
 		writeStringMessage(ws, fmt.Sprintf("Error,%s", err))
 		return
 	}
-	//加载TemplateList
-	//	writeStringMessage(ws, "Load TemplateList")
-	//	template, templateLoadErr := entity.LoadTemplateList(service.Id)
-
-	//	if templateLoadErr != nil {
-	//		writeStringMessage(ws, fmt.Sprintf("Error,%s", templateLoadErr))
-	//		return
-	//	}
 
 	//模板输出文件
-	writeStringMessage(ws, "Parse Template")
-	//TODO
-
-	//TODO
-
+	result := serviceDeploy.ParseTemplate(ws, service)
+	if !result {
+		return
+	}
+	//模板输出文件
 	onPaaS := serviceDto.OnPaaS
 
 	var deployDir = customServiceDir + "/" + service.Name
@@ -499,3 +492,52 @@ func (serviceDeploy *ServiceDeployWebSocketController) OperateOnVms(ws *websocke
 }
 
 // operate service on vms
+
+// parse template 2 file
+func (servicedDeploy *ServiceDeployWebSocketController) ParseTemplate(ws *websocket.Conn, service entity.Service) bool {
+
+	writeStringMessage(ws, "Load templateList")
+
+	template, templateLoadErr := entity.LoadTemplateList(service.Id)
+
+	if templateLoadErr != nil {
+		writeStringMessage(ws, fmt.Sprintf("Error,%s", templateLoadErr))
+		return false
+	}
+	writeStringMessage(ws, "Load componentList")
+	component, componentErr := entity.LoadComponentList(service.Id)
+
+	if componentErr != nil {
+		writeStringMessage(ws, fmt.Sprintf("Error,%s", componentErr))
+		return false
+	}
+	writeStringMessage(ws, "Parse template")
+
+	data := make(map[string]string)
+
+	if len(component) > 0 {
+		for _, item := range component {
+			data[item.Name] = item.Value
+		}
+	}
+
+	for _, templatefile := range template {
+		if templatefile.FileType == utils.FileTypes_Template {
+			if templatefile.TargetFile == "" {
+				writeStringMessage(ws, fmt.Sprintf("%s TargetFile is null,please set the value", templatefile.Name))
+			}
+			if templatefile.TemplateFile == "" {
+				writeStringMessage(ws, fmt.Sprintf("%s TemplateFile is null,please set the value", templatefile.Name))
+			}
+			result, err := utils.ParseTemplateFile2File(templatefile.TargetFile, data, templatefile.TemplateFile)
+			if !result {
+				writeStringMessage(ws, fmt.Sprintf("Error,%s", err))
+				return result
+			}
+		}
+	}
+	writeStringMessage(ws, "Parse template successful")
+	return true
+}
+
+// parse template 2 file
