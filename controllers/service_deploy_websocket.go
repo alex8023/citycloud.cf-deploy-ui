@@ -8,6 +8,7 @@ import (
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/gorilla/websocket"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -163,15 +164,20 @@ func (serviceDeploy *ServiceDeployWebSocketController) pushFiles(ws *websocket.C
 		writeStringMessage(ws, fmt.Sprintf("传输出错了。%s", ssherror))
 		return
 	}
+	if isDir {
+		os.Remove(filetgz)
+	}
 	writeBufferMessage(ws, &out)
 
 	if isDir {
-		cmd := fmt.Sprintf("cd ~/ && tar -xzf %s", filename+".tgz")
+		cmd := fmt.Sprintf("cd ~/ && tar -xzf %s && rm %s", filename+".tgz", filename+".tgz")
 		ssherror = sshRunner.RunCommand(cmd, &out)
 		if ssherror != nil {
 			writeStringMessage(ws, fmt.Sprintf("解压出错了。%s", ssherror))
+			return
 		}
 	}
+
 }
 
 //deploy 2 vms
