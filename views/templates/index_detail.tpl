@@ -269,7 +269,7 @@
     		<div class="modal-content">
       		<div class="modal-header">
         			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        			<h4 class="modal-title" id="myModalLabel1">Add Custom Service Component</h4>
+        			<h4 class="modal-title" id="myModalLabel1">Update Custom Service Operation</h4>
       		</div>
 			<form class="form-horizontal" method="post" action="serviceoperation" enctype="multipart/form-data">
     				<div class="modal-body">

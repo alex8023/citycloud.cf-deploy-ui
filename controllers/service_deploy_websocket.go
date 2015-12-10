@@ -8,6 +8,7 @@ import (
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/gorilla/websocket"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -163,15 +164,20 @@ func (serviceDeploy *ServiceDeployWebSocketController) pushFiles(ws *websocket.C
 		writeStringMessage(ws, fmt.Sprintf("传输出错了。%s", ssherror))
 		return
 	}
+	if isDir {
+		os.Remove(filetgz)
+	}
 	writeBufferMessage(ws, &out)
 
 	if isDir {
-		cmd := fmt.Sprintf("cd ~/ && tar -xzf %s", filename+".tgz")
+		cmd := fmt.Sprintf("cd ~/ && tar -xzf %s && rm %s", filename+".tgz", filename+".tgz")
 		ssherror = sshRunner.RunCommand(cmd, &out)
 		if ssherror != nil {
 			writeStringMessage(ws, fmt.Sprintf("解压出错了。%s", ssherror))
+			return
 		}
 	}
+
 }
 
 //deploy 2 vms
@@ -456,7 +462,7 @@ func (serviceDeploy *ServiceDeployWebSocketController) OperateOnVms(ws *websocke
 		writeStringMessage(ws, fmt.Sprintf("Error,%s", err))
 		return
 	}
-
+	writeStringMessage(ws, "Load custom vms info")
 	onCustom := serviceDto.OnCustom
 	sshRunner := utils.NewDeploySSHRunner(onCustom.Ip, onCustom.User, onCustom.Passwd)
 
@@ -469,16 +475,19 @@ func (serviceDeploy *ServiceDeployWebSocketController) OperateOnVms(ws *websocke
 	if err == nil {
 		switch operate {
 		case utils.Service_Restart:
+			writeStringMessage(ws, fmt.Sprintf("Start run command： %s app, please wait for a monent", "Restart"))
 			err = sshRunner.RunCommand(operation.Restart, &out)
 			if err == nil {
 				writeStringMessage(ws, fmt.Sprintf("%s app successful", "Restart"))
 			}
 		case utils.Service_Start:
+			writeStringMessage(ws, fmt.Sprintf("Start run command： %s app, please wait for a monent", "Start"))
 			err = sshRunner.RunCommand(operation.Start, &out)
 			if err == nil {
 				writeStringMessage(ws, fmt.Sprintf("%s app successful", "Start"))
 			}
 		case utils.Service_Stop:
+			writeStringMessage(ws, fmt.Sprintf("Start run command： %s app, please wait for a monent", "Stop"))
 			err = sshRunner.RunCommand(operation.Stop, &out)
 			if err == nil {
 				writeStringMessage(ws, fmt.Sprintf("%s app successful", "Stop"))
