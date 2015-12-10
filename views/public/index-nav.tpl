@@ -8,7 +8,7 @@
 				<li id = "home"><a href="index?action=home">Home</a></li>
 				<li id = "microbosh"><a href="microbosh">Deploy MicroBOSH</a></li>
 				<li id = "cloudfoundry"><a href="cloudfoundry">Deploy PaaS</a></li>
-				<li id = "templates"><a href="templates">Deploy Custom</a></li>
+				<li id = "templates"><a href="templates">CustomService</a></li>
 				<li id = "ops"><a href="index?action=ops">PaaS Ops</a></li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
