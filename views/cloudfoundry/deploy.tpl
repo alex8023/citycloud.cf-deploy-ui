@@ -14,7 +14,7 @@
 						<button class="btn btn-default " id = "upload-release" data-toggle="tooltip" data-placement="right" title="上传软件包"><span class="glyphicon glyphicon-upload"></span> UpLoad-Release</button>
 						<button class="btn btn-default " id = "upload-stemcell" data-toggle="tooltip" data-placement="right" title="上传系统镜像"><span class="glyphicon glyphicon-upload"></span> UpLoad-Stemcell</button>
 						<button class="btn btn-default " id = "deploy-cloudfoundry" data-toggle="tooltip" data-placement="right" title="部署PaaS"><span class="glyphicon glyphicon-cog"></span> Deploy</button>
-						<button class="btn btn-default " id = "login-cloudfoundry" data-toggle="tooltip" data-placement="right" title="登录PaaS"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+						<!--<button class="btn btn-default " id = "login-cloudfoundry" data-toggle="tooltip" data-placement="right" title="登录PaaS"><span class="glyphicon glyphicon-log-in"></span> Login</button>-->
 					</div>
 					<div class="btn-group btn-group" role="group">
 						<button class="btn btn-default " id = "clean-console" data-toggle="tooltip" data-placement="right" title="clean console"><span class="glyphicon glyphicon-remove"></span> Clean-Console</button>
