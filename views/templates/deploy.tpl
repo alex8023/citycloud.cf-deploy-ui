@@ -16,6 +16,9 @@
 					<div class="btn-group btn-group" role="group">
 					 	<a class="btn btn-default"  href="templates" title = "back" role="button"><span class="glyphicon glyphicon-backward" ></span> Back</a>
 					</div>
+					<div class="btn-group btn-group" role="group">
+						<button class="btn btn-default " id = "clean-console" data-toggle="tooltip" data-placement="right" title="clean console"><span class="glyphicon glyphicon-remove"></span> Clean-Console</button>
+					</div>
 					<div id = "websocketmessage">
 					<div><b>{{.Message}}</b></div>
 					<div>

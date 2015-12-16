@@ -53,6 +53,10 @@ $(document).ready(function(){
 		window.location.href = "cloudfoundry";
 	})
 	
+	$('#clean-console').on('click', function(){
+		log.empty();
+	})
+	
 	function SendMessage(msg){
 		if (cango == "yes") {
 			conn.send(msg);

@@ -1,7 +1,7 @@
   <div class="container">
       <div class="jumbotron">
         <h1>CityCloud Cf-Deploy-UI</h1>
-        <p>这是一个PaaS的自动化部署程序。</p>
+        <p>Hi,欢迎使用自动化部署软件。		</p>
         <p>
         </p>
       </div>

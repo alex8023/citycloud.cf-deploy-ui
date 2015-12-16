@@ -46,6 +46,9 @@ $(document).ready(function(){
 			var serviceId = button.data('service');
 			SendMessage('start-'+serviceId);
 		})
+		$('#clean-console').on('click', function(){
+			log.empty();
+		})
 	}
 	function SendMessage(msg){
 		if (cango == "yes") {
