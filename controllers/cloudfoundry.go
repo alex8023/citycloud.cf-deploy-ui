@@ -168,7 +168,7 @@ func (this *CloudFoundryController) Post() {
 			poolsize := 0
 			for _, v := range cloudFoundryJobsMap {
 				if value.Name == v.ResourcesPool {
-					poolsize = poolsize + 1
+					poolsize = poolsize + 1*v.Instances //fixed instance sum
 				}
 			}
 			value.Size = poolsize

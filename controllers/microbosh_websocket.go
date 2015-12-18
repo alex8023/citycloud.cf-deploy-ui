@@ -90,7 +90,7 @@ func (this *MicroBOSHWebSocketController) Get() {
 				var success bool = false
 				success = this.deleteMicroBOSH(ws)
 				if !success {
-					writeStringMessage(ws, "检查IaaS中是否还有MicroBOSH的实例，如过有，请删除。")
+					writeStringMessage(ws, "检查IaaS中是否还有MicroBOSH的实例，如果有，请删除。")
 				}
 				if success {
 					success = this.deployMicroBOSH(ws)

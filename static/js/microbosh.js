@@ -55,6 +55,9 @@ $(document).ready(function(){
 		window.location.href = "microbosh?action=config";
 	})
 	
+	$('#clean-console').on('click', function(){
+		log.empty();
+	})
 	function SendMessage(msg){
 		if (cango == "yes") {
 			conn.send(msg);

@@ -41,7 +41,7 @@ $(document).ready(function(){
 		SendMessage("Deploy");
 	})
 	
-	$('#login-microbosh').on('click',function(){
+	$('#login-cloudfoundry').on('click',function(){
 		SendMessage("Login");
 	})
 		
@@ -51,6 +51,10 @@ $(document).ready(function(){
 	
 	$('#config-cloudfoundry').on('click', function(){
 		window.location.href = "cloudfoundry";
+	})
+	
+	$('#clean-console').on('click', function(){
+		log.empty();
 	})
 	
 	function SendMessage(msg){
