@@ -1,0 +1,17 @@
+
+{{with .NetWorks}}
+networks:
+- name: {{.public.Name}}
+  subnets:
+  - range: {{.public.Cidr}}
+    reserved: []
+    static:
+    - {{.public.StaticIp}}
+    gateway: {{.public.NetType}}
+    dns:
+    - {{.public.Dns}}
+    cloud_properties:
+      name: {{.public.NetId}}
+{{end}}
+	
+	

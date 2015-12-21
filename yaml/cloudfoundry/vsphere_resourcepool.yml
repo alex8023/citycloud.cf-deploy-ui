@@ -1,0 +1,14 @@
+
+{{with .VsphereResourcesPools}}
+resource_pools:{{range .}}
+- cloud_properties:
+    ram: {{.VsphereResources.Ram}}
+    disk: {{.VsphereResources.Disk}}
+    cpu: {{.VsphereResources.Cpu}}
+  name: {{.Name}}
+  network: {{.DefaultNetWork}}
+  size: {{.Size}}
+  stemcell:
+    name: {{$.Stemcells.Name}}
+    version: {{$.Stemcells.Version}}
+{{end}}{{end}}

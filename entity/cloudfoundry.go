@@ -244,7 +244,7 @@ func (cloudFoundryProperties *CloudFoundryProperties) Load() error {
 		logger.Error("Read CloudFoundryProperties error : %s", errors)
 		_, err := orm.NewOrm().Insert(cloudFoundryProperties)
 		if err != nil {
-			logger.Error("Inert CloudFoundryProperties error %s ", err)
+			logger.Error("Insert CloudFoundryProperties error %s ", err)
 		}
 	}
 
@@ -272,7 +272,7 @@ func (compilation *Compilation) Load() error {
 		logger.Error("Read Compilation error : %s", errors)
 		_, err := orm.NewOrm().Insert(compilation)
 		if err != nil {
-			logger.Error("Inert Compilation error %s ", err)
+			logger.Error("Insert Compilation error %s ", err)
 		}
 	}
 	return errors
@@ -293,7 +293,7 @@ func (netWorks *NetWorks) Load() error {
 		logger.Error("Read NetWorks error : %s", errors)
 		_, err := orm.NewOrm().Insert(netWorks)
 		if err != nil {
-			logger.Error("Inert NetWorks error %s ", err)
+			logger.Error("Insert NetWorks error %s ", err)
 		}
 	}
 	return errors
@@ -314,7 +314,7 @@ func (resourcesPools *ResourcesPools) Load() error {
 		logger.Error("Read ResourcesPools error : %s", errors)
 		_, err := orm.NewOrm().Insert(resourcesPools)
 		if err != nil {
-			logger.Error("Inert ResourcesPools error %s ", err)
+			logger.Error("Insert ResourcesPools error %s ", err)
 		}
 	}
 	return errors
@@ -382,7 +382,7 @@ func (cloudFoundryJobs *CloudFoundryJobs) Load() error {
 		cloudFoundryJobs.StaticIps = strings.Join(cloudFoundryJobs.StaticIp, ",")
 		_, err := orm.NewOrm().Insert(cloudFoundryJobs)
 		if err != nil {
-			logger.Error("Inert CloudFoundryJobs error %s ", err)
+			logger.Error("Insert CloudFoundryJobs error %s ", err)
 		}
 	}
 	return errors

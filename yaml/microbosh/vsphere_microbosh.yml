@@ -1,0 +1,36 @@
+---
+name: {{.Name}}
+network:
+  ip: {{.VsphereNetWork.Ip}}
+  netmask: {{.VsphereNetWork.NetMask}}
+  gateway: {{.VsphereNetWork.GateWay}}
+  dns:
+  - {{.VsphereNetWork.Dns}}
+  cloud_properties:
+    name: {{.VsphereNetWork.VlanName}}
+resources:
+  persistent_disk: {{.VsphereResources.PersistentDisk}}
+  cloud_properties:
+    ram: {{.VsphereResources.Ram}}
+    disk: {{.VsphereResources.Disk}}
+    cpu: {{.VsphereResources.Cpu}}
+cloud:
+  plugin: vsphere
+  properties:
+    agent:
+      ntp:
+      - us.pool.ntp.org
+    vcenters:
+    - host: {{.VsphereVcenter.Host}}
+      user: {{.VsphereVcenter.UserName}}
+      password: {{.VsphereVcenter.Passwd}}
+      datacenters:
+      - name: {{.VsphereVcenter.DataCenterName}}
+        vm_folder: {{.VsphereVcenter.VmFolder}}
+        template_folder: {{.VsphereVcenter.TemplateFolder}}
+        disk_path: {{.VsphereVcenter.DiskPath}}
+        datastore_pattern: {{.VsphereVcenter.DataStore}}
+        persistent_datastore_pattern: {{.VsphereVcenter.DataStore}}
+        allow_mixed_datastores: true
+        clusters:
+        - {{.VsphereVcenter.ClustersName}}

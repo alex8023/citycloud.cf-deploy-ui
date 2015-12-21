@@ -1,0 +1,11 @@
+
+{{with .VsphereCompilation}}
+compilation:
+  workers: {{.Workers}}
+  cloud_properties:
+    ram: {{.VsphereResources.Ram}}
+    disk: {{.VsphereResources.Disk}}
+    cpu: {{.VsphereResources.Cpu}}
+  network: {{.DefaultNetWork}}
+  reuse_compilation_vms: true
+{{end}}

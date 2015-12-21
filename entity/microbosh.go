@@ -110,7 +110,7 @@ func (microBOSH *MicroBOSH) Load() error {
 		logger.Error("Read MicroBOSH error : %s", errors)
 		_, err := orm.NewOrm().Insert(microBOSH)
 		if err != nil {
-			logger.Error("Inert MicroBOSH error %s ", err)
+			logger.Error("Insert MicroBOSH error %s ", err)
 		}
 	}
 
@@ -135,7 +135,7 @@ func (netWork *NetWork) Load() error {
 		logger.Error("Read NetWork error : %s", errors)
 		_, err := orm.NewOrm().Insert(netWork)
 		if err != nil {
-			logger.Error("Inert NetWork error %s ", err)
+			logger.Error("Insert NetWork error %s ", err)
 		}
 	}
 	return errors
@@ -161,7 +161,7 @@ func (cloudProperties *CloudProperties) Load() error {
 		logger.Error("Read CloudProperties error : %s", errors)
 		_, err := orm.NewOrm().Insert(cloudProperties)
 		if err != nil {
-			logger.Error("Inert CloudProperties error %s ", err)
+			logger.Error("Insert CloudProperties error %s ", err)
 		}
 	}
 	return errors
@@ -185,7 +185,7 @@ func (resources *Resources) Load() error {
 		logger.Error("Read Resources error : %s", errors)
 		_, err := orm.NewOrm().Insert(resources)
 		if err != nil {
-			logger.Error("Inert Resources error %s ", err)
+			logger.Error("Insert Resources error %s ", err)
 		}
 	}
 	return errors
