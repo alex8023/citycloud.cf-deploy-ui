@@ -6,22 +6,22 @@ import (
 )
 
 type VsphereMicro struct {
-	Id               int64
-	Name             string
-	VsphereNetWork   VsphereNetWork   `orm:"-"`
-	VsphereResources VsphereResources `orm:"-"`
-	VsphereVcenter   VsphereVcenter   `orm:"-"`
+	Id              int64
+	Name            string
+	VsphereNetWork  VsphereNetWork  `orm:"-"`
+	VsphereResource VsphereResource `orm:"-"`
+	VsphereVcenter  VsphereVcenter  `orm:"-"`
 }
 
 func NewVsphereMicro(
 	name string,
 	vsphereNetWork VsphereNetWork,
-	vsphereResources VsphereResources,
+	vsphereResource VsphereResource,
 	vsphereVcenter VsphereVcenter,
 ) (vsphereMicro VsphereMicro) {
 	vsphereMicro.Name = name
 	vsphereMicro.VsphereNetWork = vsphereNetWork
-	vsphereMicro.VsphereResources = vsphereResources
+	vsphereMicro.VsphereResource = vsphereResource
 	vsphereMicro.VsphereVcenter = vsphereVcenter
 	return
 }
@@ -102,7 +102,7 @@ func (vsphereNetWork *VsphereNetWork) Update() error {
 	return err
 }
 
-type VsphereResources struct {
+type VsphereResource struct {
 	Id             int64
 	PersistentDisk string
 	Ram            string
@@ -115,36 +115,36 @@ func NewVsphereResources(
 	ram string,
 	disk string,
 	cpu string,
-) (vsphereResources VsphereResources) {
-	vsphereResources.PersistentDisk = persistentDisk
-	vsphereResources.Ram = ram
-	vsphereResources.Disk = disk
-	vsphereResources.Cpu = cpu
+) (vsphereResource VsphereResource) {
+	vsphereResource.PersistentDisk = persistentDisk
+	vsphereResource.Ram = ram
+	vsphereResource.Disk = disk
+	vsphereResource.Cpu = cpu
 	return
 }
 
-func (vsphereResources *VsphereResources) Load() error {
-	queryOneErr := orm.NewOrm().QueryTable(vsphereResources).One(vsphereResources, "Id")
+func (vsphereResource *VsphereResource) Load() error {
+	queryOneErr := orm.NewOrm().QueryTable(vsphereResource).One(vsphereResource, "Id")
 	if queryOneErr != nil {
 		logger.Error("Query One failed %s", queryOneErr)
 	}
 
-	errors := orm.NewOrm().Read(vsphereResources, "Id")
+	errors := orm.NewOrm().Read(vsphereResource, "Id")
 	if errors != nil {
-		logger.Error("Read VsphereResources error : %s", errors)
-		_, err := orm.NewOrm().Insert(vsphereResources)
+		logger.Error("Read VsphereResource error : %s", errors)
+		_, err := orm.NewOrm().Insert(vsphereResource)
 		if err != nil {
-			logger.Error("Insert VsphereResources error %s ", err)
+			logger.Error("Insert VsphereResource error %s ", err)
 		}
 	}
 
 	return nil
 }
 
-func (vsphereResources *VsphereResources) Update() error {
-	_, err := orm.NewOrm().Update(vsphereResources)
+func (vsphereResource *VsphereResource) Update() error {
+	_, err := orm.NewOrm().Update(vsphereResource)
 	if err != nil {
-		logger.Error("Update VsphereResources error %s ", err)
+		logger.Error("Update VsphereResource error %s ", err)
 	}
 	return err
 }
@@ -211,5 +211,5 @@ func (vsphereVcenter *VsphereVcenter) Update() error {
 }
 
 func init() {
-	orm.RegisterModel(new(VsphereNetWork), new(VsphereResources), new(VsphereVcenter), new(VsphereMicro))
+	orm.RegisterModel(new(VsphereNetWork), new(VsphereResource), new(VsphereVcenter), new(VsphereMicro))
 }
