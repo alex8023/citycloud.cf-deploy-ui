@@ -15,6 +15,8 @@ func (this *TemplatesController) Get() {
 	action := this.GetString("action")
 	this.Layout = "index.tpl"
 	this.Data["NavBarFocus"] = "templates"
+	this.Data["IaaSVersion"] = iaasVersion
+	this.Data["DefaultVersion"] = defaultVersion
 
 	switch action {
 	case "", "list":

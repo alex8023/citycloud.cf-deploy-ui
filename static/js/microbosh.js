@@ -51,9 +51,6 @@ $(document).ready(function(){
         $("<div><b>Your browser does not support WebSockets.</b></div>").appendTo(log);
     }
 	
-	$('#config-microbosh').on('click', function(){
-		window.location.href = "microbosh?action=config";
-	})
 	
 	$('#clean-console').on('click', function(){
 		log.empty();

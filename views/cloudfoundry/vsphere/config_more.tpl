@@ -1,0 +1,1 @@
+{{template "cloudfoundry/vsphere/config_properties/config_properties.tpl" .}}

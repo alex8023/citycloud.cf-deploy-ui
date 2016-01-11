@@ -1,0 +1,12 @@
+
+---
+name: {{.CloudFoundryProperties.Name}}
+director_uuid: {{.CloudFoundryProperties.Uuid}}
+releases:
+- name: {{.Release.Name}}
+  version: {{.Release.Version}}
+meta:
+  environment: {{.CloudFoundryProperties.Name}}
+  stemcell:
+    name: {{.Stemcells.Name}}
+    version: {{.Stemcells.Version}}

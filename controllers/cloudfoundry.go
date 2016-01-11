@@ -295,7 +295,9 @@ func (this *CloudFoundryController) Deploy() {
 	//	templateText := ""
 	if iaasVersion == defaultVersion {
 		//		templateText = entity.CloudFoundryTemplateV3
-		ipArr := utils.SpliteIPs(publicNetWorks.StaticIp)
+		networks := cf.NetWorks
+		publicNetWork := networks[utils.Net_Public]
+		ipArr := utils.SpliteIPs(publicNetWork.StaticIp)
 		cf.CloudFoundryProperties.FloatingIp = ipArr[0]
 		//设置ip段的第一个ip为haproxy的浮动ip
 	}
@@ -411,7 +413,7 @@ var (
 		"192.168.129.1 - 192.168.129.99",
 		"192.168.129.100 - 192.168.129.126")
 
-	publicNetWorks = entity.NewNetWorks("publc",
+	publicNetWorks = entity.NewNetWorks("public",
 		utils.Net_Public,
 		"manual",
 		"8bb21e6e-dc6a-409c-82d0-a110fb3c9fe1",
