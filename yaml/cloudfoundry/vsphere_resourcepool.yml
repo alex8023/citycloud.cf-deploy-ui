@@ -2,9 +2,9 @@
 {{with .VsphereResourcesPools}}
 resource_pools:{{range .}}
 - cloud_properties:
-    ram: {{.VsphereResources.Ram}}
-    disk: {{.VsphereResources.Disk}}
-    cpu: {{.VsphereResources.Cpu}}
+    ram: {{.VsphereResource.Ram}}
+    disk: {{.VsphereResource.Disk}}
+    cpu: {{.VsphereResource.Cpu}}
   name: {{.Name}}
   network: {{.DefaultNetWork}}
   size: {{.Size}}

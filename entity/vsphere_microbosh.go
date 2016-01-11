@@ -6,11 +6,12 @@ import (
 )
 
 type VsphereMicro struct {
-	Id              int64
-	Name            string
-	VsphereNetWork  VsphereNetWork  `orm:"-"`
-	VsphereResource VsphereResource `orm:"-"`
-	VsphereVcenter  VsphereVcenter  `orm:"-"`
+	Id                int64
+	Name              string
+	VsphereResourceId int64
+	VsphereNetWork    VsphereNetWork  `orm:"-"`
+	VsphereResource   VsphereResource `orm:"-"`
+	VsphereVcenter    VsphereVcenter  `orm:"-"`
 }
 
 func NewVsphereMicro(
@@ -110,7 +111,7 @@ type VsphereResource struct {
 	Cpu            string
 }
 
-func NewVsphereResources(
+func NewVsphereResource(
 	persistentDisk string,
 	ram string,
 	disk string,
@@ -124,21 +125,13 @@ func NewVsphereResources(
 }
 
 func (vsphereResource *VsphereResource) Load() error {
-	queryOneErr := orm.NewOrm().QueryTable(vsphereResource).One(vsphereResource, "Id")
-	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
-	}
 
 	errors := orm.NewOrm().Read(vsphereResource, "Id")
 	if errors != nil {
 		logger.Error("Read VsphereResource error : %s", errors)
-		_, err := orm.NewOrm().Insert(vsphereResource)
-		if err != nil {
-			logger.Error("Insert VsphereResource error %s ", err)
-		}
 	}
 
-	return nil
+	return errors
 }
 
 func (vsphereResource *VsphereResource) Update() error {

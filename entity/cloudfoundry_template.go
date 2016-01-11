@@ -58,6 +58,28 @@ func (cft CloudFoundryTemplate) CreateCloudFoundryV3YamlFile(path string) (bool,
 
 }
 
+type VsphereCloudFoundryTemplate struct {
+	VsphereCloudFoundry VsphereCloudFoundry
+}
+
+func NewVsphereCloudFoundryTemplate(vsphereCloudFoundry VsphereCloudFoundry) (vcft VsphereCloudFoundryTemplate) {
+	vcft.VsphereCloudFoundry = vsphereCloudFoundry
+	return
+}
+
+func (vcft VsphereCloudFoundryTemplate) CreateDefaultCloudFoundryYamlFileWithAppPath(version, path string, appPath string) (bool, error) {
+	if !strings.HasSuffix(appPath, "/") {
+		appPath = appPath + "/"
+	}
+
+	return vcft.CreateCloudFoundryYamlFile(version, path, appPath+CloudFoundryMetaTemplateFile_vSphere, appPath+CloudFoundryUpdateTempalteFile, appPath+CloudFoundryCompilationTemplateFile_vSphere, appPath+CloudFoundryNetworksTemplateFile_vSphere, appPath+CloudFoundryResourcePoolTemplateFile_vSphere, appPath+CloudFoundryJobsTemplateFile, appPath+CloudFoundryPropertiesTemplateFile)
+}
+
+func (vcft VsphereCloudFoundryTemplate) CreateCloudFoundryYamlFile(version, path string, template ...string) (bool, error) {
+	logger.Debug("Create CloudFoundry deployment file : %s", path)
+	return utils.CreateYmlFileFromFile(path, vcft.VsphereCloudFoundry, template...)
+}
+
 const (
 	CloudFoundryTemplateTextV2 string = CloudFoundryMetaTemplateV2 +
 		CloudFoundryUpdateTempalte +
@@ -90,6 +112,11 @@ const (
 	CloudFoundryPropertiesTemplateFile   = "yaml/cloudfoundry/properties.yml"
 	CloudFoundryResourcePoolTemplateFile = "yaml/cloudfoundry/resourcepool.yml"
 	CloudFoundryUpdateTempalteFile       = "yaml/cloudfoundry/update.yml"
+
+	CloudFoundryCompilationTemplateFile_vSphere  = "yaml/cloudfoundry/vsphere_compilation.yml"
+	CloudFoundryMetaTemplateFile_vSphere         = "yaml/cloudfoundry/vsphere_meta.yml"
+	CloudFoundryNetworksTemplateFile_vSphere     = "yaml/cloudfoundry/vsphere_networks.yml"
+	CloudFoundryResourcePoolTemplateFile_vSphere = "yaml/cloudfoundry/vsphere_resourcepool.yml"
 )
 
 func init() {

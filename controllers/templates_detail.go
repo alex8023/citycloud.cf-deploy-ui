@@ -14,6 +14,8 @@ type TemplatesDetailController struct {
 func (this *TemplatesDetailController) Get() {
 	this.Layout = "index.tpl"
 	this.Data["NavBarFocus"] = "templates"
+	this.Data["IaaSVersion"] = iaasVersion
+	this.Data["DefaultVersion"] = vsphereVersion
 
 	action := this.GetString("action")
 	switch action {

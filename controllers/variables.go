@@ -29,4 +29,5 @@ var (
 	stemcellVersion        string = beego.AppConfig.String("stemcellVersion")
 	stemcellRelease        string = workSpace + "/" + beego.AppConfig.String("stemcellRelease")
 	customServiceDir       string = beego.AppConfig.String("customServiceDeployDir")
+	vsphereVersion         string = "Vsphere"
 )

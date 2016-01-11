@@ -7,6 +7,8 @@ $(document).ready(function(){
 			var panelId = panel + index;
 			$("<div class= \"panel panel-default\" id = \""+panelId +"\"><div class=\"panel-heading\" ><h2 class=\"panel-title\">ResourcesPools<button name=\"delete\" class=\"btn btn-default\" type=\"button\" onclick=\"deletePanel('"+panelId+"')\">Delete</button></h2></div><div class=\"form-horizontal\">"+divs + "</div></div>").appendTo($("form.form-horizontal"));
 			index = index + 1;
+			//重置id=0
+			$("#"+panelId).find("[name='id']:first").val(0);
 		})
 	}
 	

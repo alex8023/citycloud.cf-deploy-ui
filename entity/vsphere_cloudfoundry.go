@@ -99,14 +99,85 @@ func (vsphereResourcesPool *VsphereResourcesPool) Update() error {
 }
 
 type VsphereCloudFoundry struct {
-	VsphereVcenter        VsphereVcenter
-	VsphereCompilation    VsphereCompilation
-	NetWorks              map[string]NetWorks
-	VsphereResourcesPools []VsphereResourcesPool
-	CloudFoundryJobs      map[string]CloudFoundryJobs
-	Properties            Properties
-	Release               Release
-	Stemcells             Stemcells
+	VsphereCompilation     VsphereCompilation
+	NetWorks               map[string]NetWorks
+	VsphereResourcesPools  []VsphereResourcesPool
+	CloudFoundryJobs       map[string]CloudFoundryJobs
+	Properties             Properties
+	Release                Release
+	Stemcells              Stemcells
+	CloudFoundryProperties CloudFoundryProperties
+}
+
+func LoadVsphereResourcePool(vsphereResourcesPool []VsphereResourcesPool) ([]VsphereResourcesPool, error) {
+	qs := orm.NewOrm().QueryTable(new(VsphereResourcesPool))
+
+	cnt, _ := qs.Count()
+	if cnt == 0 {
+		for index, value := range vsphereResourcesPool {
+			value.Load()
+			vsphereResourcesPool[index] = value
+		}
+		return vsphereResourcesPool, nil
+	}
+
+	var res []VsphereResourcesPool
+	_, err := qs.All(&res)
+
+	for index, value := range res {
+		vsphereResource := VsphereResource{}
+
+		vsphereResource.Id = value.Vid
+		vsphereResource.Load()
+
+		value.VsphereResource = vsphereResource
+		res[index] = value
+	}
+
+	return res, err
+}
+
+func UpdateVsphereResourcePool(vsphereResourcesPool []VsphereResourcesPool) ([]VsphereResourcesPool, error) {
+	qs := orm.NewOrm().QueryTable(new(VsphereResourcesPool))
+	cond := orm.NewCondition()
+
+	cond1 := cond.And("id__isnull", false)
+	qs.SetCond(cond1).Delete()
+
+	insert, _ := qs.PrepareInsert()
+
+	for index, values := range vsphereResourcesPool {
+		id, err := insert.Insert(&values)
+
+		if err != nil {
+			logger.Error("Insert VsphereResourcesPool error :%s", err)
+		} else {
+			values.Id = id
+			vsphereResourcesPool[index] = values
+		}
+
+	}
+
+	insert.Close()
+
+	return vsphereResourcesPool, nil
+}
+
+func LoadVsphereResource(vsphereResources []VsphereResource) ([]VsphereResource, error) {
+	qs := orm.NewOrm().QueryTable(new(VsphereResource))
+
+	cnt, _ := qs.Count()
+	if cnt == 0 {
+		for index, value := range vsphereResources {
+			value.Load()
+			vsphereResources[index] = value
+		}
+		return vsphereResources, nil
+	}
+
+	var res []VsphereResource
+	_, err := qs.All(&res)
+	return res, err
 }
 
 func init() {

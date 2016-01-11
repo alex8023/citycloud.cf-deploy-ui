@@ -1,12 +1,23 @@
 <div class="container" >
     <div class="panel panel-default">
 		<div class="panel-heading" >
-			<h2 class="panel-title">MicroBOSH Deployment</h2>
+			<h2 class="panel-title">{{if eq .IaaSVersion "Vsphere"}}Vsphere{{end}}MicroBOSH Deployment</h2>
 		</div>
 	  		<div class="panel-body">
 				<!--   <div class="col-sm-offset-2 col-sm-10">-->
 				<div class="btn-group btn-group" role="group">
 				      	<button class="btn btn-default " id = "config-microbosh" data-toggle="tooltip" data-placement="right" title="配置部署文件"><span class="glyphicon glyphicon-edit"></span> Config</button>
+						<script type="text/javascript">
+							$('#config-microbosh').on('click', function(){
+								{{if ne .IaaSVersion "Vsphere"}}
+								window.location.href = "microbosh?action=config";
+								{{end}}
+								{{if eq .IaaSVersion "Vsphere"}}
+								window.location.href = "vspheremicrobosh?action=config";
+								console.log(window.location.href)
+								{{end}}
+							})
+						</script>
 					  	<button class="btn btn-default " id = "deploy-all" data-toggle="tooltip" data-placement="right" title="一键部署MicroBOSH"><span class="glyphicon glyphicon-cog"></span> All-In-One</button>
 				    </div>
 					<div class="btn-group btn-group" role="group">

@@ -6,8 +6,14 @@
 		<div id="navbar">
 			<ul class="nav navbar-nav" id="navbarul">
 				<li id = "home"><a href="index?action=home">Home</a></li>
+				{{if ne $.IaaSVersion "Vsphere"}}
 				<li id = "microbosh"><a href="microbosh">Deploy MicroBOSH</a></li>
 				<li id = "cloudfoundry"><a href="cloudfoundry">Deploy PaaS</a></li>
+				{{end}}
+				{{if eq $.IaaSVersion "Vsphere"}}
+				<li id = "microbosh"><a href="vspheremicrobosh">Deploy MicroBOSH</a></li>
+				<li id = "cloudfoundry"><a href="vspherecloudfoundry">Deploy PaaS</a></li>
+				{{end}}
 				<li id = "templates"><a href="templates">CustomService</a></li>
 				<li id = "ops"><a href="index?action=ops">PaaS Ops</a></li>
 				<li class="dropdown">

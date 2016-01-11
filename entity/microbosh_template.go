@@ -100,6 +100,8 @@ apply_spec:
       - 0.asia.pool.ntp.org
       - 1.asia.pool.ntp.org
 `
+
+	VsphereMicroBOSHTemplateFile = "yaml/microbosh/vsphere_microbosh.yml"
 )
 
 type MicroBOSHTemplate struct {
@@ -123,4 +125,24 @@ func (mt MicroBOSHTemplate) CreateMicroBOSHYamlFile(version, path string) (bool,
 		return utils.CreateYmlFileFromFile(path, mt.microbosh, MicroBOSHTemplateTextV3File)
 	}
 	return utils.CreateYmlFileFromFile(path, mt.microbosh, MicroBOSHTemplateTextV2File)
+}
+
+type VsphereMicroTemplate struct {
+	vsphereMicro VsphereMicro
+}
+
+func NewVspherewMicroTemplate(vsphereMicro VsphereMicro) (vmt VsphereMicroTemplate) {
+	vmt.vsphereMicro = vsphereMicro
+	return
+}
+
+func (vmt VsphereMicroTemplate) CreateMicroBOSHYaml(template, path string) (bool, error) {
+	logger.Debug("Create MicroBOSH deployment file : %s", path)
+
+	return utils.CreateYmlFile("microbosh", template, path, vmt)
+}
+
+func (vmt VsphereMicroTemplate) CreateMicroBOSHYamlFile(version, path string) (bool, error) {
+	logger.Debug("Create MicroBOSH deployment file : %s", path)
+	return utils.CreateYmlFileFromFile(path, vmt.vsphereMicro, VsphereMicroBOSHTemplateFile)
 }

@@ -13,6 +13,7 @@ func (this *BOSHController) Get() {
 	action := this.GetString("action")
 	this.Layout = "index.tpl"
 	this.Data["NavBarFocus"] = "bosh"
+	this.Data["IaaSVersion"] = iaasVersion
 	this.Data["BOSH"] = bo
 	if action == "config" {
 		this.ConfigBOSH()
