@@ -9,11 +9,11 @@ network:
   cloud_properties:
     name: {{.VsphereNetWork.VlanName}}
 resources:
-  persistent_disk: {{.VsphereResources.PersistentDisk}}
+  persistent_disk: {{.VsphereResource.PersistentDisk}}
   cloud_properties:
-    ram: {{.VsphereResources.Ram}}
-    disk: {{.VsphereResources.Disk}}
-    cpu: {{.VsphereResources.Cpu}}
+    ram: {{.VsphereResource.Ram}}
+    disk: {{.VsphereResource.Disk}}
+    cpu: {{.VsphereResource.Cpu}}
 cloud:
   plugin: vsphere
   properties:
