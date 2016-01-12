@@ -7,7 +7,17 @@
 				<!--   <div class="col-sm-offset-2 col-sm-10">-->
 					<div class="btn-group btn-group" role="group">
 				      	<button class="btn btn-default " id = "config-cloudfoundry" data-toggle="tooltip" data-placement="right" title="配置部署文件"><span class="glyphicon glyphicon-edit"></span> Config</button>
-					  	<button class="btn btn-default " id = "deploy-all" data-toggle="tooltip" data-placement="right" title="一键部署PaaS"><span class="glyphicon glyphicon-cog"></span> All-In-One</button>
+					  	<script type="text/javascript">	
+							$('#config-cloudfoundry').on('click', function(){
+								{{if ne .IaaSVersion "Vsphere"}}
+								window.location.href = "cloudfoundry";
+								{{end}}
+								{{if eq .IaaSVersion "Vsphere"}}
+								window.location.href = "vspherecloudfoundry";
+								{{end}}
+							})
+						</script>
+						<button class="btn btn-default " id = "deploy-all" data-toggle="tooltip" data-placement="right" title="一键部署PaaS"><span class="glyphicon glyphicon-cog"></span> All-In-One</button>
 				    </div>
 					<div class="btn-group btn-group" role="group">
 						<button class="btn btn-default " id = "set-deployment" data-toggle="tooltip" data-placement="right" title="设置部署文件"><span class="glyphicon glyphicon-edit"></span> SetDeployment</button>

@@ -14,7 +14,6 @@
 								{{end}}
 								{{if eq .IaaSVersion "Vsphere"}}
 								window.location.href = "vspheremicrobosh?action=config";
-								console.log(window.location.href)
 								{{end}}
 							})
 						</script>

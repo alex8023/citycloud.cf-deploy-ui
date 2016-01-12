@@ -103,7 +103,7 @@ CREATE TABLE `component` (
   `sid` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`,`sid`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `on_paas` (
   `org` varchar(255) NOT NULL DEFAULT '',
   `space` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +236,7 @@ CREATE TABLE `operation` (
   `stop` varchar(255) NOT NULL DEFAULT '',
   `sid` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +270,7 @@ CREATE TABLE `resources_pools` (
   `size` int(11) NOT NULL DEFAULT '0',
   `default_net_work` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,7 +286,7 @@ CREATE TABLE `service` (
   `description` varchar(255) NOT NULL DEFAULT '',
   `where` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,7 +305,112 @@ CREATE TABLE `template` (
   `file_type` varchar(255) NOT NULL DEFAULT '',
   `target_file` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vsphere_compilation`
+--
+
+DROP TABLE IF EXISTS `vsphere_compilation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vsphere_compilation` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `workers` int(11) NOT NULL DEFAULT '0',
+  `default_net_work` varchar(255) NOT NULL DEFAULT '',
+  `vid` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vsphere_micro`
+--
+
+DROP TABLE IF EXISTS `vsphere_micro`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vsphere_micro` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `vsphere_resource_id` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vsphere_net_work`
+--
+
+DROP TABLE IF EXISTS `vsphere_net_work`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vsphere_net_work` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(255) NOT NULL DEFAULT '',
+  `net_mask` varchar(255) NOT NULL DEFAULT '',
+  `gate_way` varchar(255) NOT NULL DEFAULT '',
+  `dns` varchar(255) NOT NULL DEFAULT '',
+  `vlan_name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vsphere_resource`
+--
+
+DROP TABLE IF EXISTS `vsphere_resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vsphere_resource` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `persistent_disk` varchar(255) NOT NULL DEFAULT '',
+  `ram` varchar(255) NOT NULL DEFAULT '',
+  `disk` varchar(255) NOT NULL DEFAULT '',
+  `cpu` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vsphere_resources_pool`
+--
+
+DROP TABLE IF EXISTS `vsphere_resources_pool`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vsphere_resources_pool` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `size` int(11) NOT NULL DEFAULT '0',
+  `default_net_work` varchar(255) NOT NULL DEFAULT '',
+  `vid` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `vsphere_vcenter`
+--
+
+DROP TABLE IF EXISTS `vsphere_vcenter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vsphere_vcenter` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) NOT NULL DEFAULT '',
+  `passwd` varchar(255) NOT NULL DEFAULT '',
+  `host` varchar(255) NOT NULL DEFAULT '',
+  `data_center_name` varchar(255) NOT NULL DEFAULT '',
+  `vm_folder` varchar(255) NOT NULL DEFAULT '',
+  `template_folder` varchar(255) NOT NULL DEFAULT '',
+  `disk_path` varchar(255) NOT NULL DEFAULT '',
+  `data_store` varchar(255) NOT NULL DEFAULT '',
+  `clusters_name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -317,4 +422,4 @@ CREATE TABLE `template` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-08 15:06:07
+-- Dump completed on 2016-01-12 16:58:38

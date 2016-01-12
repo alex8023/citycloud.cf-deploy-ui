@@ -49,9 +49,6 @@ $(document).ready(function(){
         $("<div><b>Your browser does not support WebSockets.</b></div>").appendTo(log);
     }
 	
-	$('#config-cloudfoundry').on('click', function(){
-		window.location.href = "cloudfoundry";
-	})
 	
 	$('#clean-console').on('click', function(){
 		log.empty();
