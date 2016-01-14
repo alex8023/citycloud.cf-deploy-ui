@@ -1,7 +1,6 @@
-{{with .CloudFoundry}}
 			    <div class="panel panel-default">
 					<div class="panel-heading" >
-						<h2 class="panel-title">PaaS Jobs</h2>
+						<h2 class="panel-title">PaaS {{i18n $.Lang "Jobs"}}</h2>
 					</div>
 					<div class="form-horizontal">
 				  		<div class="panel-body">
@@ -15,7 +14,6 @@
 							  		})
 								</script>
 							</div>
-							{{with .CloudFoundryJobs}}
 								{{template "cloudfoundry/index_jobs/job_haproxy.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_gorouter.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_dea_next.tpl" .}}
@@ -32,9 +30,6 @@
 								{{template "cloudfoundry/index_jobs/job_cloud_controller_clock.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_hm9000.tpl" .}}
 								{{template "cloudfoundry/index_jobs/job_stats.tpl" .}}
-							{{end}}
-							
 						</div>
 					</div>
 				</div>
-{{end}}

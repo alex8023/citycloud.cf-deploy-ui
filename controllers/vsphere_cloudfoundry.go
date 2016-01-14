@@ -11,7 +11,7 @@ import (
 )
 
 type VsphereCloudFoundryController struct {
-	beego.Controller
+	BaseController
 }
 
 func (this *VsphereCloudFoundryController) Get() {
@@ -241,7 +241,7 @@ func (this *VsphereCloudFoundryController) ConfigProperties() {
 	}
 	this.Data["Model"] = model
 	properties.Load()
-	cf.Properties = properties
+	vcf.Properties = properties
 	this.Data["Properties"] = properties
 	this.TplNames = "cloudfoundry/vsphere/config_more.tpl"
 }

@@ -11,7 +11,7 @@ import (
 )
 
 type CloudFoundryController struct {
-	beego.Controller
+	BaseController
 }
 
 func (this *CloudFoundryController) Get() {

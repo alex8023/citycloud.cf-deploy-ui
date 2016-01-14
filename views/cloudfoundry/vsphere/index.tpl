@@ -11,14 +11,14 @@
 	</script>
     <div class="panel panel-default">
 		<div class="panel-heading" >
-			<h2 class="panel-title">PaaS Deployment</h2>
+			<h2 class="panel-title">PaaS {{i18n $.Lang "Deployment"}}</h2>
 		</div>
 		<div class="form-horizontal">
 	  		<div class="panel-body">
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
-				      	<button class="btn btn-default " id = "config-deploy"><span class="glyphicon glyphicon-cog"></span> Deploy</button>
-						<button class="btn btn-default " id = "config-more"><span class="glyphicon glyphicon-edit"></span> MoreConf</button>
+				      	<button class="btn btn-default " id = "config-deploy"><span class="glyphicon glyphicon-cog"></span> {{i18n $.Lang "Deploy"}}</button>
+						<button class="btn btn-default " id = "config-more"><span class="glyphicon glyphicon-edit"></span> {{i18n $.Lang "MoreConf"}}</button>
 				    </div>
 					<script type="text/javascript">
 						if ($('#config-deploy')){

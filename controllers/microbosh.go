@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/astaxie/beego"
+	_ "github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"io"
@@ -10,7 +10,7 @@ import (
 )
 
 type MicroBoshController struct {
-	beego.Controller
+	BaseController
 }
 
 func (this *MicroBoshController) Get() {

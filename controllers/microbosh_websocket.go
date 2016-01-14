@@ -3,7 +3,7 @@ package controllers
 import (
 	"bytes"
 	"fmt"
-	"github.com/astaxie/beego"
+	_ "github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/gorilla/websocket"
@@ -12,7 +12,7 @@ import (
 )
 
 type MicroBOSHWebSocketController struct {
-	beego.Controller
+	BaseController
 }
 
 var upgrader = websocket.Upgrader{

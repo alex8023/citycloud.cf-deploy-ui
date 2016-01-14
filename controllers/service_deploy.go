@@ -1,17 +1,19 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
+	_ "github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 )
 
 type ServiceDeployController struct {
-	beego.Controller
+	BaseController
 }
 
 func (this *ServiceDeployController) Get() {
 	this.Layout = "index.tpl"
 	this.Data["NavBarFocus"] = "templates"
+	this.Data["IaaSVersion"] = iaasVersion
+	this.Data["DefaultVersion"] = defaultVersion
 
 	this.Data["HOST"] = this.Ctx.Request.Host
 	this.Data["AppName"] = globaleAppName

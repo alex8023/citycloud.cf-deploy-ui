@@ -1,33 +1,33 @@
 <div class="container" >
     <div class="panel panel-default">
 		<div class="panel-heading" >
-			<h2 class="panel-title">PaaS Compilation</h2>
+			<h2 class="panel-title">PaaS {{i18n $.Lang "Compilation"}}</h2>
 		</div>
   		<div class="panel-body">
 			<form class="form-horizontal" method="post" action="vspherecloudfoundry">
 				<div class="form-group">
 				    <div class="col-sm-offset-2 col-sm-10">
-				      <button type="submit" class="btn btn-default " data-loading-text="Saving..."><span class="glyphicon glyphicon-floppy-save"></span> Save</button>
-					<a class="btn btn-default " href="vspherecloudfoundry"><span class="glyphicon glyphicon-step-backward"></span> Back</a>
+				      <button type="submit" class="btn btn-default " data-loading-text="Saving..."><span class="glyphicon glyphicon-floppy-save"></span> {{i18n $.Lang "Save"}}</button>
+					<a class="btn btn-default " href="vspherecloudfoundry"><span class="glyphicon glyphicon-step-backward"></span> {{i18n $.Lang "Back"}}</a>
 				    </div>
 			  	</div>
 				{{with .CloudFoundry}}
 				{{with .VsphereCompilation}}
 				<input type = "hidden" name = "id" value = "{{.Id}}">
 			  	<div class="form-group">
-			    	<label for="workers" class="col-sm-3 control-label">Workers</label>
+			    	<label for="workers" class="col-sm-3 control-label">{{i18n $.Lang "Workers"}}</label>
 				    <div class="col-sm-7">
-				      <input type="number" class="form-control" id="workers" placeholder="Workers" name="workers" value = "{{.Workers}}" required>
+				      <input type="number" class="form-control" id="workers" placeholder="{{i18n $.Lang "Workers"}}" name="workers" value = "{{.Workers}}" required>
 				    </div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label for="defaultNetWork" class="col-sm-3 control-label">DefaultNetWork</label>
+			    	<label for="defaultNetWork" class="col-sm-3 control-label">{{i18n $.Lang "DefaultNetWork"}}</label>
 				    <div class="col-sm-7">
-				      <input type="text" class="form-control" id="defaultNetWork" placeholder="DefaultNetWork" name="defaultNetWork" value = "{{.DefaultNetWork}}" readonly required>
+				      <input type="text" class="form-control" id="defaultNetWork" placeholder="{{i18n $.Lang "DefaultNetWork"}}" name="defaultNetWork" value = "{{.DefaultNetWork}}" readonly required>
 				    </div>
 			  	</div>
 				<div class="form-group">
-			    	<label for="" class="col-sm-3 control-label">FlavorPool</label>
+			    	<label for="" class="col-sm-3 control-label">{{i18n $.Lang "Instance-Flavor"}}</label>
 				    <div class="col-sm-7">
 				    	<select class="form-control" id="compilation_flavor_pool" name="vid" >
 						{{range $.VsphereResource}}<option id="compilation_flavor_pool_{{.Id}}" value="{{.Id}}">Ram({{.Ram}}M)-CPU({{.Cpu}})-Disk({{.Disk}}M)</option>{{end}}
