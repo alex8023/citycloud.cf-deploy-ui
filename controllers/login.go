@@ -1,16 +1,15 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 type LoginController struct {
-	beego.Controller
+	BaseController
 }
 
 type LogoutController struct {
-	beego.Controller
+	BaseController
 }
 
 func (this *LoginController) Get() {

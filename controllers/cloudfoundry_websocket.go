@@ -3,7 +3,7 @@ package controllers
 import (
 	"bytes"
 	"fmt"
-	"github.com/astaxie/beego"
+	_ "github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/gorilla/websocket"
 	"net/http"
@@ -11,7 +11,7 @@ import (
 )
 
 type CloudFoundryWebSocketController struct {
-	beego.Controller
+	BaseController
 }
 
 // becareful

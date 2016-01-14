@@ -4,7 +4,7 @@ $(document).ready(function(){
   		var serviceId = button.data('whatever');
 		var modal = $(this)
 		if (serviceId == "add") {
-			modal.find('.modal-title').text('Add Custom Service');
+			modal.find('.modal-title').text(modal.find('.modal-title').attr('title-add'));
 			modal.find('.modal-body #customServiceId').val(0);
 			modal.find('.modal-body #customServiceName').val('');
 			modal.find('.modal-body #customServiceDescription').val('');
@@ -23,7 +23,7 @@ $(document).ready(function(){
 			modal.find('.modal-body #customServiceVmPasswd').val('');
 			return 
 		}
-  		modal.find('.modal-title').text('Update Custom Service')
+  		modal.find('.modal-title').text(modal.find('.modal-title').attr('title-update'))
 		modal.find('.modal-body #customServiceId').val(serviceId);
 		$.ajax({
 			url:'templates?action=detail',
@@ -80,7 +80,7 @@ $(document).ready(function(){
   		var templateId = button.data('whatever');
 		var modal = $(this)
 		if (templateId == "add") {
-			modal.find('.modal-title').text('Add Custom Template');
+			modal.find('.modal-title').text(modal.find('.modal-title').attr('title-add'));
 			modal.find('.modal-body #customTemplateId').val(0);
 			modal.find('.modal-body #customTemplateName').val('');
 			modal.find('.modal-body #customTemplateFile').val('');
@@ -88,7 +88,7 @@ $(document).ready(function(){
 			modal.find('.modal-body #customTemplateDescription').val('');
 			return 
 		}
-  		modal.find('.modal-title').text('Update Custom Template')
+  		modal.find('.modal-title').text(modal.find('.modal-title').attr('title-update'))
 		modal.find('.modal-body #customTemplateId').val(templateId);
 		$.ajax({
 			url:'templatesdetail?action=detail',
@@ -172,13 +172,13 @@ $(document).ready(function(){
   		var componentId = button.data('whatever');
 		var modal = $(this)
 		if (componentId == "add") {
-			modal.find('.modal-title').text('Add Custom Service Component');
+			modal.find('.modal-title').text(modal.find('.modal-title').attr('title-add'));
 			modal.find('.modal-body #customComponentsId').val(0);
 			modal.find('.modal-body #customComponentName').val('');
 			modal.find('.modal-body #customComponentValue').val('');
 			return 
 		}
-		modal.find('.modal-title').text('Update Custom Service Component')
+		modal.find('.modal-title').text(modal.find('.modal-title').attr('title-update'))
 		modal.find('.modal-body #customComponentId').val(componentId);
 		$.ajax({
 			url:'servicecomponent',
@@ -212,7 +212,4 @@ $(document).ready(function(){
 			$("#customTargetFile").attr("required",true);
 		})
 	}
-	
-	
-	
 });

@@ -2,12 +2,12 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/astaxie/beego"
+	_ "github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 )
 
 type ServiceComponentController struct {
-	beego.Controller
+	BaseController
 }
 
 func (this *ServiceComponentController) Get() {
@@ -65,7 +65,7 @@ func (this *ServiceComponentController) DeleteComponent() {
 }
 
 type ServiceOperationController struct {
-	beego.Controller
+	BaseController
 }
 
 func (this *ServiceOperationController) Get() {

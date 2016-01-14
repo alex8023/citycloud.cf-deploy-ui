@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
+	_ "github.com/astaxie/beego"
 )
 
 type IndexController struct {
-	beego.Controller
+	BaseController
 }
 
 func (this *IndexController) Get() {

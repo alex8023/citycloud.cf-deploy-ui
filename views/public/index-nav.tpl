@@ -1,36 +1,37 @@
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 	    <div class="navbar-header">
-			<a class="navbar-brand" href="#">PaaS Ops</a>
+			<a class="navbar-brand" href="#">CCI-PaaS</a>
 		</div>
 		<div id="navbar">
 			<ul class="nav navbar-nav" id="navbarul">
-				<li id = "home"><a href="index?action=home">Home</a></li>
+				<li id = "home"><a href="index?action=home">{{i18n $.Lang "Home"}}</a></li>
 				{{if ne $.IaaSVersion "Vsphere"}}
-				<li id = "microbosh"><a href="microbosh">Deploy MicroBOSH</a></li>
-				<li id = "cloudfoundry"><a href="cloudfoundry">Deploy PaaS</a></li>
+				<li id = "microbosh"><a href="microbosh">MicroBOSH {{i18n $.Lang "Deploy"}}</a></li>
+				<li id = "cloudfoundry"><a href="cloudfoundry">PaaS {{i18n $.Lang "Deploy"}}</a></li>
 				{{end}}
 				{{if eq $.IaaSVersion "Vsphere"}}
-				<li id = "microbosh"><a href="vspheremicrobosh">Deploy MicroBOSH</a></li>
-				<li id = "cloudfoundry"><a href="vspherecloudfoundry">Deploy PaaS</a></li>
+				<li id = "microbosh"><a href="vspheremicrobosh">MicroBOSH {{i18n $.Lang "Deploy"}}</a></li>
+				<li id = "cloudfoundry"><a href="vspherecloudfoundry">PaaS {{i18n $.Lang "Deploy"}}</a></li>
 				{{end}}
-				<li id = "templates"><a href="templates">CustomService</a></li>
-				<li id = "ops"><a href="index?action=ops">PaaS Ops</a></li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">Action</a></li>
-						<li><a href="#">Another action</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li role="separator" class="divider"></li>
-						<li class="dropdown-header">Nav header</li>
-						<li><a href="#">Separated link</a></li>
-						<li><a href="#">One more separated link</a></li>
-					</ul>
-				</li>
+				<li id = "templates"><a href="templates">{{i18n $.Lang "CustomService"}}</a></li>
+				<li id = "ops"><a href="index?action=ops">PaaS {{i18n $.Lang "Operations"}}</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-			  	<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> LogOut</a></li>
+			  	<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> {{i18n $.Lang "LogOut"}}</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{if eq $.Lang "zh-CN"}}简体中文{{end}}{{if eq $.Lang "en-US"}}English{{end}} <span class="caret"></span></a>
+					<ul class="dropdown-menu pull-right">
+					{{if eq $.Lang "zh-CN"}}
+						<li><a href="#" data-lang="en-US" class="lang-changed">English </a></li>
+					{{end}}
+					{{if eq $.Lang "en-US"}}
+						<li><a href="#" data-lang="zh-CN" class="lang-changed">简体中文 </a></li>
+					{{end}}
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</div>

@@ -3,7 +3,7 @@ package controllers
 import (
 	"bytes"
 	"fmt"
-	"github.com/astaxie/beego"
+	_ "github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/gorilla/websocket"
@@ -15,7 +15,7 @@ import (
 )
 
 type ServiceDeployWebSocketController struct {
-	beego.Controller
+	BaseController
 }
 
 func (service *ServiceDeployWebSocketController) Get() {

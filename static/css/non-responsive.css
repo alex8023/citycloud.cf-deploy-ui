@@ -103,7 +103,8 @@ body,
 /* Undo custom dropdowns */
 .navbar .navbar-nav .open .dropdown-menu {
   position: absolute;
-  float: left;
+  min-width: 102px;
+  float: right;
   background-color: #fff;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, .15);
