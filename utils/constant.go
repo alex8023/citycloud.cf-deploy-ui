@@ -36,6 +36,7 @@ const (
 	ResourcesPools         = "ResourcesPools"
 	CloudFoundryJobs       = "CloudFoundryJobs"
 	Properties             = "Properties"
+	VsphereFlavor          = "vSphereFlavor"
 )
 
 //部署类型 PaaS 部署在cci-paas云上，Vms 部署在虚拟机上
