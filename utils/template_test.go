@@ -42,7 +42,7 @@ var _ = Describe("Testing Template with Ginkgo", func() {
 		Tarry("hello", "kity", "hi", "lucy")
 	})
 
-	FIt("Test parse from map", func() {
+	It("Test parse from map", func() {
 		mmap := make(map[string]string)
 		mmap["mysql_ip"] = "10.162.2.146"
 		mmap["mysql_port"] = "3306"

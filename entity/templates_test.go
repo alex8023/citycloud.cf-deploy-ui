@@ -102,6 +102,7 @@ var _ = Describe("Testing Component CRUD", func() {
 })
 
 func init() {
-	mysqlUrl := "root:c1oudc0w@tcp(127.0.0.1:3306)/cf_deploy_ui?charset=utf8"
+	mysqlUrl := "root:c1oudc0w@tcp(127.0.0.1:3306)/cf_deploy_ui?charset=utf8&parseTime=true&loc=Asia%2FShanghai"
 	orm.RegisterDataBase("default", "mysql", mysqlUrl)
+
 }

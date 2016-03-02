@@ -15,7 +15,7 @@ func init() {
 	if mysqlPort == "" {
 		mysqlPort = "3306"
 	}
-	mysqlUrl := mysqlUserName + ":" + mysqlPasswd + "@tcp(" + mysqlHost + ":" + mysqlPort + ")/" + mysqlDatabase + "?charset=utf8"
+	mysqlUrl := mysqlUserName + ":" + mysqlPasswd + "@tcp(" + mysqlHost + ":" + mysqlPort + ")/" + mysqlDatabase + "?charset=utf8&parseTime=true&loc=Asia%2FShanghai"
 	orm.RegisterDataBase("default", "mysql", mysqlUrl)
 	if beego.AppConfig.String("runmode") == "dev" {
 		orm.Debug = true

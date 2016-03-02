@@ -58,3 +58,8 @@ const (
 	Service_Stop    = "STOP"
 	Service_Restart = "RESTART"
 )
+
+//监控滚动保存的数量
+const (
+	Monitor_Agent_Size = 20
+)

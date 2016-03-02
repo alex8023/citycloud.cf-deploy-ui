@@ -38,6 +38,8 @@ func init() {
 			beego.NSRouter("/vspheremicrobosh", &controllers.VsphereMicroBoshController{}),
 			beego.NSRouter("/vspherecloudfoundry", &controllers.VsphereCloudFoundryController{}),
 			beego.NSRouter("/vsphereresource", &controllers.VsphereResourceController{}),
+			beego.NSRouter("/ops", &controllers.OpsController{}),
+			beego.NSRouter("/opsmonitor", &controllers.OpsMonitorController{}),
 		)
 	beego.AddNamespace(login)
 }
