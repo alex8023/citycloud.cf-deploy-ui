@@ -95,21 +95,21 @@ func Levelify(levelString string) (int, error) {
 }
 
 func Debug(format string, v ...interface{}) {
-	log.Debug(format, v)
+	log.Debug(format, v...)
 }
 
 func Info(format string, v ...interface{}) {
-	log.Trace(format, v)
+	log.Trace(format, v...)
 }
 
 func Warn(format string, v ...interface{}) {
-	log.Warn(format, v)
+	log.Warn(format, v...)
 }
 
 func Error(format string, v ...interface{}) {
-	log.Error(format, v)
+	log.Error(format, v...)
 }
 
 func Critical(format string, v ...interface{}) {
-	log.Critical(format, v)
+	log.Critical(format, v...)
 }

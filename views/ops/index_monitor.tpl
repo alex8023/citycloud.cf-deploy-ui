@@ -5,14 +5,13 @@
 	<div class="container" >
 		<div class="alert alert-warning alert-dismissible hide" role="alert" id = "warning-block">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>
-			<strong>Warning!</strong> {{.MessageErr}}
+			<strong>Warning!</strong> Request Error
+		</div>
+		<div class="alert alert-warning alert-dismissible hide" role="alert" id = "warning-block-request">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>
+			<strong>Warning!</strong><span id = "warning-block-request-message"></span>
 		</div>
 		<input type="hidden" id="hidden-message" value="{{.MessageErr}}">
-		<script type="text/javascript">
-			if ($('#hidden-message').val()!=""){
-				$('#warning-block').attr("class","alert alert-warning alert-dismissible")
-			}
-		</script>
 		<div class="panel panel-default">
 			<div class="panel-heading" >
 				<h2 class="panel-title">PaaS {{i18n $.Lang "Ops"}}</h2>
@@ -54,4 +53,5 @@
 				</div>
 			{{end}}
 			</div>
+			<input type = "hidden" id ="agent_id" name = "agentId" value = "{{$.AgentId}}">
 	</div>

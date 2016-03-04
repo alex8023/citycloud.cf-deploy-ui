@@ -1,145 +1,67 @@
 $(document).ready(function(){
-	var result = 
-	{
-	    "value": {
-	        "properties": {
-	            "logging": {
-	                "max_log_file_size": ""
-	            }
-	        },
-	        "job": {
-	            "name": "postgres",
-	            "release": "",
-	            "template": "postgres",
-	            "version": "5",
-	            "sha1": "0228430151570ea1e6cbb0c26c79b5ceaa83ef4d",
-	            "blobstore_id": "f26d465e-55fb-4efa-9b6f-3c03e3c06bba",
-	            "templates": [
-	                {
-	                    "name": "postgres",
-	                    "version": "5",
-	                    "sha1": "0228430151570ea1e6cbb0c26c79b5ceaa83ef4d",
-	                    "blobstore_id": "f26d465e-55fb-4efa-9b6f-3c03e3c06bba"
-	                }
-	            ]
-	        },
-	        "packages": {
-	            "common": {
-	                "name": "common",
-	                "version": "6.1",
-	                "sha1": "41bbc068713cc4a2de2433a3b8d8f03ce399c442",
-	                "blobstore_id": "17e30dc6-434b-4d5a-5cda-6203395d0333"
-	            },
-	            "postgres": {
-	                "name": "postgres",
-	                "version": "5.1",
-	                "sha1": "92a88bb74c02c9fe8459590ef695dbc6f4d413f0",
-	                "blobstore_id": "5780870b-09f3-46d8-6bb2-b96f52ed3529"
-	            }
-	        },
-	        "configuration_hash": " ",
-	        "networks": {
-	            "cf12": {
-	                "cloud_properties": {
-	                    "net_id": "53f22403-b386-4158-a30f-07f0b8cc2ea7"
-	                },
-	                "default": [
-	                    "dns",
-	                    "gateway"
-	                ],
-	                "dns": [
-	                    "192.168.138.11",
-	                    "10.10.245.59"
-	                ],
-	                "dns_record_name": "0.postgres.cf12.cf-release.microbosh",
-	                "ip": "192.168.138.22",
-	                "netmask": "255.255.255.0"
-	            }
-	        },
-	        "resource_pool": {
-	            "cloud_properties": {
-	                "availability_zone": "bigdata",
-	                "instance_type": "flavor_737"
-	            },
-	            "name": "normal",
-	            "stemcell": {
-	                "name": "bosh-openstack-kvm-ubuntu-lucid-go_agent",
-	                "version": "2719"
-	            }
-	        },
-	        "deployment": "cf-release",
-	        "index": 0,
-	        "persistent_disk": 30720,
-	        "persistent_disk_pool": {
-	            "cloud_properties": {},
-	            "disk_size": 30720,
-	            "name": "e629ad1c-48ea-44ca-82fe-02a023c50819"
-	        },
-	        "rendered_templates_archive": {
-	            "sha1": "36f90aaa68ef2ad08e3e8a3b2e2d01490e8ad02a",
-	            "blobstore_id": "a43cbd05-4917-47dc-968d-f316063d078b"
-	        },
-	        "agent_id": "6b3733ee-7b6f-4d65-9b68-d3d08ddba267",
-	        "bosh_protocol": "1",
-	        "job_state": "running",
-	        "vitals": {
-	            "cpu": {
-	                "sys": "0.0",
-	                "user": "0.1",
-	                "wait": "0.0"
-	            },
-	            "disk": {
-	                "ephemeral": {
-	                    "inode_percent": "0",
-	                    "percent": "1"
-	                },
-	                "persistent": {
-	                    "inode_percent": "0",
-	                    "percent": "1"
-	                },
-	                "system": {
-	                    "inode_percent": "32",
-	                    "percent": "40"
-	                }
-	            },
-	            "load": [
-	                "0.02",
-	                "0.08",
-	                "0.12"
-	            ],
-	            "mem": {
-	                "kb": "164720",
-	                "percent": "8"
-	            },
-	            "swap": {
-	                "kb": "0",
-	                "percent": "0"
-	            }
-	        },
-	        "vm": {
-	            "name": "vm-447d7acb-4a60-4932-b8fc-d2dc155eeccc"
-	        },
-	        "ntp": {
-	            "offset": "0.134190",
-	            "timestamp": "22 Feb 11:15:07"
-	        }
-	    }
+	
+//	result.value.vitals.cpu.sys = Math.random()+"";
+//	result.value.vitals.cpu.user = Math.random()+"";
+//	result.value.vitals.mem.kb = Math.random()*1000000+"";
+//	result.value.vitals.disk.persistent.percent = Math.random()*100+"";
+//	result.value.vitals.disk.system.percent = Math.random()*100+"";
+//	result.value.vitals.load[0] = Math.random()*2+"";
+//	result.value.vitals.load[1] = Math.random()*2+"";
+//	result.value.vitals.load[2] = Math.random()*2+"";
+
+	// 开始执行
+	var sys_cpu ,user_cpu = "0.0";
+	var mem_kb = "0";
+	var disk_persistent_per , disk_system_per = "0";
+	var load1,load5,load15 = "0.00";
+	
+	
+	var interval = setInterval(function(){
+		RequestByAgentId();
+	},5000);
+	
+	initHighchart();
+	//执行结束
+	
+	//获取健康数据请求
+	function RequestByAgentId(){
+		var agent_id = $("#agent_id").val();
+		$.ajax({
+			url:'opsmonitorrest',
+			dataType:'json',
+			data:{agent_id:agent_id},
+			success:function(data){
+				if (data.Code =="200"){
+					_vitals = data.Data.value.vitals;
+					sys_cpu = _vitals.cpu.sys;
+					user_cpu = _vitals.cpu.user;
+					mem_kb = _vitals.mem.kb;
+					disk_persistent_per = _vitals.disk.persistent.percent;
+					disk_system_per =_vitals.disk.system.percent;
+					load1 = _vitals.load[0]
+					load5 = _vitals.load[0]
+					load15 = _vitals.load[0]
+				}else{
+					resetResult()
+					$("#warning-block-request").attr("class","alert alert-danger alert-dismissible")
+					$("#warning-block-request-message").html(data.Data)
+					clearInterval(interval)
+				}
+			},
+			error:function(data){
+				$("#warning-block").attr("class","alert alert-danger alert-dismissible")
+			}
+		});
 	}
-	
-	
-	setInterval(function(){
-		result.value.vitals.cpu.sys = Math.random()+"";
-		result.value.vitals.cpu.user = Math.random()+"";
-		result.value.vitals.mem.kb = Math.random()*1000000+"";
-		result.value.vitals.disk.persistent.percent = Math.random()*100+"";
-		result.value.vitals.disk.system.percent = Math.random()*100+"";
-		result.value.vitals.load[0] = Math.random()*2+"";
-		result.value.vitals.load[1] = Math.random()*2+"";
-		result.value.vitals.load[2] = Math.random()*2+"";
-	},1000);
-	
-	
-	
+		
+	function resetResult(){
+		sys_cpu = user_cpu = "0.0";
+		mem_kb = "0";
+		disk_persistent_per = disk_system_per = "0";
+		load1 =load5 = load15 = "0.00";
+	}
+	//初始化图表，并开始加载数据
+	function initHighchart(){
 		Highcharts.setOptions({
             global: {
                 useUTC: false
@@ -154,12 +76,12 @@ $(document).ready(function(){
                 events: {
                     load: function () {
                         var system_cpu = this.series[0];
-						var user_cpu =  this.series[1];
+						var user_used_cpu =  this.series[1];
                         setInterval(function () {
-							var sysy = Number(result.value.vitals.cpu.sys),x = (new Date()).getTime();
-							var usery = Number(result.value.vitals.cpu.user);
+							var sysy = Number(sys_cpu),x = (new Date()).getTime();
+							var usery = Number(user_cpu);
                             system_cpu.addPoint([x, sysy], true, true);
-							user_cpu.addPoint([x,usery],true,true);
+							user_used_cpu.addPoint([x,usery],true,true);
                         }, 5000);
                     }
                 }
@@ -174,7 +96,7 @@ $(document).ready(function(){
             },
             yAxis: {
                 title: {
-                    text: 'CPU used percent(%)'
+                    text: 'CPU Used Percent(%)'
                 },
                 plotLines: [{
                     value: 0,
@@ -244,7 +166,7 @@ $(document).ready(function(){
                         var memused = this.series[0];
                         setInterval(function () {
                             var x = (new Date()).getTime(), 
-                                y = Number(result.value.vitals.mem.kb)/1024;
+                                y = Number(mem_kb)/1024;
                             memused.addPoint([x, y], true, true);
                         }, 5000);
                     }
@@ -260,7 +182,7 @@ $(document).ready(function(){
             },
             yAxis: {
                 title: {
-                    text: 'Memory used (MB)'
+                    text: 'Memory Used (MB)'
                 },
                 plotLines: [{
                     value: 0,
@@ -315,8 +237,8 @@ $(document).ready(function(){
 						var system_disk_used =  this.series[1];
                         setInterval(function () {
                             var x = (new Date()).getTime(), 
-                                persistent_disk_used_y = Number(result.value.vitals.disk.persistent.percent),
-								system_disk_used_y = Number(result.value.vitals.disk.system.percent);
+                                persistent_disk_used_y = Number(disk_persistent_per),
+								system_disk_used_y = Number(disk_system_per);
                             persistent_disk_used.addPoint([x, persistent_disk_used_y], true, true);
 							system_disk_used.addPoint([x,system_disk_used_y],true,true);
                         }, 5000);
@@ -405,9 +327,9 @@ $(document).ready(function(){
 						var fifteen_min =  this.series[2];
                         setInterval(function () {
                             var x = (new Date()).getTime(), 
-                                one_min_y = Number(result.value.vitals.load[0]),
-								five_min_y = Number(result.value.vitals.load[1]),
-								fifteen_min_y = Number(result.value.vitals.load[2]);
+                                one_min_y = Number(load1),
+								five_min_y = Number(load5),
+								fifteen_min_y = Number(load15);
                             one_min.addPoint([x, one_min_y], true, true);
 							five_min.addPoint([x,five_min_y],true,true);
 							fifteen_min.addPoint([x,fifteen_min_y],true,true);
@@ -425,7 +347,7 @@ $(document).ready(function(){
             },
             yAxis: {
                 title: {
-                    text: 'Disk used percent (%)'
+                    text: 'Load Average'
                 },
                 plotLines: [{
                     value: 0,
@@ -499,4 +421,5 @@ $(document).ready(function(){
 				enabled:false
 			}
         });
+	}
 });

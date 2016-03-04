@@ -16,20 +16,30 @@ func GenerateUUID() (uuidStr string) {
 	return uuid.String()
 }
 
-func GetMonitor(natsServerIp, agentId string, timeout time.Duration) (value string, err error) {
+func GetMonitor(natsServerIp, agentId string, timeout time.Duration) (string, error) {
+
 	natsUrl := fmt.Sprintf("nats://nats:nats@%s:4222", natsServerIp)
+
+	// if err != nil nc return nil
 	nc, err := nats.Connect(natsUrl)
-	defer nc.Close()
+
 	if err != nil {
 		return "", err
 	}
 
+	defer nc.Close()
+
 	msg := make(chan *nats.Msg, 1)
 
 	subject := fmt.Sprintf("director.%s.%s", GenerateUUID(), GenerateUUID())
-	nc.Subscribe(subject, func(m *nats.Msg) {
+	sub, suberr := nc.Subscribe(subject, func(m *nats.Msg) {
 		msg <- m
 	})
+
+	if suberr != nil {
+		return "", fmt.Errorf("Subccribe %s error", subject)
+	}
+	defer sub.Unsubscribe()
 
 	message := fmt.Sprintf(`{"method":"get_state","arguments":["full"],"reply_to":"%s"}`, subject)
 

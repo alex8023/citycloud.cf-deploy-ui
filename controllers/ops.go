@@ -55,14 +55,14 @@ func (this *OpsMonitorRestController) Get() {
 	}
 	natsServerIp = strings.Trim(natsServerIp, " ")
 
-	//TODO 暂时直接从nats请求信息，需要持久话请求到的健康信息和负载信息
+	//TODO 暂时直接从nats请求信息，需要持久话健康信息和负载信息
 	monitorStr, err := utils.GetMonitor(natsServerIp, agentId, time.Duration(2))
 
 	result := entity.ResponseMessage{}
 
 	if err != nil {
 		result.Code = utils.ResponseCodeFailed
-		result.Data = fmt.Errorf("Request AgentId %s monitor info error %s", agentId, err)
+		result.Data = fmt.Sprintf("Request AgentId [%s] monitor info error: %s", agentId, err)
 		logger.Error("Request AgentId %s monitor info error %s", agentId, err)
 
 	} else {
@@ -74,6 +74,7 @@ func (this *OpsMonitorRestController) Get() {
 }
 
 func (this *OpsMonitorController) CheckAgentId(agentId string) string {
+	//TODO 验证AgentId是否合法，不合法则返回""
 	return agentId
 }
 
