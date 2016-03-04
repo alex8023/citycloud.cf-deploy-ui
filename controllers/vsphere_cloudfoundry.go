@@ -385,3 +385,78 @@ var (
 
 	vcf = entity.VsphereCloudFoundry{}
 )
+
+type VsphereResourceController struct {
+	BaseController
+}
+
+func (this *VsphereResourceController) Get() {
+	action := this.GetString("action")
+	this.Layout = "index.tpl"
+	this.Data["NavBarFocus"] = "cloudfoundry"
+	this.Data["IaaSVersion"] = iaasVersion
+	this.Data["DefaultVersion"] = defaultVersion
+
+	switch action {
+	case "", "list":
+		vsphereResources, _ = entity.LoadVsphereResource(vsphereResources)
+		this.Data["VsphereResource"] = vsphereResources
+		this.TplNames = "cloudfoundry/vsphere/config_vsphereflavor.tpl"
+	case "detail":
+		id, err := this.GetInt64("id", 0)
+		_vsphereResource := entity.VsphereResource{}
+		if err == nil {
+			_vsphereResource.Id = id
+			err = _vsphereResource.Load()
+			if err == nil {
+				this.Data["json"] = &_vsphereResource
+				this.ServeJson()
+			}
+		}
+	}
+}
+
+func (this *VsphereResourceController) Post() {
+	action := this.GetString("action")
+	switch action {
+	case "save":
+		_vsphereResource := entity.VsphereResource{}
+
+		id, _ := this.GetInt64("id", 0)
+
+		_vsphereResource.Cpu = this.GetString("cpu")
+		_vsphereResource.Disk = this.GetString("disk")
+		_vsphereResource.Ram = this.GetString("ram")
+		_vsphereResource.PersistentDisk = this.GetString("persistentDisk")
+
+		if id != 0 {
+			_vsphereResource.Id = id
+			err := _vsphereResource.Update()
+			if err != nil {
+				this.Data["MessageErr"] = fmt.Sprintf("%s", err)
+			}
+		} else {
+			err := _vsphereResource.Save()
+			if err != nil {
+				this.Data["MessageErr"] = fmt.Sprintf("%s", err)
+			}
+		}
+	case "delete":
+		id, err := this.GetInt64("id", 0)
+		_vsphereResource := entity.VsphereResource{}
+		if err == nil && id != 0 {
+			_vsphereResource.Id = id
+			err = _vsphereResource.Delete()
+			if err != nil {
+				this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", err)
+			}
+		}
+		if err != nil {
+			this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", err)
+		}
+	default:
+		this.Data["MessageErr"] = fmt.Sprintf("Unknow action %s", action)
+	}
+
+	this.Redirect("vsphereresource", 301)
+}

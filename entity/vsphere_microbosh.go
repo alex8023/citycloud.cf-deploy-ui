@@ -142,6 +142,22 @@ func (vsphereResource *VsphereResource) Update() error {
 	return err
 }
 
+func (vsphereResource *VsphereResource) Save() error {
+	_, err := orm.NewOrm().Insert(vsphereResource)
+	if err != nil {
+		logger.Error("Insert VsphereResource error : %s", err)
+	}
+	return err
+}
+
+func (vsphereResource *VsphereResource) Delete() error {
+	_, err := orm.NewOrm().Delete(vsphereResource)
+	if err != nil {
+		logger.Error("Delete VsphereResource error %s ", err)
+	}
+	return err
+}
+
 type VsphereVcenter struct {
 	Id             int64
 	UserName       string

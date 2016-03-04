@@ -27,6 +27,23 @@ $ go get github.com/onsi/gomega
 # for more information [ginkgo](http://onsi.github.io/ginkgo/)
 ```
 
+### attention(important!)
+
+beego 目前使用1.5.0
+go get安装完成后，需要检出v1.5.0重新编译安装beego，v1.6.0 缺失AppPath参数，影响应用编译。
+
+```
+$ cd $GOPATH/src/github.com/astaxie/beego
+$ git checkout v1.5.0
+$ go build 
+$ go install
+
+$ bee version
+bee   :1.4.1
+beego :1.5.0
+Go    :go version go1.4.2 linux/amd64
+```
+
 ## init workdir and checkout dev
 
 ```

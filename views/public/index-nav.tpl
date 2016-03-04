@@ -15,7 +15,7 @@
 				<li id = "cloudfoundry"><a href="vspherecloudfoundry">PaaS {{i18n $.Lang "Deploy"}}</a></li>
 				{{end}}
 				<li id = "templates"><a href="templates">{{i18n $.Lang "CustomService"}}</a></li>
-				<li id = "ops"><a href="index?action=ops">PaaS {{i18n $.Lang "Operations"}}</a></li>
+				<li id = "ops"><a href="ops">PaaS {{i18n $.Lang "Operations"}}</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 			  	<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> {{i18n $.Lang "LogOut"}}</a></li>

@@ -36,6 +36,7 @@ const (
 	ResourcesPools         = "ResourcesPools"
 	CloudFoundryJobs       = "CloudFoundryJobs"
 	Properties             = "Properties"
+	VsphereFlavor          = "vSphereFlavor"
 )
 
 //部署类型 PaaS 部署在cci-paas云上，Vms 部署在虚拟机上
@@ -56,4 +57,15 @@ const (
 	Service_Start   = "START"
 	Service_Stop    = "STOP"
 	Service_Restart = "RESTART"
+)
+
+//监控滚动保存的数量
+const (
+	Monitor_Agent_Size = 20
+)
+
+//response error code
+const (
+	ResponseCodeSuccess = "200"
+	ResponseCodeFailed  = "400"
 )

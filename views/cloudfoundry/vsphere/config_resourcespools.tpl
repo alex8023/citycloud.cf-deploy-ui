@@ -47,7 +47,7 @@
 							    <div class="col-sm-7">
 							    	<select class="form-control" id="compilation_flavor_pool" name="vid" >
 									{{$vsphereResourcePoolId := .Id}}
-									{{range $.VsphereResource}}<option id="compilation_flavor_pool_{{$vsphereResourcePoolId}}_{{.Id}}" value="{{.Id}}">Ram({{.Ram}}M)-CPU({{.Cpu}})-Disk({{.Disk}}M)</option>{{end}}
+									{{range $.VsphereResource}}<option id="compilation_flavor_pool_{{$vsphereResourcePoolId}}_{{.Id}}" value="{{.Id}}">{{i18n $.Lang "Ram"}}({{.Ram}}M)-{{i18n $.Lang "Cpu"}}({{.Cpu}})-{{i18n $.Lang "Disk"}}({{.Disk}}M)</option>{{end}}
 									</select>
 									<script type="text/javascript">
 									$("#compilation_flavor_pool_{{.Id}}_{{.Vid}}").attr("selected",true);  

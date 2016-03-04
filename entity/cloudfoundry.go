@@ -372,7 +372,6 @@ func UpdateResourcePools(resourcesPools []ResourcesPools) ([]ResourcesPools, err
 }
 
 func (cloudFoundryJobs *CloudFoundryJobs) Load() error {
-	logger.Debug(" before load jobs %s", cloudFoundryJobs)
 	errors := orm.NewOrm().Read(cloudFoundryJobs, "JobName")
 	if errors == nil {
 		cloudFoundryJobs.StaticIp = strings.Split(cloudFoundryJobs.StaticIps, ",")
@@ -389,7 +388,6 @@ func (cloudFoundryJobs *CloudFoundryJobs) Load() error {
 }
 
 func (cloudFoundryJobs *CloudFoundryJobs) Update() error {
-	logger.Debug(" before update jobs %s", cloudFoundryJobs)
 	cloudFoundryJobs.StaticIps = strings.Join(cloudFoundryJobs.StaticIp, ",")
 	_, err := orm.NewOrm().Update(cloudFoundryJobs)
 	if err != nil {

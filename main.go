@@ -11,7 +11,7 @@ import (
 
 func main() {
 	beego.Run()
-	//	initDB()
+	//initDB()
 
 }
 

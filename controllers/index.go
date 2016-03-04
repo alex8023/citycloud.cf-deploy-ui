@@ -11,7 +11,7 @@ type IndexController struct {
 func (this *IndexController) Get() {
 	action := this.GetString("action")
 	this.Data["IaaSVersion"] = iaasVersion
-	this.Data["DefaultVersion"] = vsphereVersion
+	this.Data["DefaultVersion"] = defaultVersion
 	if action == "home" || action == "" {
 		this.Data["NavBarFocus"] = "home"
 		this.TplNames = "home/home.tpl"
