@@ -63,3 +63,9 @@ const (
 const (
 	Monitor_Agent_Size = 20
 )
+
+//response error code
+const (
+	ResponseCodeSuccess = "200"
+	ResponseCodeFailed  = "400"
+)

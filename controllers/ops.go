@@ -3,12 +3,10 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	_ "fmt"
-	_ "github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
+	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
-	_ "io"
-	_ "os"
+	"strings"
 	"time"
 )
 
@@ -17,6 +15,10 @@ type OpsController struct {
 }
 
 type OpsMonitorController struct {
+	BaseController
+}
+
+type OpsMonitorRestController struct {
 	BaseController
 }
 
@@ -43,6 +45,32 @@ func (this *OpsMonitorController) Get() {
 	this.Data["AgentId"] = agentId
 
 	this.TplNames = "ops/index_monitor.tpl"
+}
+
+func (this *OpsMonitorRestController) Get() {
+	agentId := this.GetString("agent_id")
+	natsServerIp := mi.NetWork.Vip
+	if iaasVersion == vsphereVersion {
+		natsServerIp = vsphereMicro.VsphereNetWork.Ip
+	}
+	natsServerIp = strings.Trim(natsServerIp, " ")
+
+	//TODO 暂时直接从nats请求信息，需要持久话请求到的健康信息和负载信息
+	monitorStr, err := utils.GetMonitor(natsServerIp, agentId, time.Duration(2))
+
+	result := entity.ResponseMessage{}
+
+	if err != nil {
+		result.Code = utils.ResponseCodeFailed
+		result.Data = fmt.Errorf("Request AgentId %s monitor info error %s", agentId, err)
+		logger.Error("Request AgentId %s monitor info error %s", agentId, err)
+
+	} else {
+		result.Code = utils.ResponseCodeSuccess
+		result.Data = monitorStr
+	}
+	this.Data["json"] = &result
+	this.ServeJson(false)
 }
 
 func (this *OpsMonitorController) CheckAgentId(agentId string) string {
