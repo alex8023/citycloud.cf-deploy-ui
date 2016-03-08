@@ -49,7 +49,8 @@ $(document).ready(function(){
 				}
 			},
 			error:function(data){
-				$("#warning-block").attr("class","alert alert-danger alert-dismissible")
+				$("#warning-block-request").attr("class","alert alert-danger alert-dismissible")
+				$("#warning-block-request-message").html("Request Err")
 			}
 		});
 	}

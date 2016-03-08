@@ -41,6 +41,14 @@ func (monitor *Monitor) Load() error {
 	return err
 }
 
+func (monitor *Monitor) LoadByAgentId() error {
+	err := orm.NewOrm().QueryTable(new(Monitor)).Filter("AgentId", monitor.AgentId).OrderBy("Updated").Limit(1).One(monitor)
+	if err != nil {
+		logger.Error("Read Monitor error : %s", err)
+	}
+	return err
+}
+
 func (monitor *Monitor) Save() error {
 	_, err := orm.NewOrm().Insert(monitor)
 	if err != nil {

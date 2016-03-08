@@ -9,11 +9,24 @@
 				$('#warning-block').attr("class","alert alert-warning alert-dismissible")
 			}
 		</script>
+		<div class="alert alert-warning alert-dismissible hide" role="alert" id = "warning-block-agenterr">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">x</button>
+			<strong>Warning!</strong> {{.AgentError}}
+		</div>
+		<input type="hidden" id="hidden-message-agent" value="{{.AgentError}}">
+		<script type="text/javascript">
+			if ($('#hidden-message-agent').val()!=""){
+				$('#warning-block-agenterr').attr("class","alert alert-warning alert-dismissible")
+			}
+		</script>
 		<div class="panel panel-default">
 			<div class="panel-heading" >
 				<h2 class="panel-title">PaaS {{i18n $.Lang "Ops"}}</h2>
 			</div>
 			<div class="panel-body">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" class="btn btn-default" data-toggle="modal" data-target="#config-agent" data-whatever="add"><span class="glyphicon glyphicon-plus"></span> {{i18n $.Lang "Add Agent"}}</button>
+				</div>
 			 	<table class="table table-responsive ">
 					<thead>
 						<tr>
@@ -34,8 +47,8 @@
 								<td>{{$monitor.Index}}</td>
 								<td>{{$monitor.JobState}}</td>
 								<td>
-								<button type="button" class="btn btn-default" data-toggle="modal" data-target="#config-custom-template" data-whatever="{{$monitor.AgentId}}" title = "{{i18n $.Lang "Edit"}}"><span class="glyphicon glyphicon-edit"></span> </button>
-								<a class="btn btn-default"  href="opsmonitor?agent_id={{$monitor.AgentId}}" title = "{{i18n $.Lang "Config"}}" role="button"><span class="glyphicon glyphicon-edit" ></span> </a>
+								<button type="button" class="btn btn-default" data-toggle="modal" data-target="#config-agent" data-whatever="{{$monitor.AgentId}}" title = "{{i18n $.Lang "Edit"}}"><span class="glyphicon glyphicon-edit"></span> </button>
+								<a class="btn btn-default"  href="opsmonitor?agent_id={{$monitor.AgentId}}" title = "{{i18n $.Lang "Stats"}}" role="button"><span class="glyphicon glyphicon-stats" ></span> </a>
 								<button type="button" class="btn btn-default" data-toggle="modal" data-target="#delete-custom-template" data-whatever="{{$monitor.AgentId}}" title = "{{i18n $.Lang "Delete"}}"><span class="glyphicon glyphicon-remove" ></span> </button>
 								</td>
 								</tr>
@@ -47,7 +60,7 @@
 							<td>0</td>
 							<td>Unknow</td>
 							<td>
-							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#config-custom-template" data-whatever="{{$jobName}}" title = "{{i18n $.Lang "Edit"}}"><span class="glyphicon glyphicon-edit"></span> </button>
+							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#config-agent" data-whatever="add" title = "{{i18n $.Lang "Edit"}}"><span class="glyphicon glyphicon-edit"></span> </button>
 							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#delete-custom-template" data-whatever="{{$jobName}}" title = "{{i18n $.Lang "Delete"}}"><span class="glyphicon glyphicon-remove" ></span> </button>
 							</td>
 							</tr>
@@ -58,3 +71,31 @@
 				</table>
 			</div>
 	</div>
+	
+<div class="modal fade" id="config-agent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+ 	<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+      		<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        			<h4 class="modal-title" id="myModalLabel" title-add = "{{i18n $.Lang "Add Agent"}}" title-update = "{{i18n $.Lang "Update Agent"}}" >{{i18n $.Lang "Add Agent"}}</h4>
+      		</div>
+			<form class="form-horizontal" method="post" action="ops" enctype="multipart/form-data">
+    			<div class="modal-body">
+					<div class="form-horizontal">
+			  			<div class="panel-body">
+				    		<label for="ops_agent_id" class="col-sm-3 control-label">{{i18n $.Lang "Agent"}}</label>
+					      	<div class="col-sm-9">
+								<input type="text" class="form-control" id="ops_agent_id" placeholder="{{i18n $.Lang "Agent"}}" name="agent_id"  >
+				  			</div>
+						</div>
+					</div>
+      			</div>
+		      	<div class="modal-footer">
+		        		<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> {{i18n $.Lang "Close"}}</button>
+		        		<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span>  {{i18n $.Lang "Save"}}</button>
+		      	</div>
+			</form>
+    		</div>
+  	</div>
+</div>
+<script src="/static/js/ops.js"></script>

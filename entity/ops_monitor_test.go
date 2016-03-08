@@ -150,13 +150,20 @@ var _ = Describe("Testing OpsMonitor CRUD", func() {
 		monitor.JobName = nats.Value.Job.Name
 		monitor.JobState = nats.Value.JobState
 		monitor.Value = result
-		monitor.Save()
-		monitor.Delete()
+
+		errors := monitor.Save()
+
+		Expect(errors).NotTo(HaveOccurred())
+
+		errors = monitor.Delete()
+
+		Expect(errors).NotTo(HaveOccurred())
 	})
 
 	It("Testing Load OpsMonitor", func() {
 		sq, err := orm.NewOrm().Raw("insert into monitor (updated) values(?)", time.Now()).Exec()
 		Expect(err).NotTo(HaveOccurred())
+
 		id, _ := sq.LastInsertId()
 		sq, err = orm.NewOrm().Raw("delete from monitor where id = ?", id).Exec()
 		Expect(err).NotTo(HaveOccurred())
