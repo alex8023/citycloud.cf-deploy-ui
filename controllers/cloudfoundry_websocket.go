@@ -138,7 +138,7 @@ func (this *CloudFoundryWebSocketController) statsCloudFoundry(ws *websocket.Con
 	writeStringMessage(ws, "============================================")
 	writeStringMessage(ws, "Status PaaS Instances")
 	var out bytes.Buffer
-	cmdCommand := utils.Command{Name: "bosh", Args: []string{"vms"}, Dir: workDir, Stdin: ""}
+	cmdCommand := utils.Command{Name: "bosh", Args: []string{"vms", cf.CloudFoundryProperties.Name, "--details"}, Dir: workDir, Stdin: ""}
 	cmdRunner := utils.NewDeployCmdRunner()
 	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
