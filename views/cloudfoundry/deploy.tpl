@@ -24,6 +24,7 @@
 						<button class="btn btn-default " id = "upload-release" data-toggle="tooltip" data-placement="right" ><span class="glyphicon glyphicon-upload"></span> {{i18n $.Lang "UpLoad-Release"}}</button>
 						<button class="btn btn-default " id = "upload-stemcell" data-toggle="tooltip" data-placement="right"><span class="glyphicon glyphicon-upload"></span> {{i18n $.Lang "UpLoad-Stemcell"}}</button>
 						<button class="btn btn-default " id = "deploy-cloudfoundry" data-toggle="tooltip" data-placement="right" ><span class="glyphicon glyphicon-cog"></span> {{i18n $.Lang "Deploy"}}</button>
+						<button class="btn btn-default " id = "stats-cloudfoundry" data-toggle="tooltip" data-placement="right" ><span class="glyphicon glyphicon-stats"></span> {{i18n $.Lang "Status"}}</button>
 						<!--<button class="btn btn-default " id = "login-cloudfoundry" data-toggle="tooltip" data-placement="right" ><span class="glyphicon glyphicon-log-in"></span> {{i18n $.Lang "LoginPaaS"}}</button>-->
 					</div>
 					<div class="btn-group btn-group" role="group">
