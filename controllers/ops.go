@@ -238,7 +238,11 @@ func (this *OpsController) LoadJobMonitor() map[string]entity.JobMonitorStruct {
 
 func saveOrUpdateMonitor(result string) error {
 	var nats entity.NatsResult
-	json.Unmarshal([]byte(result), &nats)
+	err := json.Unmarshal([]byte(result), &nats)
+
+	if err != nil {
+		return err
+	}
 
 	monitor := entity.Monitor{}
 	monitor.AgentId = nats.Value.AgentId
@@ -247,7 +251,9 @@ func saveOrUpdateMonitor(result string) error {
 	monitor.JobState = nats.Value.JobState
 	monitor.Updated = time.Now()
 	monitor.Value = result
-	return monitor.SaveOrUpdate()
+
+	err = monitor.SaveOrUpdate()
+	return err
 }
 
 func getMonitorByAgentId(agentId string) (string, error) {
