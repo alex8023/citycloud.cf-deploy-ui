@@ -41,6 +41,10 @@ $(document).ready(function(){
 		SendMessage("Deploy");
 	})
 	
+	$('#stats-cloudfoundry').on('click',function(){
+		SendMessage("Stats");
+	})
+	
 	$('#login-cloudfoundry').on('click',function(){
 		SendMessage("Login");
 	})

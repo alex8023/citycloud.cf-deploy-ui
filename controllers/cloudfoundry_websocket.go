@@ -85,6 +85,12 @@ func (this *CloudFoundryWebSocketController) Get() {
 				if !success {
 					writeStringMessage(ws, "部署PaaS实例出现了错误！")
 				}
+			case action == "Stats":
+				var success bool = false
+				success = this.statsCloudFoundry(ws)
+				if !success {
+					writeStringMessage(ws, "获取PaaS实例信息出现了错误！")
+				}
 			default:
 				writeStringMessage(ws, fmt.Sprintf("未知的执行命令！%s", action))
 			}
@@ -115,14 +121,29 @@ func (this *CloudFoundryWebSocketController) setCloudFoundryDeployment(ws *webso
 //deploy CloudFoundry
 func (this *CloudFoundryWebSocketController) deployCloudFoundry(ws *websocket.Conn) bool {
 	writeStringMessage(ws, "============================================")
-	writeStringMessage(ws, "Deploying PaaS instances")
+	writeStringMessage(ws, "Deploying PaaS Instances")
 	var out bytes.Buffer
 	cmdCommand := utils.Command{Name: "bosh", Args: []string{"deploy"}, Dir: workDir, Stdin: "yes"}
 	cmdRunner := utils.NewDeployCmdRunner()
 	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
 	writeBytesBufferMessage(&out, &cmdRunner, ws)
 
-	writeStringMessage(ws, "Finished PaaS CloudFoundry instances")
+	writeStringMessage(ws, "Finished PaaS CloudFoundry Instances")
+	writeStringMessage(ws, "============================================")
+	return cmdRunner.Success()
+}
+
+//bosh vms
+func (this *CloudFoundryWebSocketController) statsCloudFoundry(ws *websocket.Conn) bool {
+	writeStringMessage(ws, "============================================")
+	writeStringMessage(ws, "Status PaaS Instances")
+	var out bytes.Buffer
+	cmdCommand := utils.Command{Name: "bosh", Args: []string{"vms"}, Dir: workDir, Stdin: ""}
+	cmdRunner := utils.NewDeployCmdRunner()
+	cmdRunner.RunCommandAsyncCmd(cmdCommand, &out)
+	writeBytesBufferMessage(&out, &cmdRunner, ws)
+
+	writeStringMessage(ws, "Finished Status PaaS CloudFoundry Instances")
 	writeStringMessage(ws, "============================================")
 	return cmdRunner.Success()
 }
