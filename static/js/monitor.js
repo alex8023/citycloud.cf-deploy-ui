@@ -20,7 +20,8 @@ $(document).ready(function(){
 		RequestByAgentId();
 	},5000);
 	
-	initHighchart();
+	setTimeout(function(){initHighchart()},5000);
+//	initHighchart();
 	//执行结束
 	
 	//获取健康数据请求
@@ -38,14 +39,15 @@ $(document).ready(function(){
 					mem_kb = _vitals.mem.kb;
 					disk_persistent_per = _vitals.disk.persistent.percent;
 					disk_system_per =_vitals.disk.system.percent;
-					load1 = _vitals.load[0]
-					load5 = _vitals.load[0]
-					load15 = _vitals.load[0]
+					load1 = _vitals.load[0];
+					load5 = _vitals.load[0];
+					load15 = _vitals.load[0];
 				}else{
-					resetResult()
-					$("#warning-block-request").attr("class","alert alert-danger alert-dismissible")
-					$("#warning-block-request-message").html(data.Data)
-					clearInterval(interval)
+					resetResult();
+					$("#warning-block-request").attr("class","alert alert-danger alert-dismissible");
+					$("#warning-block-request-message").html(data.Data);
+					clearInterval(interval);
+					
 				}
 			},
 			error:function(data){
@@ -56,10 +58,25 @@ $(document).ready(function(){
 	}
 		
 	function resetResult(){
-		sys_cpu = user_cpu = "0.0";
+		sys_cpu = "0.0";
+		user_cpu = "0.0";
 		mem_kb = "0";
-		disk_persistent_per = disk_system_per = "0";
-		load1 =load5 = load15 = "0.00";
+		disk_persistent_per ="0"; 
+		disk_system_per = "0";
+		load1 ="0.00";
+		load5 ="0.00"; 
+		load15 = "0.00";
+	}
+	
+	function demoResult(){
+		sys_cpu = Math.random()+"";
+		user_cpu = Math.random()+"";
+		mem_kb = Math.random()*1000000+"";
+		disk_persistent_per = Math.random()*100+"";
+		disk_system_per = Math.random()*100+"";
+		load1 =Math.random()*2+"";
+		load5 = Math.random()*2+"";
+		load15 = Math.random()*2+"";
 	}
 	//初始化图表，并开始加载数据
 	function initHighchart(){
