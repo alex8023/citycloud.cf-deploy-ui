@@ -11,4 +11,11 @@ $(document).ready(function(){
   		modal.find('.modal-title').text(modal.find('.modal-title').attr('title-update'))
 		modal.find('.modal-body #ops_agent_id').val(agent_id);
 	})
+	
+	$("#delete-agent").on('show.bs.modal', function (event) {
+  		var button = $(event.relatedTarget);
+  		var agentId = button.data('whatever');
+		var modal = $(this)
+		modal.find('.modal-body #deleteAgentId').val(agentId);
+	})
 });

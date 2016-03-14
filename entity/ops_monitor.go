@@ -64,8 +64,17 @@ func (monitor *Monitor) Update() error {
 	}
 	return err
 }
+
 func (monitor *Monitor) Delete() error {
 	_, err := orm.NewOrm().Delete(monitor)
+	if err != nil {
+		logger.Error("Delete Monitor error %s ", err)
+	}
+	return err
+}
+
+func (monitor *Monitor) DeleteByAgentId() error {
+	_, err := orm.NewOrm().QueryTable(new(Monitor)).Filter("AgentId", monitor.AgentId).Delete()
 	if err != nil {
 		logger.Error("Delete Monitor error %s ", err)
 	}

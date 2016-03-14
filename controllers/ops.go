@@ -34,14 +34,26 @@ func (this *OpsController) Get() {
 
 func (this *OpsController) Post() {
 	agentId := this.GetString("agent_id")
-	monitorStr, err := getMonitorByAgentId(agentId)
-	if err != nil {
-		this.Data["AgentError"] = fmt.Sprintf("Request AgentId [%s] monitor info error: %s", agentId, err)
-		logger.Error("Request AgentId [%s] monitor info error: %s", agentId, err)
-	} else {
-		err = saveOrUpdateMonitor(monitorStr)
-		this.Data["AgentError"] = fmt.Sprintf("Save error: %s", err)
-		logger.Error("saveOrUpdateMonitor monitorStr [%s] Error %s", monitorStr, err)
+	action := this.GetString("action")
+
+	switch action {
+	case "":
+		monitorStr, err := getMonitorByAgentId(agentId)
+		if err != nil {
+			this.Data["AgentError"] = fmt.Sprintf("Request AgentId [%s] monitor info error: %s", agentId, err)
+			logger.Error("Request AgentId [%s] monitor info error: %s", agentId, err)
+		} else {
+			err = saveOrUpdateMonitor(monitorStr)
+			this.Data["AgentError"] = fmt.Sprintf("Save error: %s", err)
+			logger.Error("saveOrUpdateMonitor monitorStr [%s] Error %s", monitorStr, err)
+		}
+	case "delete":
+		monitor := entity.Monitor{}
+		monitor.AgentId = agentId
+		err := monitor.DeleteByAgentId()
+		if err != nil {
+			this.Data["AgentError"] = fmt.Sprintf("Delete Monitor error %s", err)
+		}
 	}
 
 	this.Get()
