@@ -49,7 +49,7 @@
 								<td>
 								<button type="button" class="btn btn-default" data-toggle="modal" data-target="#config-agent" data-whatever="{{$monitor.AgentId}}" title = "{{i18n $.Lang "Edit"}}"><span class="glyphicon glyphicon-edit"></span> </button>
 								<a class="btn btn-default"  href="opsmonitor?agent_id={{$monitor.AgentId}}" title = "{{i18n $.Lang "Stats"}}" role="button"><span class="glyphicon glyphicon-stats" ></span> </a>
-								<button type="button" class="btn btn-default" data-toggle="modal" data-target="#delete-custom-template" data-whatever="{{$monitor.AgentId}}" title = "{{i18n $.Lang "Delete"}}"><span class="glyphicon glyphicon-remove" ></span> </button>
+								<button type="button" class="btn btn-default" data-toggle="modal" data-target="#delete-agent" data-whatever="{{$monitor.AgentId}}" title = "{{i18n $.Lang "Delete"}}"><span class="glyphicon glyphicon-remove" ></span> </button>
 								</td>
 								</tr>
 							{{end}}
@@ -61,7 +61,6 @@
 							<td>Unknow</td>
 							<td>
 							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#config-agent" data-whatever="add" title = "{{i18n $.Lang "Edit"}}"><span class="glyphicon glyphicon-edit"></span> </button>
-							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#delete-custom-template" data-whatever="{{$jobName}}" title = "{{i18n $.Lang "Delete"}}"><span class="glyphicon glyphicon-remove" ></span> </button>
 							</td>
 							</tr>
 						{{end}}
@@ -71,7 +70,7 @@
 				</table>
 			</div>
 	</div>
-	
+<!--config-agent-->
 <div class="modal fade" id="config-agent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
  	<div class="modal-dialog" role="document">
     		<div class="modal-content">
@@ -98,4 +97,33 @@
     		</div>
   	</div>
 </div>
+<!--config-agent-->
+<!--delete-agent-->
+<div class="modal fade" id="delete-agent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+ 	<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+      		<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        			<h4 class="modal-title" id="myModalLabel1">{{i18n $.Lang "Delete Agent"}}</h4>
+      		</div>
+			<form class="form-horizontal" method="post" action="ops" enctype="multipart/form-data">
+    				<div class="modal-body">
+					<div class="form-horizontal">
+			  			<div class="panel-body">
+				  			<input type="hidden" name = "agent_id" id = "deleteAgentId">
+							<input type="hidden" name = "action" value="delete">
+							{{i18n $.Lang "Delete this Agent"}} ?
+						</div>
+					</div>
+      			</div>
+		      	<div class="modal-footer">
+		        		<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> {{i18n $.Lang "Close"}}</button>
+		        		<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span>  {{i18n $.Lang "Delete"}}</button>
+		      	</div>
+			</form>
+    		</div>
+  	</div>
+</div>
+<!--delete-agent-->
+
 <script src="/static/js/ops.js"></script>
