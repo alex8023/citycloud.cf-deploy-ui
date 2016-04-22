@@ -16,27 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `job_properties`
+-- Table structure for table `on_custom`
 --
 
-DROP TABLE IF EXISTS `job_properties`;
+DROP TABLE IF EXISTS `on_custom`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `job_properties` (
-  `name` varchar(255) NOT NULL,
-  `value` varchar(2048) NOT NULL DEFAULT '',
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `on_custom` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `sid` bigint(20) NOT NULL DEFAULT '0',
+  `ip` varchar(255) NOT NULL DEFAULT '',
+  `user` varchar(255) NOT NULL DEFAULT '',
+  `passwd` varchar(255) NOT NULL DEFAULT '',
+  `private_key` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `job_properties`
+-- Dumping data for table `on_custom`
 --
 
-LOCK TABLES `job_properties` WRITE;
-/*!40000 ALTER TABLE `job_properties` DISABLE KEYS */;
-INSERT INTO `job_properties` VALUES ('cc_quota_definitions_memory_limit','524288'),('cc_quota_definitions_total_services','1000');
-/*!40000 ALTER TABLE `job_properties` ENABLE KEYS */;
+LOCK TABLES `on_custom` WRITE;
+/*!40000 ALTER TABLE `on_custom` DISABLE KEYS */;
+INSERT INTO `on_custom` VALUES (2,7,'10.162.2.146','root','4rfv%TGB',''),(3,9,'10.162.2.146','root','4rfv%TGB',''),(4,10,'10.162.2.147','root','4rfv%TGB',''),(5,11,'10.162.2.147','root','4rfv%TGB',''),(6,12,'10.162.2.146','root','4rfv%TGB','');
+/*!40000 ALTER TABLE `on_custom` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

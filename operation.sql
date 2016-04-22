@@ -16,27 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `job_properties`
+-- Table structure for table `operation`
 --
 
-DROP TABLE IF EXISTS `job_properties`;
+DROP TABLE IF EXISTS `operation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `job_properties` (
-  `name` varchar(255) NOT NULL,
-  `value` varchar(2048) NOT NULL DEFAULT '',
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `operation` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `start` varchar(255) NOT NULL DEFAULT '',
+  `restart` varchar(255) NOT NULL DEFAULT '',
+  `stop` varchar(255) NOT NULL DEFAULT '',
+  `sid` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `job_properties`
+-- Dumping data for table `operation`
 --
 
-LOCK TABLES `job_properties` WRITE;
-/*!40000 ALTER TABLE `job_properties` DISABLE KEYS */;
-INSERT INTO `job_properties` VALUES ('cc_quota_definitions_memory_limit','524288'),('cc_quota_definitions_total_services','1000');
-/*!40000 ALTER TABLE `job_properties` ENABLE KEYS */;
+LOCK TABLES `operation` WRITE;
+/*!40000 ALTER TABLE `operation` DISABLE KEYS */;
+INSERT INTO `operation` VALUES (2,'~/cfdemo-start.sh','~/cfdemo-restart.sh','~/cfdemo-stop.sh',7),(3,'~/cfweb-start.sh','~/cfweb-restart.sh','~/cfweb-stop.sh',9),(4,'~/es_start.sh > ~/es_log.log 2>&1 &','~/es_restart.sh > ~/es_log.log 2>&1 &','~/es_stop.sh > ~/es_log.log 2>&1 &',10),(5,'~/lognode_start.sh >> ~/lognode_log.log 2>&1 &','~/lognode_restart.sh >> ~/lognode_log.log 2>&1 &','~/lognode_stop.sh >> ~/lognode_log.log 2>&1 &',11),(6,'~/mysql_env.sh','echo \"hello\"','echo \"hello\"',12);
+/*!40000 ALTER TABLE `operation` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -16,27 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `job_properties`
+-- Table structure for table `on_paas`
 --
 
-DROP TABLE IF EXISTS `job_properties`;
+DROP TABLE IF EXISTS `on_paas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `job_properties` (
-  `name` varchar(255) NOT NULL,
-  `value` varchar(2048) NOT NULL DEFAULT '',
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `on_paas` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `sid` bigint(20) NOT NULL DEFAULT '0',
+  `api` varchar(255) NOT NULL DEFAULT '',
+  `user` varchar(255) NOT NULL DEFAULT '',
+  `passwd` varchar(255) NOT NULL DEFAULT '',
+  `org` varchar(255) NOT NULL DEFAULT '',
+  `space` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `job_properties`
+-- Dumping data for table `on_paas`
 --
 
-LOCK TABLES `job_properties` WRITE;
-/*!40000 ALTER TABLE `job_properties` DISABLE KEYS */;
-INSERT INTO `job_properties` VALUES ('cc_quota_definitions_memory_limit','524288'),('cc_quota_definitions_total_services','1000');
-/*!40000 ALTER TABLE `job_properties` ENABLE KEYS */;
+LOCK TABLES `on_paas` WRITE;
+/*!40000 ALTER TABLE `on_paas` DISABLE KEYS */;
+INSERT INTO `on_paas` VALUES (1,8,'api.ccipaas.com','admin','admin','ccidev','dev'),(2,13,'api.ccipaas.com','admin','admin','ccidev','dev');
+/*!40000 ALTER TABLE `on_paas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
