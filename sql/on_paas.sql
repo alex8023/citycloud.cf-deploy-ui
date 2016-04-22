@@ -16,29 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `service`
+-- Table structure for table `on_paas`
 --
 
-DROP TABLE IF EXISTS `service`;
+DROP TABLE IF EXISTS `on_paas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `service` (
+CREATE TABLE `on_paas` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `description` varchar(255) NOT NULL DEFAULT '',
-  `where` varchar(255) NOT NULL DEFAULT '',
+  `sid` bigint(20) NOT NULL DEFAULT '0',
+  `api` varchar(255) NOT NULL DEFAULT '',
+  `user` varchar(255) NOT NULL DEFAULT '',
+  `passwd` varchar(255) NOT NULL DEFAULT '',
+  `org` varchar(255) NOT NULL DEFAULT '',
+  `space` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `service`
+-- Dumping data for table `on_paas`
 --
 
-LOCK TABLES `service` WRITE;
-/*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (7,'cfdemo','cfdemo','Vms'),(8,'example','example app service','PaaS'),(9,'cfWeb','PaaS管理程序cfWeb','Vms'),(10,'es','PaaS-es日志分析程序','Vms'),(11,'lognode','PaaS-日志节点','Vms'),(12,'mysql','cfWeb数据存储服务','Vms'),(13,'cf-mysql-service-broker','PaaS提供的mysql存储服务','PaaS');
-/*!40000 ALTER TABLE `service` ENABLE KEYS */;
+LOCK TABLES `on_paas` WRITE;
+/*!40000 ALTER TABLE `on_paas` DISABLE KEYS */;
+INSERT INTO `on_paas` VALUES (1,8,'api.ccipaas.com','admin','admin','ccidev','dev'),(2,13,'api.ccipaas.com','admin','admin','ccidev','dev');
+/*!40000 ALTER TABLE `on_paas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-22 17:13:35
+-- Dump completed on 2016-04-22 17:29:39

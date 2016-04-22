@@ -16,32 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `on_paas`
+-- Table structure for table `on_custom`
 --
 
-DROP TABLE IF EXISTS `on_paas`;
+DROP TABLE IF EXISTS `on_custom`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `on_paas` (
+CREATE TABLE `on_custom` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `sid` bigint(20) NOT NULL DEFAULT '0',
-  `api` varchar(255) NOT NULL DEFAULT '',
+  `ip` varchar(255) NOT NULL DEFAULT '',
   `user` varchar(255) NOT NULL DEFAULT '',
   `passwd` varchar(255) NOT NULL DEFAULT '',
-  `org` varchar(255) NOT NULL DEFAULT '',
-  `space` varchar(255) NOT NULL DEFAULT '',
+  `private_key` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `on_paas`
+-- Dumping data for table `on_custom`
 --
 
-LOCK TABLES `on_paas` WRITE;
-/*!40000 ALTER TABLE `on_paas` DISABLE KEYS */;
-INSERT INTO `on_paas` VALUES (1,8,'api.ccipaas.com','admin','admin','ccidev','dev'),(2,13,'api.ccipaas.com','admin','admin','ccidev','dev');
-/*!40000 ALTER TABLE `on_paas` ENABLE KEYS */;
+LOCK TABLES `on_custom` WRITE;
+/*!40000 ALTER TABLE `on_custom` DISABLE KEYS */;
+INSERT INTO `on_custom` VALUES (2,7,'10.162.2.146','root','4rfv%TGB',''),(3,9,'10.162.2.146','root','4rfv%TGB',''),(4,10,'10.162.2.147','root','4rfv%TGB',''),(5,11,'10.162.2.147','root','4rfv%TGB',''),(6,12,'10.162.2.146','root','4rfv%TGB','');
+/*!40000 ALTER TABLE `on_custom` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-22 17:13:35
+-- Dump completed on 2016-04-22 17:29:39
