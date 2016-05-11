@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"reflect"
 	"strconv"
@@ -197,22 +196,22 @@ func (this *CloudFoundryController) Post() {
 }
 
 func (this *CloudFoundryController) DeployCloudFoundry() {
-	logger.Debug("%s", "Deploy CloudFoundry")
+	beego.Debug("%s", "Deploy CloudFoundry")
 	this.LoadData()
 	this.Deploy()
 	this.Data["HOST"] = this.Ctx.Request.Host
 	this.Data["AppName"] = globaleAppName
 	this.Data["WebSocket"] = cloudfoundryWebsocket
-	this.TplNames = "cloudfoundry/deploy.tpl"
+	this.TplName = "cloudfoundry/deploy.tpl"
 }
 
 func (this *CloudFoundryController) IndexCloudFoundry() {
 	this.LoadData()
-	this.TplNames = "cloudfoundry/index.tpl"
+	this.TplName = "cloudfoundry/index.tpl"
 }
 
 func (this *CloudFoundryController) ConfigCloudFoundry() {
-	logger.Debug("%s", "Config CloudFoundry")
+	beego.Debug("%s", "Config CloudFoundry")
 	this.LoadData()
 	model := this.GetString("model")
 	if model == "" {
@@ -221,23 +220,23 @@ func (this *CloudFoundryController) ConfigCloudFoundry() {
 	this.Data["Model"] = model
 	switch model {
 	case utils.CloudFoundryProperties:
-		this.TplNames = "cloudfoundry/config_properties.tpl"
+		this.TplName = "cloudfoundry/config_properties.tpl"
 	case utils.NetWorks:
-		this.TplNames = "cloudfoundry/config_networks.tpl"
+		this.TplName = "cloudfoundry/config_networks.tpl"
 	case utils.Compilation:
-		this.TplNames = "cloudfoundry/config_compilation.tpl"
+		this.TplName = "cloudfoundry/config_compilation.tpl"
 	case utils.ResourcesPools:
 		this.Data["Pools"] = len(cf.ResourcesPools)
-		this.TplNames = "cloudfoundry/config_resourcespools.tpl"
+		this.TplName = "cloudfoundry/config_resourcespools.tpl"
 	case utils.CloudFoundryJobs:
-		this.TplNames = "cloudfoundry/config_jobs.tpl"
+		this.TplName = "cloudfoundry/config_jobs.tpl"
 	default:
 		this.IndexCloudFoundry()
 	}
 }
 
 func (this *CloudFoundryController) ConfigProperties() {
-	logger.Debug("%s", "Config CloudFoundry Properties")
+	beego.Debug("%s", "Config CloudFoundry Properties")
 	model := this.GetString("model")
 	if model == "" {
 		model = utils.Properties
@@ -246,7 +245,7 @@ func (this *CloudFoundryController) ConfigProperties() {
 	properties.Load()
 	cf.Properties = properties
 	this.Data["Properties"] = properties
-	this.TplNames = "cloudfoundry/config_more.tpl"
+	this.TplName = "cloudfoundry/config_more.tpl"
 }
 
 //read data from const or database

@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
+	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"os"
 	"strings"
@@ -17,12 +17,12 @@ func NewCloudFoundryTemplate(cloudfoundry CloudFoundry) (cft CloudFoundryTemplat
 }
 
 func (cft CloudFoundryTemplate) CreateCloudFoundryYaml(template, path string) (bool, error) {
-	logger.Debug("Create CloudFoundry deployment file : %s", path)
+	beego.Debug("Create CloudFoundry deployment file : %s", path)
 	return utils.CreateYmlFile("cloudfoundry", template, path, cft.CloudFoundry)
 }
 
 func (cft CloudFoundryTemplate) CreateCloudFoundryV3Yaml(path string) (bool, error) {
-	logger.Debug("Create CloudFoundry deployment file : %s", path)
+	beego.Debug("Create CloudFoundry deployment file : %s", path)
 	return utils.CreateYmlFile("cloudfoundry", CloudFoundryTemplateV3, path, cft.CloudFoundry)
 }
 
@@ -43,7 +43,7 @@ func (cft CloudFoundryTemplate) CreateDefaultCloudFoundryYamlFileWithAppPath(ver
 }
 
 func (cft CloudFoundryTemplate) CreateCloudFoundryYamlFile(version, path string, template ...string) (bool, error) {
-	logger.Debug("Create CloudFoundry deployment file : %s", path)
+	beego.Debug("Create CloudFoundry deployment file : %s", path)
 	if version == "CCI-IaaS3.0" {
 		return utils.CreateYmlFileFromFile(path, cft.CloudFoundry, template...)
 	}
@@ -53,7 +53,7 @@ func (cft CloudFoundryTemplate) CreateCloudFoundryYamlFile(version, path string,
 }
 
 func (cft CloudFoundryTemplate) CreateCloudFoundryV3YamlFile(path string) (bool, error) {
-	logger.Debug("Create CloudFoundry deployment file : %s", path)
+	beego.Debug("Create CloudFoundry deployment file : %s", path)
 	return utils.CreateYmlFileFromFile(path, cft.CloudFoundry, workDir+CloudFoundryMetaTemplateV3File, workDir+CloudFoundryUpdateTempalteFile, workDir+CloudFoundryCompilationTemplateFile, workDir+CloudFoundryNetworksTemplateV3File, workDir+CloudFoundryResourcePoolTemplateFile, workDir+CloudFoundryJobsTemplateFile, workDir+CloudFoundryPropertiesTemplateFile)
 
 }
@@ -76,7 +76,7 @@ func (vcft VsphereCloudFoundryTemplate) CreateDefaultCloudFoundryYamlFileWithApp
 }
 
 func (vcft VsphereCloudFoundryTemplate) CreateCloudFoundryYamlFile(version, path string, template ...string) (bool, error) {
-	logger.Debug("Create CloudFoundry deployment file : %s", path)
+	beego.Debug("Create CloudFoundry deployment file : %s", path)
 	return utils.CreateYmlFileFromFile(path, vcft.VsphereCloudFoundry, template...)
 }
 

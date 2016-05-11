@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
+	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 )
 
@@ -114,13 +114,13 @@ func NewMicroBOSHTemplate(microbosh MicroBOSH) (mt MicroBOSHTemplate) {
 }
 
 func (mt MicroBOSHTemplate) CreateMicroBOSHYaml(template, path string) (bool, error) {
-	logger.Debug("Create MicroBOSH deployment file : %s", path)
+	beego.Debug("Create MicroBOSH deployment file : %s", path)
 
 	return utils.CreateYmlFile("microbosh", template, path, mt.microbosh)
 }
 
 func (mt MicroBOSHTemplate) CreateMicroBOSHYamlFile(version, path string) (bool, error) {
-	logger.Debug("Create MicroBOSH deployment file : %s", path)
+	beego.Debug("Create MicroBOSH deployment file : %s", path)
 	if version == "CCI-IaaS3.0" {
 		return utils.CreateYmlFileFromFile(path, mt.microbosh, MicroBOSHTemplateTextV3File)
 	}
@@ -137,12 +137,12 @@ func NewVspherewMicroTemplate(vsphereMicro VsphereMicro) (vmt VsphereMicroTempla
 }
 
 func (vmt VsphereMicroTemplate) CreateMicroBOSHYaml(template, path string) (bool, error) {
-	logger.Debug("Create MicroBOSH deployment file : %s", path)
+	beego.Debug("Create MicroBOSH deployment file : %s", path)
 
 	return utils.CreateYmlFile("microbosh", template, path, vmt)
 }
 
 func (vmt VsphereMicroTemplate) CreateMicroBOSHYamlFile(version, path string) (bool, error) {
-	logger.Debug("Create MicroBOSH deployment file : %s", path)
+	beego.Debug("Create MicroBOSH deployment file : %s", path)
 	return utils.CreateYmlFileFromFile(path, vmt.vsphereMicro, VsphereMicroBOSHTemplateFile)
 }

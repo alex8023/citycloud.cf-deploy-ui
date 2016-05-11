@@ -18,7 +18,7 @@ func (this *ServiceComponentController) Get() {
 		err = component.Load()
 		if err == nil {
 			this.Data["json"] = &component
-			this.ServeJson()
+			this.ServeJSON()
 		}
 	}
 }
@@ -72,7 +72,7 @@ func (this *ServiceOperationController) Get() {
 	id, err := this.GetInt64("sid", 0)
 	if id == 0 {
 		this.Data["json"] = ""
-		this.ServeJson()
+		this.ServeJSON()
 	}
 	operation := entity.Operation{}
 	if err == nil {
@@ -80,10 +80,10 @@ func (this *ServiceOperationController) Get() {
 		err = operation.Load()
 		if err == nil {
 			this.Data["json"] = &operation
-			this.ServeJson()
+			this.ServeJSON()
 		} else {
 			this.Data["json"] = ""
-			this.ServeJson()
+			this.ServeJSON()
 		}
 	}
 }

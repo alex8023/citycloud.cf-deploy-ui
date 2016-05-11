@@ -2,9 +2,8 @@ package controllers
 
 import (
 	"fmt"
-	_ "github.com/astaxie/beego"
+	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"io"
 	"os"
 )
@@ -72,7 +71,7 @@ func (this *MicroBoshController) Post() {
 func (this *MicroBoshController) SavePrivateKeyFile(key string, path string) error {
 	file, _, err := this.GetFile(key)
 	if err != nil {
-		logger.Debug("UpLoadFile error :%s", err)
+		beego.Debug("UpLoadFile error :%s", err)
 		return err
 	}
 
@@ -88,23 +87,23 @@ func (this *MicroBoshController) SavePrivateKeyFile(key string, path string) err
 
 func (this *MicroBoshController) IndexMicroBOSH() {
 	this.LoadData()
-	this.TplNames = "microbosh/index.tpl"
+	this.TplName = "microbosh/index.tpl"
 }
 
 func (this *MicroBoshController) ConfigMicroBOSH() {
-	logger.Debug("%s", "Config MicroBOSH")
+	beego.Debug("%s", "Config MicroBOSH")
 	this.LoadData()
-	this.TplNames = "microbosh/config.tpl"
+	this.TplName = "microbosh/config.tpl"
 }
 
 func (this *MicroBoshController) DeployMicroBOSH() {
-	logger.Debug("%s", "Deploy MicroBOSH")
+	beego.Debug("%s", "Deploy MicroBOSH")
 	this.LoadData()
 	this.Deploy()
 	this.Data["HOST"] = this.Ctx.Request.Host
 	this.Data["AppName"] = globaleAppName
 	this.Data["WebSocket"] = microWebsocket
-	this.TplNames = "microbosh/deploy.tpl"
+	this.TplName = "microbosh/deploy.tpl"
 }
 
 //read data from const or database

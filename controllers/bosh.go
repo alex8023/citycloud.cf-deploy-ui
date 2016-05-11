@@ -32,17 +32,17 @@ func (this *BOSHController) Post() {
 
 func (this *BOSHController) DeployBOSH() {
 	this.LoadData()
-	this.TplNames = "bosh/config.tpl"
+	this.TplName = "bosh/config.tpl"
 }
 
 func (this *BOSHController) IndexBOSH() {
 	this.LoadData()
-	this.TplNames = "bosh/index.tpl"
+	this.TplName = "bosh/index.tpl"
 }
 
 func (this *BOSHController) ConfigBOSH() {
 	this.LoadData()
-	this.TplNames = "bosh/config.tpl"
+	this.TplName = "bosh/config.tpl"
 }
 
 func (this *BOSHController) LoadData() {

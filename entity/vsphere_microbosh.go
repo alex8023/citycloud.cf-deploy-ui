@@ -1,8 +1,8 @@
 package entity
 
 import (
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 type VsphereMicro struct {
@@ -30,15 +30,15 @@ func NewVsphereMicro(
 func (vsphereMicro *VsphereMicro) Load() error {
 	queryOneErr := orm.NewOrm().QueryTable(vsphereMicro).One(vsphereMicro, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 
 	errors := orm.NewOrm().Read(vsphereMicro, "Id")
 	if errors != nil {
-		logger.Error("Read VsphereMicro error : %s", errors)
+		beego.Error("Read VsphereMicro error : %s", errors)
 		_, err := orm.NewOrm().Insert(vsphereMicro)
 		if err != nil {
-			logger.Error("Insert VsphereMicro error %s ", err)
+			beego.Error("Insert VsphereMicro error %s ", err)
 		}
 	}
 
@@ -48,7 +48,7 @@ func (vsphereMicro *VsphereMicro) Load() error {
 func (vsphereMicro *VsphereMicro) Update() error {
 	_, err := orm.NewOrm().Update(vsphereMicro)
 	if err != nil {
-		logger.Error("Update VsphereMicro error %s ", err)
+		beego.Error("Update VsphereMicro error %s ", err)
 	}
 	return err
 }
@@ -80,15 +80,15 @@ func NewVsphereNetWork(
 func (vsphereNetWork *VsphereNetWork) Load() error {
 	queryOneErr := orm.NewOrm().QueryTable(vsphereNetWork).One(vsphereNetWork, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 
 	errors := orm.NewOrm().Read(vsphereNetWork, "Id")
 	if errors != nil {
-		logger.Error("Read VsphereNetWork error : %s", errors)
+		beego.Error("Read VsphereNetWork error : %s", errors)
 		_, err := orm.NewOrm().Insert(vsphereNetWork)
 		if err != nil {
-			logger.Error("Insert VsphereNetWork error %s ", err)
+			beego.Error("Insert VsphereNetWork error %s ", err)
 		}
 	}
 
@@ -98,7 +98,7 @@ func (vsphereNetWork *VsphereNetWork) Load() error {
 func (vsphereNetWork *VsphereNetWork) Update() error {
 	_, err := orm.NewOrm().Update(vsphereNetWork)
 	if err != nil {
-		logger.Error("Update VsphereNetWork error %s ", err)
+		beego.Error("Update VsphereNetWork error %s ", err)
 	}
 	return err
 }
@@ -128,7 +128,7 @@ func (vsphereResource *VsphereResource) Load() error {
 
 	errors := orm.NewOrm().Read(vsphereResource, "Id")
 	if errors != nil {
-		logger.Error("Read VsphereResource error : %s", errors)
+		beego.Error("Read VsphereResource error : %s", errors)
 	}
 
 	return errors
@@ -137,7 +137,7 @@ func (vsphereResource *VsphereResource) Load() error {
 func (vsphereResource *VsphereResource) Update() error {
 	_, err := orm.NewOrm().Update(vsphereResource)
 	if err != nil {
-		logger.Error("Update VsphereResource error %s ", err)
+		beego.Error("Update VsphereResource error %s ", err)
 	}
 	return err
 }
@@ -145,7 +145,7 @@ func (vsphereResource *VsphereResource) Update() error {
 func (vsphereResource *VsphereResource) Save() error {
 	_, err := orm.NewOrm().Insert(vsphereResource)
 	if err != nil {
-		logger.Error("Insert VsphereResource error : %s", err)
+		beego.Error("Insert VsphereResource error : %s", err)
 	}
 	return err
 }
@@ -153,7 +153,7 @@ func (vsphereResource *VsphereResource) Save() error {
 func (vsphereResource *VsphereResource) Delete() error {
 	_, err := orm.NewOrm().Delete(vsphereResource)
 	if err != nil {
-		logger.Error("Delete VsphereResource error %s ", err)
+		beego.Error("Delete VsphereResource error %s ", err)
 	}
 	return err
 }
@@ -196,15 +196,15 @@ func NewVsphereVcenter(
 func (vsphereVcenter *VsphereVcenter) Load() error {
 	queryOneErr := orm.NewOrm().QueryTable(vsphereVcenter).One(vsphereVcenter, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 
 	errors := orm.NewOrm().Read(vsphereVcenter, "Id")
 	if errors != nil {
-		logger.Error("Read VsphereVcenter error : %s", errors)
+		beego.Error("Read VsphereVcenter error : %s", errors)
 		_, err := orm.NewOrm().Insert(vsphereVcenter)
 		if err != nil {
-			logger.Error("Insert VsphereVcenter error %s ", err)
+			beego.Error("Insert VsphereVcenter error %s ", err)
 		}
 	}
 
@@ -214,7 +214,7 @@ func (vsphereVcenter *VsphereVcenter) Load() error {
 func (vsphereVcenter *VsphereVcenter) Update() error {
 	_, err := orm.NewOrm().Update(vsphereVcenter)
 	if err != nil {
-		logger.Error("Update VsphereVcenter error %s ", err)
+		beego.Error("Update VsphereVcenter error %s ", err)
 	}
 	return err
 }

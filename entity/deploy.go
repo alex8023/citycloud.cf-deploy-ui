@@ -2,8 +2,8 @@ package entity
 
 import (
 	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 )
 
@@ -16,7 +16,7 @@ type Deploy struct {
 func (deploy *Deploy) Load() error {
 	err := orm.NewOrm().Read(deploy, "Id")
 	if err != nil {
-		logger.Error("Read Deploy error : %s", err)
+		beego.Error("Read Deploy error : %s", err)
 	}
 	return err
 }
@@ -24,7 +24,7 @@ func (deploy *Deploy) Load() error {
 func (deploy *Deploy) Save() error {
 	_, err := orm.NewOrm().Insert(deploy)
 	if err != nil {
-		logger.Error("Insert Deploy error : %s", err)
+		beego.Error("Insert Deploy error : %s", err)
 	}
 	return err
 }
@@ -32,7 +32,7 @@ func (deploy *Deploy) Save() error {
 func (deploy *Deploy) Update() error {
 	_, err := orm.NewOrm().Update(deploy)
 	if err != nil {
-		logger.Error("Update Deploy error %s ", err)
+		beego.Error("Update Deploy error %s ", err)
 	}
 	return err
 }
@@ -40,7 +40,7 @@ func (deploy *Deploy) Update() error {
 func (deploy *Deploy) Delete() error {
 	_, err := orm.NewOrm().Delete(deploy)
 	if err != nil {
-		logger.Error("Delete Deploy error %s ", err)
+		beego.Error("Delete Deploy error %s ", err)
 	}
 	return err
 }
@@ -57,7 +57,7 @@ type Operation struct {
 func (operation *Operation) Load() error {
 	err := orm.NewOrm().Read(operation, "Id")
 	if err != nil {
-		logger.Error("Read Operation error : %s", err)
+		beego.Error("Read Operation error : %s", err)
 	}
 	return err
 }
@@ -65,7 +65,7 @@ func (operation *Operation) Load() error {
 func (operation *Operation) Save() error {
 	_, err := orm.NewOrm().Insert(operation)
 	if err != nil {
-		logger.Error("Insert Operation error : %s", err)
+		beego.Error("Insert Operation error : %s", err)
 	}
 	return err
 }
@@ -73,7 +73,7 @@ func (operation *Operation) Save() error {
 func (operation *Operation) Update() error {
 	_, err := orm.NewOrm().Update(operation)
 	if err != nil {
-		logger.Error("Update Operation error %s ", err)
+		beego.Error("Update Operation error %s ", err)
 	}
 	return err
 }
@@ -81,7 +81,7 @@ func (operation *Operation) Update() error {
 func (operation *Operation) Delete() error {
 	_, err := orm.NewOrm().Delete(operation)
 	if err != nil {
-		logger.Error("Delete Operation error %s ", err)
+		beego.Error("Delete Operation error %s ", err)
 	}
 	return err
 }
@@ -89,7 +89,7 @@ func (operation *Operation) Delete() error {
 func (operation *Operation) LoadBySid() error {
 	err := orm.NewOrm().QueryTable(new(Operation)).Filter("sid", operation.Sid).One(operation)
 	if err != nil {
-		logger.Error("Read Operation error : %s", err)
+		beego.Error("Read Operation error : %s", err)
 		return err
 	}
 	return nil
@@ -109,7 +109,7 @@ type OnPaaS struct {
 func (onPaaS *OnPaaS) Load() error {
 	err := orm.NewOrm().Read(onPaaS, "Id")
 	if err != nil {
-		logger.Error("Read OnPaaS error : %s", err)
+		beego.Error("Read OnPaaS error : %s", err)
 	}
 	return err
 }
@@ -117,7 +117,7 @@ func (onPaaS *OnPaaS) Load() error {
 func (onPaaS *OnPaaS) LoadBySid() error {
 	err := orm.NewOrm().QueryTable(new(OnPaaS)).Filter("sid", onPaaS.Sid).One(onPaaS)
 	if err != nil {
-		logger.Error("Read OnPaaS error : %s", err)
+		beego.Error("Read OnPaaS error : %s", err)
 		return err
 	}
 	return nil
@@ -126,7 +126,7 @@ func (onPaaS *OnPaaS) LoadBySid() error {
 func (onPaaS *OnPaaS) Save() error {
 	_, err := orm.NewOrm().Insert(onPaaS)
 	if err != nil {
-		logger.Error("Insert OnPaaS error : %s", err)
+		beego.Error("Insert OnPaaS error : %s", err)
 	}
 	return err
 }
@@ -134,7 +134,7 @@ func (onPaaS *OnPaaS) Save() error {
 func (onPaaS *OnPaaS) Update() error {
 	_, err := orm.NewOrm().Update(onPaaS)
 	if err != nil {
-		logger.Error("Update OnPaaS error %s ", err)
+		beego.Error("Update OnPaaS error %s ", err)
 	}
 	return err
 }
@@ -142,7 +142,7 @@ func (onPaaS *OnPaaS) Update() error {
 func (onPaaS *OnPaaS) Delete() error {
 	_, err := orm.NewOrm().Delete(onPaaS)
 	if err != nil {
-		logger.Error("Delete OnPaaS error %s ", err)
+		beego.Error("Delete OnPaaS error %s ", err)
 	}
 	return err
 }
@@ -164,7 +164,7 @@ type OnCustom struct {
 func (onCustom *OnCustom) Load() error {
 	err := orm.NewOrm().Read(onCustom, "Id")
 	if err != nil {
-		logger.Error("Read OnCustom error : %s", err)
+		beego.Error("Read OnCustom error : %s", err)
 	}
 	return err
 }
@@ -172,7 +172,7 @@ func (onCustom *OnCustom) Load() error {
 func (onCustom *OnCustom) LoadBySid() error {
 	err := orm.NewOrm().QueryTable(new(OnCustom)).Filter("sid", onCustom.Sid).One(onCustom)
 	if err != nil {
-		logger.Error("Read OnCustom error : %s,Returned Multi Rows Not One.", err)
+		beego.Error("Read OnCustom error : %s,Returned Multi Rows Not One.", err)
 		return err
 	}
 	return nil
@@ -181,7 +181,7 @@ func (onCustom *OnCustom) LoadBySid() error {
 func (onCustom *OnCustom) Save() error {
 	_, err := orm.NewOrm().Insert(onCustom)
 	if err != nil {
-		logger.Error("Insert OnCustom error : %s", err)
+		beego.Error("Insert OnCustom error : %s", err)
 	}
 	return err
 }
@@ -189,7 +189,7 @@ func (onCustom *OnCustom) Save() error {
 func (onCustom *OnCustom) Update() error {
 	_, err := orm.NewOrm().Update(onCustom)
 	if err != nil {
-		logger.Error("Update OnCustom error %s ", err)
+		beego.Error("Update OnCustom error %s ", err)
 	}
 	return err
 }
@@ -197,7 +197,7 @@ func (onCustom *OnCustom) Update() error {
 func (onCustom *OnCustom) Delete() error {
 	_, err := orm.NewOrm().Delete(onCustom)
 	if err != nil {
-		logger.Error("Delete OnCustom error %s ", err)
+		beego.Error("Delete OnCustom error %s ", err)
 	}
 	return err
 }
