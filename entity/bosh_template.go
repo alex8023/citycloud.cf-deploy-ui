@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
+	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 )
 
@@ -203,6 +203,6 @@ func NewBOSHTemplate(bosh BOSH) (bt BOSHTemplate) {
 }
 
 func (bt BOSHTemplate) CreateBOSHYaml(path string) (bool, error) {
-	logger.Debug("Create BOSH deployment file : %s", path)
+	beego.Debug("Create BOSH deployment file : %s", path)
 	return utils.CreateYmlFile("bosh", BOSHTemplateText, path, bt.bosh)
 }

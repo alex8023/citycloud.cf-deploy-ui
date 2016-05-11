@@ -1,8 +1,8 @@
 package entity
 
 import (
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"time"
 )
@@ -36,7 +36,7 @@ type Monitor struct {
 func (monitor *Monitor) Load() error {
 	err := orm.NewOrm().Read(monitor, "Id")
 	if err != nil {
-		logger.Error("Read Monitor error : %s", err)
+		beego.Error("Read Monitor error : %s", err)
 	}
 	return err
 }
@@ -44,7 +44,7 @@ func (monitor *Monitor) Load() error {
 func (monitor *Monitor) LoadByAgentId() error {
 	err := orm.NewOrm().QueryTable(new(Monitor)).Filter("AgentId", monitor.AgentId).OrderBy("Updated").Limit(1).One(monitor)
 	if err != nil {
-		logger.Error("Read Monitor error : %s", err)
+		beego.Error("Read Monitor error : %s", err)
 	}
 	return err
 }
@@ -52,7 +52,7 @@ func (monitor *Monitor) LoadByAgentId() error {
 func (monitor *Monitor) Save() error {
 	_, err := orm.NewOrm().Insert(monitor)
 	if err != nil {
-		logger.Error("Insert Monitor error : %s", err)
+		beego.Error("Insert Monitor error : %s", err)
 	}
 	return err
 }
@@ -60,7 +60,7 @@ func (monitor *Monitor) Save() error {
 func (monitor *Monitor) Update() error {
 	_, err := orm.NewOrm().Update(monitor)
 	if err != nil {
-		logger.Error("Update Monitor error %s ", err)
+		beego.Error("Update Monitor error %s ", err)
 	}
 	return err
 }
@@ -68,7 +68,7 @@ func (monitor *Monitor) Update() error {
 func (monitor *Monitor) Delete() error {
 	_, err := orm.NewOrm().Delete(monitor)
 	if err != nil {
-		logger.Error("Delete Monitor error %s ", err)
+		beego.Error("Delete Monitor error %s ", err)
 	}
 	return err
 }
@@ -76,7 +76,7 @@ func (monitor *Monitor) Delete() error {
 func (monitor *Monitor) DeleteByAgentId() error {
 	_, err := orm.NewOrm().QueryTable(new(Monitor)).Filter("AgentId", monitor.AgentId).Delete()
 	if err != nil {
-		logger.Error("Delete Monitor error %s ", err)
+		beego.Error("Delete Monitor error %s ", err)
 	}
 	return err
 }
@@ -86,7 +86,7 @@ func (monitor *Monitor) SaveOrUpdate() error {
 	count, err := orm.NewOrm().QueryTable(new(Monitor)).Filter("AgentId", monitor.AgentId).Count()
 
 	if err != nil {
-		logger.Error("Count Monitor error : %s", err)
+		beego.Error("Count Monitor error : %s", err)
 		return err
 	}
 
@@ -118,7 +118,7 @@ type AgentVm struct {
 func (agentVm *AgentVm) Load() error {
 	err := orm.NewOrm().Read(agentVm, "Id")
 	if err != nil {
-		logger.Error("Read AgentVm error : %s", err)
+		beego.Error("Read AgentVm error : %s", err)
 	}
 	return err
 }
@@ -126,7 +126,7 @@ func (agentVm *AgentVm) Load() error {
 func (agentVm *AgentVm) Save() error {
 	_, err := orm.NewOrm().Insert(agentVm)
 	if err != nil {
-		logger.Error("Insert AgentVm error : %s", err)
+		beego.Error("Insert AgentVm error : %s", err)
 	}
 	return err
 }
@@ -134,7 +134,7 @@ func (agentVm *AgentVm) Save() error {
 func (agentVm *AgentVm) Update() error {
 	_, err := orm.NewOrm().Update(agentVm)
 	if err != nil {
-		logger.Error("Update AgentVm error %s ", err)
+		beego.Error("Update AgentVm error %s ", err)
 	}
 	return err
 }

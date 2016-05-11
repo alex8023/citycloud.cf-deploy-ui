@@ -22,7 +22,7 @@ func (this *TemplatesDetailController) Get() {
 	case "", "list":
 		serviceId, err := this.GetInt64("serviceId", 0)
 		if err != nil {
-			this.TplNames = "templates/404.tpl"
+			this.TplName = "templates/404.tpl"
 			return
 		}
 		if this.CheckService(serviceId) {
@@ -31,7 +31,7 @@ func (this *TemplatesDetailController) Get() {
 	case "detail":
 		this.LoadCustomTemplateDetail()
 	default:
-		this.TplNames = "templates/404.tpl"
+		this.TplName = "templates/404.tpl"
 	}
 }
 
@@ -39,14 +39,14 @@ func (this *TemplatesDetailController) CheckService(serviceId int64) bool {
 
 	this.Data["ServiceId"] = serviceId
 	if serviceId == 0 {
-		this.TplNames = "templates/404.tpl"
+		this.TplName = "templates/404.tpl"
 		return false
 	}
 	service := entity.Service{}
 	service.Id = serviceId
 	loaderr := service.Load()
 	if loaderr != nil {
-		this.TplNames = "templates/404.tpl"
+		this.TplName = "templates/404.tpl"
 		return false
 	}
 	this.Data["Service"] = service
@@ -82,7 +82,7 @@ func (this *TemplatesDetailController) List(serviceId int64) {
 			this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", operationerrors)
 		}
 	}
-	this.TplNames = "templates/index_detail.tpl"
+	this.TplName = "templates/index_detail.tpl"
 }
 
 func (this *TemplatesDetailController) LoadCustomTemplateDetail() {
@@ -93,7 +93,7 @@ func (this *TemplatesDetailController) LoadCustomTemplateDetail() {
 		err = template.Load()
 		if err == nil {
 			this.Data["json"] = &template
-			this.ServeJson()
+			this.ServeJSON()
 		}
 	}
 }

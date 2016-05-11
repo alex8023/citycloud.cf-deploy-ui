@@ -2,8 +2,8 @@ package entity
 
 import (
 	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 // 组件
@@ -44,7 +44,7 @@ func (component *Component) TableUnique() [][]string {
 func (template *Template) Load() error {
 	err := orm.NewOrm().Read(template, "Id")
 	if err != nil {
-		logger.Error("Read Template error : %s", err)
+		beego.Error("Read Template error : %s", err)
 	}
 	return err
 }
@@ -52,7 +52,7 @@ func (template *Template) Load() error {
 func (template *Template) Save() error {
 	_, err := orm.NewOrm().Insert(template)
 	if err != nil {
-		logger.Error("Insert Template error : %s", err)
+		beego.Error("Insert Template error : %s", err)
 	}
 	return err
 }
@@ -60,7 +60,7 @@ func (template *Template) Save() error {
 func (template *Template) Update() error {
 	_, err := orm.NewOrm().Update(template)
 	if err != nil {
-		logger.Error("Update Template error %s ", err)
+		beego.Error("Update Template error %s ", err)
 	}
 	return err
 }
@@ -68,7 +68,7 @@ func (template *Template) Update() error {
 func (template *Template) Delete() error {
 	_, err := orm.NewOrm().Delete(template)
 	if err != nil {
-		logger.Error("Delete Template error %s ", err)
+		beego.Error("Delete Template error %s ", err)
 	}
 	return err
 }
@@ -76,7 +76,7 @@ func (template *Template) Delete() error {
 func (component *Component) Load() error {
 	err := orm.NewOrm().Read(component, "Id")
 	if err != nil {
-		logger.Error("Read Component error : %s", err)
+		beego.Error("Read Component error : %s", err)
 	}
 	return err
 }
@@ -84,7 +84,7 @@ func (component *Component) Load() error {
 func (component *Component) Save() error {
 	_, err := orm.NewOrm().Insert(component)
 	if err != nil {
-		logger.Error("Insert Component error : %s", err)
+		beego.Error("Insert Component error : %s", err)
 	}
 	return err
 }
@@ -92,7 +92,7 @@ func (component *Component) Save() error {
 func (component *Component) Update() error {
 	_, err := orm.NewOrm().Update(component)
 	if err != nil {
-		logger.Error("Update Component error %s ", err)
+		beego.Error("Update Component error %s ", err)
 	}
 	return err
 }
@@ -100,7 +100,7 @@ func (component *Component) Update() error {
 func (component *Component) Delete() error {
 	_, err := orm.NewOrm().Delete(component)
 	if err != nil {
-		logger.Error("Delete Component error %s ", err)
+		beego.Error("Delete Component error %s ", err)
 	}
 	return err
 }
@@ -110,7 +110,7 @@ func LoadComponentList(sid int64) ([]Component, error) {
 	qs := orm.NewOrm().QueryTable(new(Component)).Filter("sid", sid)
 	_, err := qs.All(&component)
 	if err != nil {
-		logger.Error("Load Component List error %s ", err)
+		beego.Error("Load Component List error %s ", err)
 		e := fmt.Errorf("Load Component List error %s ", err)
 		return component, e
 	}
@@ -122,7 +122,7 @@ func LoadTemplateList(sid int64) ([]Template, error) {
 	qs := orm.NewOrm().QueryTable(new(Template)).Filter("sid", sid)
 	_, err := qs.All(&template)
 	if err != nil {
-		logger.Error("Load Template List error %s ", err)
+		beego.Error("Load Template List error %s ", err)
 		e := fmt.Errorf("Load Template List error %s ", err)
 		return template, e
 	}
@@ -133,7 +133,7 @@ func LoadTemplateList(sid int64) ([]Template, error) {
 func (service *Service) Load() error {
 	err := orm.NewOrm().Read(service, "Id")
 	if err != nil {
-		logger.Error("Read Service error : %s", err)
+		beego.Error("Read Service error : %s", err)
 	}
 	return err
 }
@@ -141,7 +141,7 @@ func (service *Service) Load() error {
 func (service *Service) Save() error {
 	_, err := orm.NewOrm().Insert(service)
 	if err != nil {
-		logger.Error("Insert Service error : %s", err)
+		beego.Error("Insert Service error : %s", err)
 	}
 	return err
 }
@@ -149,7 +149,7 @@ func (service *Service) Save() error {
 func (service *Service) Update() error {
 	_, err := orm.NewOrm().Update(service)
 	if err != nil {
-		logger.Error("Update Service error %s ", err)
+		beego.Error("Update Service error %s ", err)
 	}
 	return err
 }
@@ -157,7 +157,7 @@ func (service *Service) Update() error {
 func (service *Service) Delete() error {
 	_, err := orm.NewOrm().Delete(service)
 	if err != nil {
-		logger.Error("Delete Service error %s ", err)
+		beego.Error("Delete Service error %s ", err)
 	}
 	return err
 }
@@ -167,7 +167,7 @@ func LoadServiceList() ([]Service, error) {
 	qs := orm.NewOrm().QueryTable(new(Service)).OrderBy("-id")
 	_, err := qs.All(&service)
 	if err != nil {
-		logger.Error("Load Service List error %s ", err)
+		beego.Error("Load Service List error %s ", err)
 		e := fmt.Errorf("Load Service List error %s ", err)
 		return service, e
 	}

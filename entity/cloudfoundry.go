@@ -2,8 +2,8 @@ package entity
 
 import (
 	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"strings"
 )
 
@@ -237,14 +237,14 @@ func (cloudFoundryProperties *CloudFoundryProperties) Load() error {
 
 	queryOneErr := orm.NewOrm().QueryTable(cloudFoundryProperties).One(cloudFoundryProperties, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 	errors := orm.NewOrm().Read(cloudFoundryProperties, "Id")
 	if errors != nil {
-		logger.Error("Read CloudFoundryProperties error : %s", errors)
+		beego.Error("Read CloudFoundryProperties error : %s", errors)
 		_, err := orm.NewOrm().Insert(cloudFoundryProperties)
 		if err != nil {
-			logger.Error("Insert CloudFoundryProperties error %s ", err)
+			beego.Error("Insert CloudFoundryProperties error %s ", err)
 		}
 	}
 
@@ -256,7 +256,7 @@ func (cloudFoundryProperties *CloudFoundryProperties) Load() error {
 func (cloudFoundryProperties *CloudFoundryProperties) Update() error {
 	_, err := orm.NewOrm().Update(cloudFoundryProperties)
 	if err != nil {
-		logger.Error("Update CloudFoundryProperties error %s ", err)
+		beego.Error("Update CloudFoundryProperties error %s ", err)
 	}
 	return err
 }
@@ -265,14 +265,14 @@ func (compilation *Compilation) Load() error {
 
 	queryOneErr := orm.NewOrm().QueryTable(compilation).One(compilation, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 	errors := orm.NewOrm().Read(compilation, "Id")
 	if errors != nil {
-		logger.Error("Read Compilation error : %s", errors)
+		beego.Error("Read Compilation error : %s", errors)
 		_, err := orm.NewOrm().Insert(compilation)
 		if err != nil {
-			logger.Error("Insert Compilation error %s ", err)
+			beego.Error("Insert Compilation error %s ", err)
 		}
 	}
 	return errors
@@ -281,7 +281,7 @@ func (compilation *Compilation) Load() error {
 func (compilation *Compilation) Update() error {
 	_, err := orm.NewOrm().Update(compilation)
 	if err != nil {
-		logger.Error("Update Compilation error %s ", err)
+		beego.Error("Update Compilation error %s ", err)
 	}
 	return err
 }
@@ -290,10 +290,10 @@ func (netWorks *NetWorks) Load() error {
 
 	errors := orm.NewOrm().Read(netWorks, "NetWorkName")
 	if errors != nil {
-		logger.Error("Read NetWorks error : %s", errors)
+		beego.Error("Read NetWorks error : %s", errors)
 		_, err := orm.NewOrm().Insert(netWorks)
 		if err != nil {
-			logger.Error("Insert NetWorks error %s ", err)
+			beego.Error("Insert NetWorks error %s ", err)
 		}
 	}
 	return errors
@@ -302,7 +302,7 @@ func (netWorks *NetWorks) Load() error {
 func (netWorks *NetWorks) Update() error {
 	_, err := orm.NewOrm().Update(netWorks)
 	if err != nil {
-		logger.Error("Update NetWorks error %s ", err)
+		beego.Error("Update NetWorks error %s ", err)
 	}
 	return err
 }
@@ -311,10 +311,10 @@ func (resourcesPools *ResourcesPools) Load() error {
 
 	errors := orm.NewOrm().Read(resourcesPools, "Id")
 	if errors != nil {
-		logger.Error("Read ResourcesPools error : %s", errors)
+		beego.Error("Read ResourcesPools error : %s", errors)
 		_, err := orm.NewOrm().Insert(resourcesPools)
 		if err != nil {
-			logger.Error("Insert ResourcesPools error %s ", err)
+			beego.Error("Insert ResourcesPools error %s ", err)
 		}
 	}
 	return errors
@@ -323,7 +323,7 @@ func (resourcesPools *ResourcesPools) Load() error {
 func (resourcesPools *ResourcesPools) Update() error {
 	_, err := orm.NewOrm().Update(resourcesPools)
 	if err != nil {
-		logger.Error("Update ResourcesPools error %s ", err)
+		beego.Error("Update ResourcesPools error %s ", err)
 	}
 	return err
 }
@@ -358,7 +358,7 @@ func UpdateResourcePools(resourcesPools []ResourcesPools) ([]ResourcesPools, err
 		id, err := insert.Insert(&values)
 
 		if err != nil {
-			logger.Error("Insert ResourcePools error :%s", err)
+			beego.Error("Insert ResourcePools error :%s", err)
 		} else {
 			values.Id = id
 			resourcesPools[index] = values
@@ -377,11 +377,11 @@ func (cloudFoundryJobs *CloudFoundryJobs) Load() error {
 		cloudFoundryJobs.StaticIp = strings.Split(cloudFoundryJobs.StaticIps, ",")
 	}
 	if errors != nil {
-		logger.Error("Read CloudFoundryJobs error : %s", errors)
+		beego.Error("Read CloudFoundryJobs error : %s", errors)
 		cloudFoundryJobs.StaticIps = strings.Join(cloudFoundryJobs.StaticIp, ",")
 		_, err := orm.NewOrm().Insert(cloudFoundryJobs)
 		if err != nil {
-			logger.Error("Insert CloudFoundryJobs error %s ", err)
+			beego.Error("Insert CloudFoundryJobs error %s ", err)
 		}
 	}
 	return errors
@@ -391,7 +391,7 @@ func (cloudFoundryJobs *CloudFoundryJobs) Update() error {
 	cloudFoundryJobs.StaticIps = strings.Join(cloudFoundryJobs.StaticIp, ",")
 	_, err := orm.NewOrm().Update(cloudFoundryJobs)
 	if err != nil {
-		logger.Error("Update CloudFoundryJobs error %s ", err)
+		beego.Error("Update CloudFoundryJobs error %s ", err)
 	}
 	return err
 }
@@ -421,7 +421,7 @@ func (properties *Properties) Update() error {
 		_, err := insert.Insert(&values)
 		if err != nil {
 			erros = append(erros, err)
-			logger.Error("Update JobProperties error :%s", err)
+			beego.Error("Update JobProperties error :%s", err)
 		}
 	}
 	insert.Close()

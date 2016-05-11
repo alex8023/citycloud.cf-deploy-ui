@@ -3,8 +3,8 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"strings"
 	"time"
@@ -29,7 +29,7 @@ func (this *OpsController) Get() {
 	this.Data["DefaultVersion"] = defaultVersion
 	jobs := this.LoadJobMonitor()
 	this.Data["JobMonitorStruct"] = jobs
-	this.TplNames = "ops/index.tpl"
+	this.TplName = "ops/index.tpl"
 }
 
 func (this *OpsController) Post() {
@@ -41,11 +41,11 @@ func (this *OpsController) Post() {
 		monitorStr, err := getMonitorByAgentId(agentId)
 		if err != nil {
 			this.Data["AgentError"] = fmt.Sprintf("Request AgentId [%s] monitor info error: %s", agentId, err)
-			logger.Error("Request AgentId [%s] monitor info error: %s", agentId, err)
+			beego.Error("Request AgentId [%s] monitor info error: %s", agentId, err)
 		} else {
 			err = saveOrUpdateMonitor(monitorStr)
 			this.Data["AgentError"] = fmt.Sprintf("Save error: %s", err)
-			logger.Error("saveOrUpdateMonitor monitorStr [%s] Error %s", monitorStr, err)
+			beego.Error("saveOrUpdateMonitor monitorStr [%s] Error %s", monitorStr, err)
 		}
 	case "delete":
 		monitor := entity.Monitor{}
@@ -81,7 +81,7 @@ func (this *OpsMonitorController) Get() {
 		this.Data["Monitor"] = monitor
 	}
 
-	this.TplNames = "ops/index_monitor.tpl"
+	this.TplName = "ops/index_monitor.tpl"
 }
 
 func (this *OpsMonitorRestController) Get() {
@@ -95,16 +95,22 @@ func (this *OpsMonitorRestController) Get() {
 	if err != nil {
 		result.Code = utils.ResponseCodeFailed
 		result.Data = fmt.Sprintf("Request AgentId [%s] monitor info error: %s", agentId, err)
-		logger.Error("Request AgentId %s monitor info error %s", agentId, err)
+		beego.Error("Request AgentId %s monitor info error %s", agentId, err)
+		monitor := entity.Monitor{}
+		monitor.AgentId = agentId
+		err = monitor.DeleteByAgentId()
+		if err != nil {
+			this.Data["AgentError"] = fmt.Sprintf("Delete Monitor error %s", err)
+		}
 
 	} else {
 		result.Code = utils.ResponseCodeSuccess
 		result.Data = monitorStr
 		err = saveOrUpdateMonitor(monitorStr)
-		logger.Error("saveOrUpdateMonitor monitorStr [%s] Error %s", monitorStr, err)
+		beego.Error("saveOrUpdateMonitor monitorStr [%s] Error %s", monitorStr, err)
 	}
 	this.Data["json"] = &result
-	this.ServeJson(false)
+	this.ServeJSON(false)
 }
 
 func (this *OpsMonitorController) CheckAgentId(agentId string) string {

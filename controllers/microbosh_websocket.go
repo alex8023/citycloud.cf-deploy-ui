@@ -3,8 +3,7 @@ package controllers
 import (
 	"bytes"
 	"fmt"
-	_ "github.com/astaxie/beego"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
+	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"github.com/gorilla/websocket"
 	"net/http"
@@ -239,12 +238,12 @@ func (this *MicroBOSHWebSocketController) statusMicroBOSH(ws *websocket.Conn) bo
 }
 
 func writeStringMessage(ws *websocket.Conn, message string) {
-	logger.Debug("[Command INFO]: %s", message)
+	beego.Debug("[Command INFO]: %s", message)
 	ws.WriteMessage(websocket.TextMessage, []byte(message))
 }
 
 func writeBytesMessage(ws *websocket.Conn, message []byte) {
-	logger.Debug("[Command INFO]: %s", string(message))
+	beego.Debug("[Command INFO]: %s", string(message))
 	ws.WriteMessage(websocket.TextMessage, message)
 }
 

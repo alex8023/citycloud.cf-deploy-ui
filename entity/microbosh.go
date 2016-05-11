@@ -1,8 +1,8 @@
 package entity
 
 import (
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 type MicroBOSH struct {
@@ -102,15 +102,15 @@ func (microbosh *MicroBOSH) TableName() string {
 func (microBOSH *MicroBOSH) Load() error {
 	queryOneErr := orm.NewOrm().QueryTable(microBOSH).One(microBOSH, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 
 	errors := orm.NewOrm().Read(microBOSH, "Id")
 	if errors != nil {
-		logger.Error("Read MicroBOSH error : %s", errors)
+		beego.Error("Read MicroBOSH error : %s", errors)
 		_, err := orm.NewOrm().Insert(microBOSH)
 		if err != nil {
-			logger.Error("Insert MicroBOSH error %s ", err)
+			beego.Error("Insert MicroBOSH error %s ", err)
 		}
 	}
 
@@ -120,7 +120,7 @@ func (microBOSH *MicroBOSH) Load() error {
 func (microBOSH *MicroBOSH) Update() error {
 	_, err := orm.NewOrm().Update(microBOSH)
 	if err != nil {
-		logger.Error("Update MicroBOSH error %s ", err)
+		beego.Error("Update MicroBOSH error %s ", err)
 	}
 	return err
 }
@@ -128,14 +128,14 @@ func (microBOSH *MicroBOSH) Update() error {
 func (netWork *NetWork) Load() error {
 	queryOneErr := orm.NewOrm().QueryTable(netWork).One(netWork, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 	errors := orm.NewOrm().Read(netWork, "Id")
 	if errors != nil {
-		logger.Error("Read NetWork error : %s", errors)
+		beego.Error("Read NetWork error : %s", errors)
 		_, err := orm.NewOrm().Insert(netWork)
 		if err != nil {
-			logger.Error("Insert NetWork error %s ", err)
+			beego.Error("Insert NetWork error %s ", err)
 		}
 	}
 	return errors
@@ -144,7 +144,7 @@ func (netWork *NetWork) Load() error {
 func (netWork *NetWork) Update() error {
 	_, err := orm.NewOrm().Update(netWork)
 	if err != nil {
-		logger.Error("Update NetWork error %s ", err)
+		beego.Error("Update NetWork error %s ", err)
 	}
 	return err
 }
@@ -153,15 +153,15 @@ func (cloudProperties *CloudProperties) Load() error {
 
 	queryOneErr := orm.NewOrm().QueryTable(cloudProperties).One(cloudProperties, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 
 	errors := orm.NewOrm().Read(cloudProperties, "Id")
 	if errors != nil {
-		logger.Error("Read CloudProperties error : %s", errors)
+		beego.Error("Read CloudProperties error : %s", errors)
 		_, err := orm.NewOrm().Insert(cloudProperties)
 		if err != nil {
-			logger.Error("Insert CloudProperties error %s ", err)
+			beego.Error("Insert CloudProperties error %s ", err)
 		}
 	}
 	return errors
@@ -170,7 +170,7 @@ func (cloudProperties *CloudProperties) Load() error {
 func (cloudProperties *CloudProperties) Update() error {
 	_, err := orm.NewOrm().Update(cloudProperties)
 	if err != nil {
-		logger.Error("Update CloudProperties error %s ", err)
+		beego.Error("Update CloudProperties error %s ", err)
 	}
 	return err
 }
@@ -178,14 +178,14 @@ func (cloudProperties *CloudProperties) Update() error {
 func (resources *Resources) Load() error {
 	queryOneErr := orm.NewOrm().QueryTable(resources).One(resources, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 	errors := orm.NewOrm().Read(resources, "Id")
 	if errors != nil {
-		logger.Error("Read Resources error : %s", errors)
+		beego.Error("Read Resources error : %s", errors)
 		_, err := orm.NewOrm().Insert(resources)
 		if err != nil {
-			logger.Error("Insert Resources error %s ", err)
+			beego.Error("Insert Resources error %s ", err)
 		}
 	}
 	return errors
@@ -194,7 +194,7 @@ func (resources *Resources) Load() error {
 func (resources *Resources) Update() error {
 	_, err := orm.NewOrm().Update(resources)
 	if err != nil {
-		logger.Error("Update Resources error %s ", err)
+		beego.Error("Update Resources error %s ", err)
 	}
 	return err
 }

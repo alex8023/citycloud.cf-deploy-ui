@@ -29,5 +29,5 @@ func (this *ServiceDeployController) Get() {
 		this.Data["Service"] = service
 	}
 
-	this.TplNames = "templates/deploy.tpl"
+	this.TplName = "templates/deploy.tpl"
 }

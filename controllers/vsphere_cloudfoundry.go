@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	"github.com/citycloud/citycloud.cf-deploy-ui/utils"
 	"reflect"
 	"strconv"
@@ -194,22 +193,22 @@ func (this *VsphereCloudFoundryController) Post() {
 }
 
 func (this *VsphereCloudFoundryController) DeployCloudFoundry() {
-	logger.Debug("%s", "Deploy CloudFoundry")
+	beego.Debug("%s", "Deploy CloudFoundry")
 	this.LoadData()
 	this.Deploy()
 	this.Data["HOST"] = this.Ctx.Request.Host
 	this.Data["AppName"] = globaleAppName
 	this.Data["WebSocket"] = cloudfoundryWebsocket
-	this.TplNames = "cloudfoundry/deploy.tpl"
+	this.TplName = "cloudfoundry/deploy.tpl"
 }
 
 func (this *VsphereCloudFoundryController) IndexCloudFoundry() {
 	this.LoadData()
-	this.TplNames = "cloudfoundry/vsphere/index.tpl"
+	this.TplName = "cloudfoundry/vsphere/index.tpl"
 }
 
 func (this *VsphereCloudFoundryController) ConfigCloudFoundry() {
-	logger.Debug("%s", "Config CloudFoundry")
+	beego.Debug("%s", "Config CloudFoundry")
 	this.LoadData()
 	model := this.GetString("model")
 	if model == "" {
@@ -218,23 +217,23 @@ func (this *VsphereCloudFoundryController) ConfigCloudFoundry() {
 	this.Data["Model"] = model
 	switch model {
 	case utils.CloudFoundryProperties:
-		this.TplNames = "cloudfoundry/vsphere/config_properties.tpl"
+		this.TplName = "cloudfoundry/vsphere/config_properties.tpl"
 	case utils.NetWorks:
-		this.TplNames = "cloudfoundry/vsphere/config_networks.tpl"
+		this.TplName = "cloudfoundry/vsphere/config_networks.tpl"
 	case utils.Compilation:
-		this.TplNames = "cloudfoundry/vsphere/config_compilation.tpl"
+		this.TplName = "cloudfoundry/vsphere/config_compilation.tpl"
 	case utils.ResourcesPools:
 		this.Data["Pools"] = len(cf.ResourcesPools)
-		this.TplNames = "cloudfoundry/vsphere/config_resourcespools.tpl"
+		this.TplName = "cloudfoundry/vsphere/config_resourcespools.tpl"
 	case utils.CloudFoundryJobs:
-		this.TplNames = "cloudfoundry/vsphere/config_jobs.tpl"
+		this.TplName = "cloudfoundry/vsphere/config_jobs.tpl"
 	default:
 		this.IndexCloudFoundry()
 	}
 }
 
 func (this *VsphereCloudFoundryController) ConfigProperties() {
-	logger.Debug("%s", "Config CloudFoundry Properties")
+	beego.Debug("%s", "Config CloudFoundry Properties")
 	model := this.GetString("model")
 	if model == "" {
 		model = utils.Properties
@@ -243,7 +242,7 @@ func (this *VsphereCloudFoundryController) ConfigProperties() {
 	properties.Load()
 	vcf.Properties = properties
 	this.Data["Properties"] = properties
-	this.TplNames = "cloudfoundry/vsphere/config_more.tpl"
+	this.TplName = "cloudfoundry/vsphere/config_more.tpl"
 }
 
 //read data from const or database
@@ -401,7 +400,7 @@ func (this *VsphereResourceController) Get() {
 	case "", "list":
 		vsphereResources, _ = entity.LoadVsphereResource(vsphereResources)
 		this.Data["VsphereResource"] = vsphereResources
-		this.TplNames = "cloudfoundry/vsphere/config_vsphereflavor.tpl"
+		this.TplName = "cloudfoundry/vsphere/config_vsphereflavor.tpl"
 	case "detail":
 		id, err := this.GetInt64("id", 0)
 		_vsphereResource := entity.VsphereResource{}
@@ -410,7 +409,7 @@ func (this *VsphereResourceController) Get() {
 			err = _vsphereResource.Load()
 			if err == nil {
 				this.Data["json"] = &_vsphereResource
-				this.ServeJson()
+				this.ServeJSON()
 			}
 		}
 	}

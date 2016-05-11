@@ -2,9 +2,8 @@ package controllers
 
 import (
 	"fmt"
-	_ "github.com/astaxie/beego"
+	"github.com/astaxie/beego"
 	"github.com/citycloud/citycloud.cf-deploy-ui/entity"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 type VsphereMicroBoshController struct {
@@ -68,23 +67,23 @@ func (this *VsphereMicroBoshController) Post() {
 
 func (this *VsphereMicroBoshController) IndexMicroBOSH() {
 	this.LoadData()
-	this.TplNames = "microbosh/index_vsphere.tpl"
+	this.TplName = "microbosh/index_vsphere.tpl"
 }
 
 func (this *VsphereMicroBoshController) ConfigMicroBOSH() {
-	logger.Debug("%s", "Config VsphereMicroBOSH")
+	beego.Debug("%s", "Config VsphereMicroBOSH")
 	this.LoadData()
-	this.TplNames = "microbosh/config_vsphere.tpl"
+	this.TplName = "microbosh/config_vsphere.tpl"
 }
 
 func (this *VsphereMicroBoshController) DeployMicroBOSH() {
-	logger.Debug("%s", "Deploy VsphereMicroBOSH")
+	beego.Debug("%s", "Deploy VsphereMicroBOSH")
 	this.LoadData()
 	this.Deploy()
 	this.Data["HOST"] = this.Ctx.Request.Host
 	this.Data["AppName"] = globaleAppName
 	this.Data["WebSocket"] = microWebsocket
-	this.TplNames = "microbosh/deploy.tpl"
+	this.TplName = "microbosh/deploy.tpl"
 }
 
 //read data from const or database

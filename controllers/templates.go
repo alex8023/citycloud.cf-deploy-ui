@@ -95,7 +95,7 @@ func (this *TemplatesController) Post() {
 }
 
 func (this *TemplatesController) List() {
-	this.TplNames = "templates/index.tpl"
+	this.TplName = "templates/index.tpl"
 	service, err := entity.LoadServiceList()
 	if err != nil {
 		this.Data["MessageErr"] = fmt.Sprintf("Errors: %s", err)
@@ -114,7 +114,7 @@ func (this *TemplatesController) LoadCustomServiceDetail() {
 		err = serviceDto.Load()
 		if err == nil {
 			this.Data["json"] = &serviceDto
-			this.ServeJson()
+			this.ServeJSON()
 		}
 	}
 }

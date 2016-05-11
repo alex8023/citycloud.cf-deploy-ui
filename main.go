@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/citycloud/citycloud.cf-deploy-ui/entity"
+	_ "github.com/citycloud/citycloud.cf-deploy-ui/logger"
 	_ "github.com/citycloud/citycloud.cf-deploy-ui/models"
 	_ "github.com/citycloud/citycloud.cf-deploy-ui/routers"
 	_ "github.com/go-sql-driver/mysql"
@@ -12,7 +13,6 @@ import (
 func main() {
 	beego.Run()
 	//initDB()
-
 }
 
 func initDB() {

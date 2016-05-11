@@ -1,8 +1,8 @@
 package entity
 
 import (
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"github.com/citycloud/citycloud.cf-deploy-ui/logger"
 )
 
 type VsphereCompilation struct {
@@ -27,15 +27,15 @@ func NewVsphereCompilation(
 func (vsphereCompilation *VsphereCompilation) Load() error {
 	queryOneErr := orm.NewOrm().QueryTable(vsphereCompilation).One(vsphereCompilation, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 
 	errors := orm.NewOrm().Read(vsphereCompilation, "Id")
 	if errors != nil {
-		logger.Error("Read VsphereCompilation error : %s", errors)
+		beego.Error("Read VsphereCompilation error : %s", errors)
 		_, err := orm.NewOrm().Insert(vsphereCompilation)
 		if err != nil {
-			logger.Error("Insert VsphereCompilation error %s ", err)
+			beego.Error("Insert VsphereCompilation error %s ", err)
 		}
 	}
 
@@ -45,7 +45,7 @@ func (vsphereCompilation *VsphereCompilation) Load() error {
 func (vsphereCompilation *VsphereCompilation) Update() error {
 	_, err := orm.NewOrm().Update(vsphereCompilation)
 	if err != nil {
-		logger.Error("Update VsphereCompilation error %s ", err)
+		beego.Error("Update VsphereCompilation error %s ", err)
 	}
 	return err
 }
@@ -75,15 +75,15 @@ func NewVsphereResourcesPool(
 func (vsphereResourcesPool *VsphereResourcesPool) Load() error {
 	queryOneErr := orm.NewOrm().QueryTable(vsphereResourcesPool).One(vsphereResourcesPool, "Id")
 	if queryOneErr != nil {
-		logger.Error("Query One failed %s", queryOneErr)
+		beego.Error("Query One failed %s", queryOneErr)
 	}
 
 	errors := orm.NewOrm().Read(vsphereResourcesPool, "Id")
 	if errors != nil {
-		logger.Error("Read VsphereResourcesPool error : %s", errors)
+		beego.Error("Read VsphereResourcesPool error : %s", errors)
 		_, err := orm.NewOrm().Insert(vsphereResourcesPool)
 		if err != nil {
-			logger.Error("Insert VsphereResourcesPool error %s ", err)
+			beego.Error("Insert VsphereResourcesPool error %s ", err)
 		}
 	}
 
@@ -93,7 +93,7 @@ func (vsphereResourcesPool *VsphereResourcesPool) Load() error {
 func (vsphereResourcesPool *VsphereResourcesPool) Update() error {
 	_, err := orm.NewOrm().Update(vsphereResourcesPool)
 	if err != nil {
-		logger.Error("Update VsphereResourcesPool error %s ", err)
+		beego.Error("Update VsphereResourcesPool error %s ", err)
 	}
 	return err
 }
@@ -150,7 +150,7 @@ func UpdateVsphereResourcePool(vsphereResourcesPool []VsphereResourcesPool) ([]V
 		id, err := insert.Insert(&values)
 
 		if err != nil {
-			logger.Error("Insert VsphereResourcesPool error :%s", err)
+			beego.Error("Insert VsphereResourcesPool error :%s", err)
 		} else {
 			values.Id = id
 			vsphereResourcesPool[index] = values
